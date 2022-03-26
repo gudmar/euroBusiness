@@ -6,11 +6,13 @@ import App from './App';
 import { Provider } from 'react-redux';
 import * as serviceWorker from './serviceWorker';
 import { createStore } from 'redux';
+import  store  from './app/store';
 
 import myReducer from './features/myCounter/MyCounterReducer';
 
 
-const store = createStore(myReducer, {counter: 1});
+// const store = createStore(myReducer, {counter: 1});
+// const store = configureStore();
 
 ReactDOM.render(
   <React.StrictMode>
