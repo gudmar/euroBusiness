@@ -1,5 +1,7 @@
 const myReducer = (state, action) => {
     console.log(action.type)
+    console.log(state)
+    if (state === undefined) return {counter: 0}
     switch (action.type) {
         case 'increment':
             return {...state, counter: state.counter + 1}

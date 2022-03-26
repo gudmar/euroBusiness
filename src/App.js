@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import { Counter } from './features/counter/Counter';
 import './App.css';
 import MyCounter from './features/myCounter/MyCounter';
+import Tasks from './features/task/Tasks'
 import Center from './features/center/center';
 
 function App() {
@@ -63,6 +64,10 @@ function App() {
       <Center>
         <MyCounter />
       </Center>
+      <Center>
+        <Tasks />
+      </Center>
+
     </div>
 
   </>
