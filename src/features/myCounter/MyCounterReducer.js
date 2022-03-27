@@ -1,25 +1,29 @@
+import defaultState from '../../app/defaultState';
+
 const myReducer = (state, action) => {
     console.log(action.type)
     console.log(state)
-    if (state === undefined) return {counter: 0}
+    if (state === undefined) return defaultState;
+    let newState = state;
+    
     switch (action.type) {
-        case 'increment':
-            return {...state, counter: state.counter + 1}
-            break;
-        case 'decrement':
-            return {...state, counter: state.counter - 1}
-            break;
-        case 'reset':
+        case 'counter/increment':
+            newState++;
+            return newState;
+        case 'counter/decrement':
+            newState--;
+            return newState;
+        case 'counter/reset':
             return {...state, counter: 0}
             break;
-        case 'incrementStep':
+        case 'counter/incrementStep':
             return {...state, counter: state.counter + action.payload}
             break;
-        case 'decrementStep':
+        case 'counter/decrementStep':
             return {...state, counter: state.counter - action.payload}
             break;
-        case 'setValue':
-            return {...state, counter: action.payload}
+        case 'counter/setValue':
+            return action.payload;
             break;
 
         default:

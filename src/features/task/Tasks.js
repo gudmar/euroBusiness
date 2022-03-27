@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useState, useRef, useEffect } from 'react';
+import { useSelector, useDispatch, useStore } from 'react-redux';
 import {
   add,
   removeLast,
@@ -14,13 +14,17 @@ import store from '../../app/store.js'
 
 const Tasks = () => {
     console.log(store.getState())
+    const stor = useStore();
     const dispatch = useDispatch();
     const tasks = useSelector(state => state.tasks)
+    const taskBox = useRef();
     console.log(tasks)
     const addTask = (payload) => dispatch(add(payload))
     const remTask = (payload) => dispatch(remove(payload))
     const remLastTask = () => dispatch(removeLast())
-    const removeNthTask = ({taskNumber}) => { return remTask(taskNumber);}
+    const removeNthTask = (taskNumber) => { console.log(taskNumber); return remTask(taskNumber);}
+
+    useEffect(()=>{console.log(stor.getState())})
 
     const [currentText, setCurrnetText] = useState('');
 
@@ -28,17 +32,18 @@ const Tasks = () => {
 
     const singleTask = ({message, index}) => {
         return (
-            <div className={styles.newLine} key={index}>
+            <div className={styles.newLine} key={index} ariaLabel = {index}>
                 <span className="message">{message}</span>
-                <button onClick={removeNthTask(index)}>-</button>
+                <button onClick={ () => removeNthTask(index)}>-</button>
             </div>
         )
     }
 
     const listOfTasks = (tasks) => {
+        if (tasks.length < 1) return null;
         return (
             <div className={styles.list}>
-                {tasks.map((item, index) => singleTask({message:index, index: index}))}
+                {tasks.map((item, index) => singleTask({message:item, index: index}))}
             </div>
         )
     }
@@ -49,9 +54,9 @@ const Tasks = () => {
     return (
         <div className="wrapper">
             {listOfTasks(tasks)}
-            <input type = "text" value = {currentText} onChange={(e) => setCurrnetText(e.target.value)}/>
-            <button onClick={() => dispatch(addTask())}>+</button>
-            <button onClick={() => dispatch(remLastTask())}>-</button>}
+            <input type = "text" value = {currentText} ref={taskBox} onChange={(e) => setCurrnetText(e.target.value)}/>
+            <button onClick={() => addTask(taskBox.current.value) }>+</button>
+            <button onClick={() => remLastTask()}>-</button>}
         </div>
           )
 }

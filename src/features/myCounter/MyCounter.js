@@ -22,6 +22,7 @@ const MyCounter = () => {
     const change = (e) => {dispatch(setValue(parseInt(e.target.value)))}
     const log = () => {console.log(currentVal)}
 // const myValue = useSelector()
+console.log(currentVal)
 
 
     return (
