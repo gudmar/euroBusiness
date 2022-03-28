@@ -5,6 +5,8 @@ import './App.css';
 import MyCounter from './features/myCounter/MyCounter';
 import Tasks from './features/task/Tasks'
 import Center from './features/center/center';
+import OldCounter from './features/oldCounter/oldCounter';
+import OldTasks from './features/oldTasks/OldTasks';
 
 function App() {
   return (
@@ -59,15 +61,38 @@ function App() {
       </header>
     </div> */}
 
-    <div>
-      <h2>My counter</h2>
-      <Center>
-        <MyCounter />
-      </Center>
-      <Center>
-        <Tasks />
-      </Center>
 
+    <Center>
+      <h1>Redux examples</h1>
+      <p>Two examples of redux handling a counter and a task list components. First without redux-toolkit, and the second with the toolkit.
+        <b>So there are 2 storages!!</b> and this should never happen. Only one storage for an application...
+      </p>
+      <p>Yes, but this is not an application. This is only an example. an attempt to learn how react works. No need to set 2 repos and 2 projects for those 
+        2 examples. Besides. If something goes wrong with the 2-storage setup I want to see the real downsides of having 2 sotrages. Besides those 
+        that may be read about in the internet.
+      </p>
+    </Center>
+    <div className="row">
+
+      <div className="column">
+        <h2>With toolkit</h2>
+        <Center>
+          <MyCounter />
+        </Center>
+        <Center>
+          <Tasks />
+        </Center>
+      </div>
+
+      <div className="column">
+      <h2>No toolkit</h2>
+        <Center>
+          <OldCounter />
+        </Center>
+        <Center>
+          <OldTasks />
+        </Center>
+      </div>
     </div>
 
   </>
