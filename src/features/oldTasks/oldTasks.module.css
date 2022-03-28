@@ -1,0 +1,10 @@
+
+
+
+.list{
+    width: 60vw;
+    height: 8rem;
+    border: solid thin black;
+    border-radius: 5px;
+    overflow: auto;
+}
