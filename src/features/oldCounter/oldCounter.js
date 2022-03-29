@@ -6,30 +6,48 @@ import {
   increment,
   incrementStep,
   decrementStep,
-  setValue
+  setValue,
+  logState,
 } from './actions';
 import styles from './oldCounter.module.css';
+import { connect } from 'react-redux';
 
 
 
-const OldCounter = () => {
+const OldCounter = (props) => {
 
     // const currentVal = useSelector(state => state.counter)
     // const dispatch = useDispatch();
-    const inc = () => {dispatch(increment())}
-    const dec = () => {dispatch(decrement())}
-    const change = (e) => {dispatch(setValue(parseInt(e.target.value)))}
-    const log = () => {console.log(currentVal)}
+
+    // const inc = () => {props.dispatch(increment())}
+    // const dec = () => {props.dispatch(decrement())}
+    // const change = (e) => {props.dispatch(setValue(parseInt(e.target.value)))}
+    // const log = () => {console.log(currentVal)}
 
 
     return (
         <div className="wrapper">
-            <button onClick={dec}>-</button>
-            <input type="number" value = {currentVal} onChange={change}></input>
-            <button onClick={inc}>+</button>
-            <button onClick={log}>log</button>
+            <button onClick={props.dec}>-</button>
+            <input type="number" value = {props.counter} onChange={props.change}></input>
+            <button onClick={props.inc}>+</button>
+            <button onClick={props.log}>log</button>
         </div>
           )
 }
 
-export default OldCounter;
+const mapStateToProps = (state, ownProps) => {
+    return {
+        counter: state.counter
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        inc: () => dispatch(increment()),
+        dec: () => dispatch(decrement()),
+        change: (e) => dispatch(setValue(parseInt(e.target.value))),
+        log: () => dispatch(logState())
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(OldCounter);
