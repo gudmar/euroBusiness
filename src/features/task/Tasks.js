@@ -13,18 +13,16 @@ import store from '../../app/store.js'
 
 
 const Tasks = () => {
-    console.log(store.getState())
-    const stor = useStore();
+    const store = useStore();
     const dispatch = useDispatch();
     const tasks = useSelector(state => state.tasks)
     const taskBox = useRef();
-    console.log(tasks)
     const addTask = (payload) => dispatch(add(payload))
     const remTask = (payload) => dispatch(remove(payload))
     const remLastTask = () => dispatch(removeLast())
     const removeNthTask = (taskNumber) => { console.log(taskNumber); return remTask(taskNumber);}
 
-    useEffect(()=>{console.log(stor.getState())})
+    useEffect(()=>{console.log(store.getState())})
 
     const [currentText, setCurrnetText] = useState('');
 
@@ -47,7 +45,6 @@ const Tasks = () => {
             </div>
         )
     }
-// const myValue = useSelector()
 
 
 

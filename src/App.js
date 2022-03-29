@@ -71,14 +71,16 @@ function App() {
 
 
     <Center>
-      <h1>Redux examples</h1>
-      <p>Two examples of redux handling a counter and a task list components. First without redux-toolkit, and the second with the toolkit.
-        <b>So there are 2 storages!!</b> and this should never happen. Only one storage for an application...
-      </p>
-      <p>Yes, but this is not an application. This is only an example. an attempt to learn how react works. No need to set 2 repos and 2 projects for those 
-        2 examples. Besides. If something goes wrong with the 2-storage setup I want to see the real downsides of having 2 sotrages. Besides those 
-        that may be read about in the internet.
-      </p>
+      <div className="column">
+        <h1>Redux examples</h1>
+        <p>Two examples of redux handling a counter and a task list components. First without redux-toolkit, and the second with the toolkit.
+          <b>So there are 2 storages!!</b> and having more than one storage in the application is strongly discouraged.
+        </p>
+        <p>
+          On the other hand redux alows to have more than one stores, and it is interesting how to implement this case.
+          Moreover this allows to test 2 things within one repo :)
+        </p>
+      </div>
     </Center>
     <div className="row">
     <Provider store = {store}>

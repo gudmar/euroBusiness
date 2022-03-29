@@ -2,8 +2,10 @@
 
 
 .list{
-    width: 60vw;
+    /* width: 60vw; */
+    flex-grow: 1;
     height: 8rem;
+    flex-basis: 40vw;
     border: solid thin black;
     border-radius: 5px;
     overflow: auto;
