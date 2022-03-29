@@ -6,26 +6,25 @@ import {
   remove
 } from './actions';
 import styles from './oldTasks.module.css';
-import oldStore from '../../app/oldStore.js'
+import { oldStore } from '../../app/oldStore.js'
+import { connect } from 'react-redux';
 
 
 
 
-
-const Tasks = () => {
+const OldTasks = (props) => {
     console.log(oldStore.getState())
-    // const stor = useStore();
-    // const dispatch = useDispatch();
 
-    // const tasks = useSelector(state => state.tasks)
+    const tasks = props.tasks;
     const taskBox = useRef();
+    const dispatch = props.dispatch;
     
     const addTask = (payload) => dispatch(add(payload))
     const remTask = (payload) => dispatch(remove(payload))
     const remLastTask = () => dispatch(removeLast())
     const removeNthTask = (taskNumber) => { console.log(taskNumber); return remTask(taskNumber);}
 
-    useEffect(()=>{console.log(stor.getState())})
+    useEffect(()=>{console.log(oldStore.getState())})
 
     const [currentText, setCurrnetText] = useState('');
 
@@ -42,6 +41,7 @@ const Tasks = () => {
 
     const listOfTasks = (tasks) => {
         if (tasks.length < 1) return null;
+        console.log(tasks)
         return (
             <div className={styles.list}>
                 {tasks.map((item, index) => singleTask({message:item, index: index}))}
@@ -62,4 +62,11 @@ const Tasks = () => {
           )
 }
 
-export default Tasks;
+const mapStateToProps = (state, ownProps) => {
+    return {
+        tasks: state.tasks,
+        store: state
+    }
+}
+
+export default connect(mapStateToProps)(OldTasks);

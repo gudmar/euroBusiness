@@ -8,6 +8,14 @@ import Center from './features/center/center';
 import OldCounter from './features/oldCounter/oldCounter';
 import OldTasks from './features/oldTasks/OldTasks';
 
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
+import  store  from './app/store';
+import { oldStore, rootReducer } from './app/oldStore'
+
+console.log(store.getState());
+console.log(oldStore.getState());
+
 function App() {
   return (
 
@@ -73,7 +81,7 @@ function App() {
       </p>
     </Center>
     <div className="row">
-
+    <Provider store = {store}>
       <div className="column">
         <h2>With toolkit</h2>
         <Center>
@@ -83,8 +91,11 @@ function App() {
           <Tasks />
         </Center>
       </div>
+    </Provider>
 
-      <div className="column">
+
+  <Provider store = {oldStore}>
+      <div className="column" store={oldStore}>
       <h2>No toolkit</h2>
         <Center>
           <OldCounter />
@@ -93,7 +104,10 @@ function App() {
           <OldTasks />
         </Center>
       </div>
+    </Provider>
+
     </div>
+  
 
   </>
 
