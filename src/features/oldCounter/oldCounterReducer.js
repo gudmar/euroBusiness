@@ -1,8 +1,6 @@
 import defaultState from '../../app/defaultState';
 
 const myReducer = (state, action) => {
-    console.log(action.type)
-    console.log(state)
     if (state === undefined) return defaultState.conuter;
     let newState = state;
     

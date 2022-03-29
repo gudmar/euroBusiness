@@ -1,5 +1,4 @@
 import React, { useState, useRef, useEffect } from 'react';
-// import { useSelector, useDispatch, useStore } from 'react-redux';
 import {
   add,
   removeLast,
@@ -9,11 +8,7 @@ import styles from './oldTasks.module.css';
 import { oldStore } from '../../app/oldStore.js'
 import { connect } from 'react-redux';
 
-
-
-
 const OldTasks = (props) => {
-    console.log(oldStore.getState())
 
     const tasks = props.tasks;
     const taskBox = useRef();
@@ -41,14 +36,12 @@ const OldTasks = (props) => {
 
     const listOfTasks = (tasks) => {
         if (tasks.length < 1) return null;
-        console.log(tasks)
         return (
             <div className={styles.list}>
                 {tasks.map((item, index) => singleTask({message:item, index: index}))}
             </div>
         )
     }
-// const myValue = useSelector()
 
 
 
