@@ -1,0 +1,41 @@
+.board{
+    position: relative;
+    width: 800px;
+    height: 800px;
+    display: grid;
+    grid-template: "f-top f-top f-top f-top f-top f-top f-top f-top f-top f-top f-top f-right f-right" 1fr
+                   "f-top f-top f-top f-top f-top f-top f-top f-top f-top f-top f-top f-right f-right" 1fr
+                 "f-left f-left b-mid b-mid b-mid b-mid b-mid b-mid b-mid b-mid b-mid f-right f-right" 1fr
+                 "f-left f-left b-mid b-mid b-mid b-mid b-mid b-mid b-mid b-mid b-mid f-right f-right" 1fr
+                 "f-left f-left b-mid b-mid b-mid b-mid b-mid b-mid b-mid b-mid b-mid f-right f-right" 1fr
+                 "f-left f-left b-mid b-mid b-mid b-mid b-mid b-mid b-mid b-mid b-mid f-right f-right" 1fr
+                 "f-left f-left b-mid b-mid b-mid b-mid b-mid b-mid b-mid b-mid b-mid f-right f-right" 1fr
+                 "f-left f-left b-mid b-mid b-mid b-mid b-mid b-mid b-mid b-mid b-mid f-right f-right" 1fr
+                 "f-left f-left b-mid b-mid b-mid b-mid b-mid b-mid b-mid b-mid b-mid f-right f-right" 1fr
+                 "f-left f-left b-mid b-mid b-mid b-mid b-mid b-mid b-mid b-mid b-mid f-right f-right" 1fr
+                 "f-left f-left b-mid b-mid b-mid b-mid b-mid b-mid b-mid b-mid b-mid f-right f-right" 1fr
+                 "f-left f-left f-bot f-bot f-bot f-bot f-bot f-bot f-bot f-bot f-bot f-bot   f-bot  " 1fr
+                 "f-left f-left f-bot f-bot f-bot f-bot f-bot f-bot f-bot f-bot f-bot f-bot   f-bot  " 1fr;
+    border: solid thin black;
+}
+
+.fieldBar{
+    position: relative;
+    display: flex;
+}
+.fieldBarBottom{
+    grid-area: f-bot;
+}
+.fieldBarLeft{
+    grid-area: f-left;
+}
+.fieldBarTop{ 
+    grid-area: f-top;
+}
+.fieldBarRight{
+    grid-area: f-right;
+}
+.middleBoard{
+    background-color: yellow;
+    grid-area: b-mid;
+}
