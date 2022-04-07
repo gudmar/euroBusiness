@@ -60,8 +60,12 @@ const countVisitFeeChecker = (object) => {
 }
 
 const descriptors = {
+    Start: {
+        type: 'start',
+        boardFieldNumber: 1,
+        visit: [-400]
+    },
     Ateny: {
-        type: 'city',
         type: 'city',
         country: 'Greece',
         price: 120,
@@ -75,6 +79,12 @@ const descriptors = {
         boardFieldNumber: 2,
         isPlegded: false, // zastawiony
     },
+    Chance_blue: {
+        type: 'chanceBlue',
+    },
+    Chance_red: {
+        type: 'chanceRed',
+    },
     Saloniki: {
         country: 'Greece',
         type: 'city',
@@ -87,6 +97,27 @@ const descriptors = {
         nrOfHouses: 0, // 5 houses === hotel
         nrInSet: 2,
         boardFieldNumber: 4,
+        isPlegded: false,
+    },
+    Guarded_Parking: {
+        type: 'guardedPark',
+        boardFieldNumber: 5,
+        visit: [400],
+    },
+    Free_Parking: {
+        type: 'freePark',
+        boardFieldNumber: 11,
+        visit: [0],
+        wait: 1
+    },
+    Jail: {
+        type: 'jail',
+        boardFieldNumber: 11,
+        wait: 2
+    },
+    Go_to_jail: {
+        type: 'go_to_jail',
+        boardFieldNumber: 31,
     },
     South_Railways: {
         country: 'Railways',
@@ -97,6 +128,7 @@ const descriptors = {
         owner: 'bank',
         nrInSet: 4,
         boardFieldNumber: 6,
+        isPlegded: false,
     },
     Neapol: {
         country: 'Italy',
@@ -110,6 +142,7 @@ const descriptors = {
         nrOfHouses: 0, // 5 houses === hotel
         nrInSet: 3,
         boardFieldNumber: 7,
+        isPlegded: false,
     },
     Mediolan: {
         country: 'Italy',
@@ -123,6 +156,7 @@ const descriptors = {
         nrOfHouses: 0, // 5 houses === hotel
         nrInSet: 3,
         boardFieldNumber: 9,
+        isPlegded: false,
     },
     Rome: {
         country: 'Italy',
@@ -136,6 +170,7 @@ const descriptors = {
         nrOfHouses: 0, // 5 houses === hotel
         nrInSet: 3,
         boardFieldNumber: 10,
+        isPlegded: false,
     },
     Barcelona: {
         country: 'Spain',
@@ -149,6 +184,7 @@ const descriptors = {
         nrOfHouses: 0, // 5 houses === hotel
         nrInSet: 3,
         boardFieldNumber: 12,
+        isPlegded: false,
     },
     Power_Station: {
         country: plant,
@@ -158,6 +194,7 @@ const descriptors = {
         owner: 'bank',
         nrInSet: 2,
         boardFieldNumber: 13,
+        isPlegded: false,
     },
     Sewilla: {
         country: 'Spain',
@@ -171,6 +208,7 @@ const descriptors = {
         nrOfHouses: 0, // 5 houses === hotel
         nrInSet: 3,
         boardFieldNumber: 14,
+        isPlegded: false,
     },
     Madrit: {
         country: 'Spain',
@@ -184,6 +222,7 @@ const descriptors = {
         nrOfHouses: 0, // 5 houses === hotel
         nrInSet: 3,
         boardFieldNumber: 15,
+        isPlegded: false,
     },
     West_Railways: {
         country: 'Railways',
@@ -194,6 +233,7 @@ const descriptors = {
         owner: 'bank',
         nrInSet: 4,
         boardFieldNumber: 16,
+        isPlegded: false,
     },
     Liverpool: {
         country: 'UK',
@@ -207,6 +247,7 @@ const descriptors = {
         nrOfHouses: 0, // 5 houses === hotel
         nrInSet: 3,
         boardFieldNumber: 17,
+        isPlegded: false,
     },
     Glasgow: {
         country: 'UK',
@@ -220,6 +261,7 @@ const descriptors = {
         nrOfHouses: 0, // 5 houses === hotel
         nrInSet: 3,
         boardFieldNumber: 19,
+        isPlegded: false,
     },
     Londyn: {
         country: 'UK',
@@ -233,6 +275,7 @@ const descriptors = {
         nrOfHouses: 0, // 5 houses === hotel
         nrInSet: 3,
         boardFieldNumber: 20,
+        isPlegded: false,
     },
     Rotterdam: {
         country: 'Benelux',
@@ -246,6 +289,7 @@ const descriptors = {
         nrOfHouses: 0, // 5 houses === hotel
         nrInSet: 3,
         boardFieldNumber: 22,
+        isPlegded: false,
     },
     Bruksela: {
         country: 'Benelux',
@@ -259,6 +303,7 @@ const descriptors = {
         nrOfHouses: 0, // 5 houses === hotel
         nrInSet: 3,
         boardFieldNumber: 24,
+        isPlegded: false,
     },
     Amsterdam: {
         country: 'Benelux',
@@ -272,6 +317,7 @@ const descriptors = {
         nrOfHouses: 0, // 5 houses === hotel
         nrInSet: 3,
         boardFieldNumber: 25,
+        isPlegded: false,
     },
     North_Railways: {
         country: 'Railways',
@@ -282,6 +328,7 @@ const descriptors = {
         owner: 'bank',
         nrInSet: 4,
         boardFieldNumber: 26,
+        isPlegded: false,
     },
     Malmo: {
         country: 'Sweeden',
@@ -295,6 +342,7 @@ const descriptors = {
         nrOfHouses: 0, // 5 houses === hotel
         nrInSet: 3,
         boardFieldNumber: 27,
+        isPlegded: false,
     },
     Goteborg: {
         country: 'Sweeden',
@@ -308,6 +356,7 @@ const descriptors = {
         nrOfHouses: 0, // 5 houses === hotel
         nrInSet: 3,
         boardFieldNumber: 28,
+        isPlegded: false,
     },
     Water_plant: {
         country: plant,
@@ -317,6 +366,7 @@ const descriptors = {
         owner: 'bank',
         nrInSet: 2,
         boardFieldNumber: 29,
+        isPlegded: false,
     },
     Sztokholm: {
         country: 'Sweeden',
@@ -329,6 +379,7 @@ const descriptors = {
         owner: 'bank',
         nrOfHouses: 0, // 5 houses === hotel
         nrInSet: 3,
+        isPlegded: false,
         boardFieldNumber: 30,
     },
     Frankfurt: {
@@ -343,6 +394,7 @@ const descriptors = {
         nrOfHouses: 0, // 5 houses === hotel
         nrInSet: 3,
         boardFieldNumber: 32,
+        isPlegded: false,
     },
     Kolonia: {
         country: 'RFN',
@@ -356,6 +408,7 @@ const descriptors = {
         nrOfHouses: 0, // 5 houses === hotel
         nrInSet: 3,
         boardFieldNumber: 33,
+        isPlegded: false,
     },
     Bonn: {
         country: 'RFN',
@@ -369,6 +422,7 @@ const descriptors = {
         nrOfHouses: 0, // 5 houses === hotel
         nrInSet: 3,
         boardFieldNumber: 35,
+        isPlegded: false,
     },
     East_Railways: {
         country: 'Railways',
@@ -378,7 +432,8 @@ const descriptors = {
         visit: [50, 100, 200, 400],
         owner: 'bank',
         nrInSet: 4,
-        boardFieldNumber: 26,
+        boardFieldNumber: 36,
+        isPlegded: false,
     },
     Insbruck: {
         country: 'Austria',
@@ -392,6 +447,11 @@ const descriptors = {
         nrOfHouses: 0, // 5 houses === hotel
         nrInSet: 3,
         boardFieldNumber: 38,
+        isPlegded: false,
+    },
+    Tax: {
+        type: 'tax',
+        visit: [200]
     },
     Wieden: {
         country: 'Austria',
@@ -404,9 +464,14 @@ const descriptors = {
         owner: 'bank',
         nrOfHouses: 0, // 5 houses === hotel
         nrInSet: 3,
-        boardFieldNumber: 38,
+        boardFieldNumber: 40,
+        isPlegded: false,
     },
-
-
-
 }
+
+const boardInOrder = [
+    'Start', 'Saloniki', 'Chance_blue', 'Ateny', 'Guarded_Parking', 'South_Railways', 'Neapol', 'Chance_red', 'Mediolan', 'Rome', 'Jail', 'Barcelona',
+    'Power_Station', 'Sewilla', 'Madrit', 'West_Railways','Liverpool', 'Chance_blue', 'Glasgow', 'London', 'Free_Parking', 'Rotterdam', 'Chance_red', 
+    'Bruksela', 'Amsterdam', 'North_Rilways', 'Malmo', 'Gotteborg', 'Water_plant', 'Sztokholm', 'Go_to_jail', 'Frankfurt', 'Kolonia', 'Chance_blue', 'Bonn',
+    'East_Railways', 'Chance_red', 'Insbruk', 'Tax', 'Wieden'
+]
