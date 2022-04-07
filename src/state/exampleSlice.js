@@ -10,5 +10,6 @@ const exampleSlice = createSlice({
         add: (state, action) => state.push(action.payload),
     }
 })
-
-export default exampleSlice;
+export const { add } = exampleSlice;
+// export const { exampleSlice } = exampleSlice.actions;
+export default exampleSlice.reducer;
