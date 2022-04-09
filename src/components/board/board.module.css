@@ -19,22 +19,7 @@
     border: solid thin black;
 }
 
-.fieldBar{
-    position: relative;
-    display: flex;
-}
-.fieldBarBottom{
-    grid-area: f-bot;
-}
-.fieldBarLeft{
-    grid-area: f-left;
-}
-.fieldBarTop{ 
-    grid-area: f-top;
-}
-.fieldBarRight{
-    grid-area: f-right;
-}
+
 .middleBoard{
     background-color: yellow;
     grid-area: b-mid;

@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 
 const Grid = (props) => {
-
+    return (<></>)
 }
 
 Grid.propTypes = {
@@ -9,3 +9,5 @@ Grid.propTypes = {
     size: PropTypes.oneOf(['narrow', 'wide']),
     children: PropTypes.element // any
 }
+
+export default Grid;
