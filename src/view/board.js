@@ -1,10 +1,18 @@
+import ArrowBack from '@material-ui/icons/ArrowBack'
+import QuestionAnswer from '@material-ui/icons/QuestionAnswer';
+import LocalParking from '@material-ui/icons/LocalParking';
+import DirectionsCar from '@material-ui/icons/DirectionsCar';
+import HouseSharp from '@material-ui/icons/HouseSharp';
+import Train from '@material-ui/icons/Train';
+import Power from '@material-ui/icons/esm/Power';
+import Euro from '@material-ui/icons/Euro';
 
 const boardFieldView = {
             Start: {
                 width: 2,
                 color: undefined,
-                icon: 'ArrowBack',
-                title: 'big',
+                icon: ArrowBack,
+                titleSize: 'big',
                 direction: '-45deg',
             },
             Ateny: {
@@ -16,13 +24,13 @@ const boardFieldView = {
             Chance_blue: {
                 color: 'blue',
                 width: 1,
-                title: 'huge'
+                titleSize: 'huge'
             },
             Chance_red: {
-                ccolor: 'red',
+                color: 'red',
                 width: 1,
-                title: 'huge',
-                icon: 'QuestionMark'
+                titleSize: 'huge',
+                icon: QuestionAnswer,
             },
             Saloniki: {
                 width: 1,
@@ -33,20 +41,20 @@ const boardFieldView = {
             Guarded_Parking: {
                 ccolor: 'red',
                 width: 1,
-                title: 'huge',
-                icon: 'LocalParking',
+                titleSize: 'huge',
+                icon: LocalParking,
             },
             Free_Parking: {
                 color: undefined,
                 width: 2, 
                 direction: '135deg',
-                icon: 'DirectionsCar'
+                icon: DirectionsCar,
             },
             Jail: {
                 color: undefined,
                 width: 2,
                 direction: '225deg',
-                icon: 'HouseSiding'
+                icon: HouseSharp,
             },
             Go_to_jail: {
                 direction: '225deg',
@@ -87,7 +95,7 @@ const boardFieldView = {
             Power_Station: {
                 width: 1,
                 color: undefined,
-                icon: 'LightBulb',
+                icon: Power,
                 direction: '90deg',
 
             },
@@ -150,7 +158,7 @@ const boardFieldView = {
             North_Railways: {
                 color:undefined,
                 direction: '180deg',
-                icon: 'Train',
+                icon: Train,
                 width: 1,
             },
             Malmo: {

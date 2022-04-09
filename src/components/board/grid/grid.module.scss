@@ -1,6 +1,29 @@
 .grid {
     flex-grow: 1;
+    border-top: black medium solid;
+    border-left: black medium solid;
+    border-right: black medium solid;
+    height: 100%;
 }
 .gird-wide {
     flex-grow: 2;
+    border-left: none;
 }
+.upside {
+    transform: rotate('180deg');
+}
+.colorBar {
+    height: 2rem;
+    width: 100%;
+    position: relative;
+}
+.column {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+.iconBlank {
+    height: 30%;
+}
+

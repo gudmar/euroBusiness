@@ -5,6 +5,7 @@ import Grid from '../grid/grid.js'
 const BoardSide = (props) => {
     const direction = props.direction;
     const descriptors = props.descriptors;
+    console.log(descriptors)
     const directionClass = 'fieldBar' + props.direction;
     const boardSide = direction => (
         <div className={ `${styles.fieldBar} ${styles[directionClass]}` }>

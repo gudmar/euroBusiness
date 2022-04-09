@@ -8,8 +8,8 @@ const boardDescriptorCreator = (stateDescriptor = descriptors, viewDescriptor = 
     return orderArray.map((item, index) => {
         return { 
             id: item,
-            ...viewDescriptor[index],
-            ...stateDescriptor
+            ...viewDescriptor[item],
+            ...stateDescriptor[item],
         }
     });
 }
@@ -20,6 +20,7 @@ const Board = (props) => {
     const leftSliceDescriptor = boardDescriptors.slice(10, 19)
     const topSliceDescriptor = boardDescriptors.slice(20, 29)
     const rightSliceDescriptor = boardDescriptors.slice(30, 39)
+    console.log(bottomSliceDescriptor)
     return(
         <div className={styles.board}>
             <BoardSide direction="Bottom" descriptors = {bottomSliceDescriptor}></BoardSide>
