@@ -1,154 +1,162 @@
+import ArrowBack from '@material-ui/icons/ArrowBack'
+import QuestionAnswer from '@material-ui/icons/QuestionAnswer';
+import LocalParking from '@material-ui/icons/LocalParking';
+import DirectionsCar from '@material-ui/icons/DirectionsCar';
+import HouseSharp from '@material-ui/icons/HouseSharp';
+import Train from '@material-ui/icons/Train';
+import Power from '@material-ui/icons/esm/Power';
+import Euro from '@material-ui/icons/Euro';
 
 const boardFieldView = {
             Start: {
                 width: 2,
-                color: none,
-                icon: 'ArrowBack',
-                title: 'big',
+                color: undefined,
+                icon: ArrowBack,
+                titleSize: 'big',
                 direction: '-45deg',
             },
             Ateny: {
                 width: 1,
-                color: yellow,
-                icon: none,
+                color: 'yellow',
+                icon: undefined,
                 direction: '0deg',
             },
             Chance_blue: {
-                color: blue,
+                color: 'blue',
                 width: 1,
-                title: 'huge'
+                titleSize: 'huge'
             },
             Chance_red: {
-                color: red,
+                color: 'red',
                 width: 1,
-                title: 'huge',
-                icon: 'QuestionMark'
+                titleSize: 'huge',
+                icon: QuestionAnswer,
             },
             Saloniki: {
                 width: 1,
-                color: yellow,
-                icon: none,
+                color: 'yellow',
+                icon: undefined,
                 direction: '0deg',
             },
             Guarded_Parking: {
-                color: red,
+                ccolor: 'red',
                 width: 1,
-                title: 'huge',
-                icon: 'LocalParking',
+                titleSize: 'huge',
+                icon: LocalParking,
             },
             Free_Parking: {
-                color: none,
+                color: undefined,
                 width: 2, 
                 direction: '135deg',
-                icon: 'DirectionsCar'
+                icon: DirectionsCar,
             },
             Jail: {
-                color: none,
+                color: undefined,
                 width: 2,
                 direction: '225deg',
-                icon: 'HouseSiding'
+                icon: HouseSharp,
             },
             Go_to_jail: {
                 direction: '225deg',
                 width: 2,
-                color: none,
+                color: undefined,
                 symbol: 'U+1F6A8'
             },
             South_Railways: {
-                color:none,
+                color: undefined,
                 direction: '0deg',
-                icon: Train,
+                icon: 'Train',
                 width: 1,
             },
             Neapol: {
                 width: 1,
                 color: 'red',
-                icon: none,
+                icon: undefined,
                 direction: '0deg',
             },
             Mediolan: {
                 width: 1,
                 color: 'red',
-                icon: none,
+                icon: undefined,
                 direction: '0deg',
             },
             Rome: {
                 width: 1,
                 color: 'red',
-                icon: none,
+                icon: undefined,
                 direction: '0deg',
             },
             Barcelona: {
                 width: 1,
                 color: 'blue',
-                icon: none,
+                icon: undefined,
                 direction: '90deg',
             },
             Power_Station: {
                 width: 1,
-                color: none,
-                icon: 'LightBulb',
+                color: undefined,
+                icon: Power,
                 direction: '90deg',
 
             },
             Sewilla: {
                 width: 1,
                 color: 'blue',
-                icon: none,
+                icon: undefined,
                 direction: '90deg',
 
             },
             Madrit: {
                 width: 1,
                 color: 'blue',
-                icon: none,
+                icon: undefined,
                 direction: '90deg',
 
             },
             West_Railways: {
-                color:none,
+                color:undefined,
                 direction: '90deg',
-                icon: Train,
+                icon: 'Train',
                 width: 1,
             },
             Liverpool: {
                 width: 1,
                 color: 'orange',
-                icon: none,
+                icon: undefined,
                 direction: '90deg',
             },
             Glasgow: {
                 width: 1,
                 color: 'orange',
-                icon: none,
+                icon: undefined,
                 direction: '90deg',
             },
             Londyn: {
                 width: 1,
                 color: 'orange',
-                icon: none,
+                icon: undefined,
                 direction: '90deg',
             },
             Rotterdam: {
                 width: 1,
                 color: 'green',
-                icon: none,
+                icon: undefined,
                 direction: '180deg',
             },
             Bruksela: {
                 width: 1,
                 color: 'green',
-                icon: none,
+                icon: undefined,
                 direction: '180deg',
             },
             Amsterdam: {
                 width: 1,
                 color: 'green',
-                icon: none,
+                icon: undefined,
                 direction: '180deg',
             },
             North_Railways: {
-                color:none,
+                color:undefined,
                 direction: '180deg',
                 icon: Train,
                 width: 1,
@@ -156,19 +164,19 @@ const boardFieldView = {
             Malmo: {
                 width: 1,
                 color: 'purple',
-                icon: none,
+                icon: undefined,
                 direction: '180deg',
             },
             Goteborg: {
                 width: 1,
                 color: 'purple',
-                icon: none,
+                icon: undefined,
                 direction: '180deg',
 
             },
             Water_plant: {
                 width: 1,
-                color: none,
+                color: undefined,
                 icon: 'Wash',
                 direction: '180deg',
 
@@ -176,48 +184,49 @@ const boardFieldView = {
             Sztokholm: {
                 width: 1,
                 color: 'purple',
-                icon: none,
+                icon: undefined,
                 direction: '180deg',
 
             },
             Frankfurt: {
                 width: 1,
                 color: 'brown',
-                icon: none,
+                icon: undefined,
                 direction: '270deg',
             },
             Kolonia: {
                 width: 1,
                 color: 'brown',
-                icon: none,
+                icon: undefined,
                 direction: '270deg',
             },
             Bonn: {
                 width: 1,
                 color: 'brown',
-                icon: none,
+                icon: undefined,
                 direction: '270deg',
             },
             East_Railways: {
-                color:none,
+                color:undefined,
                 direction: '270deg',
-                icon: Train,
+                icon: 'Train',
                 width: 1,
             },
             Insbruck: {
                 width: 1,
                 color: 'black',
-                icon: none,
+                icon: undefined,
                 direction: '270deg',
             },
             Tax: {
                 type: 'tax',
-                visit: [200]
+                visit: [200],
+                icon: 'Euro'
             },
             Wieden: {
                 width: 1,
                 color: 'black',
-                icon: none,
+                icon: undefined,
                 direction: '270deg',
             },
         };

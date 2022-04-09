@@ -36,10 +36,10 @@ const counntParkingFee = () => 400;
 const countCityVisitFee = (object) => {
     if (object.owner === 'bank') return 0;
     if (object.isPlegded) return 0;
-    if (nrOfHouses === 0);
+    if (object.nrOfHouses === 0);
     const {owns, outOf} = getNrOfCitiesPlayerHas(descriptors, object.owner, object.country);
-    const feeToPay = visit[nrOfHouses];
-    if ((owns === outOf) && (nrOfHouses === 0)) return feeToPay * 2;
+    const feeToPay = object.visit[object.nrOfHouses];
+    if ((owns === outOf) && (object.nrOfHouses === 0)) return feeToPay * 2;
     return feeToPay;
 }
 const countRailwayVisitFee = (object) => {
@@ -187,7 +187,7 @@ const descriptors = {
         isPlegded: false,
     },
     Power_Station: {
-        country: plant,
+        country: 'plant',
         type: 'powerStation',
         price: 300,
         mortgage: 150,
@@ -359,7 +359,7 @@ const descriptors = {
         isPlegded: false,
     },
     Water_plant: {
-        country: plant,
+        country: 'plant',
         type: 'waterPlant',
         price: 300,
         mortgage: 150,
@@ -475,3 +475,5 @@ const boardInOrder = [
     'Bruksela', 'Amsterdam', 'North_Rilways', 'Malmo', 'Gotteborg', 'Water_plant', 'Sztokholm', 'Go_to_jail', 'Frankfurt', 'Kolonia', 'Chance_blue', 'Bonn',
     'East_Railways', 'Chance_red', 'Insbruk', 'Tax', 'Wieden'
 ]
+
+export { boardInOrder, descriptors }
