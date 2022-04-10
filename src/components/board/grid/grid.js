@@ -7,14 +7,16 @@ import HouseSiding from '@material-ui/icons';
 import Train from '@material-ui/icons';
 import LightBulb from '@material-ui/icons';
 import Euro from '@material-ui/icons';
+import styles from './grid.module.css';
 
 
 
 const caption = (descriptor) => {
+    const title = descriptor.id.split('_').join(' ');
     return (
         <div className = {'caption'}>
-            <span>{descriptor.id}</span>
-            <span>{descriptor.price}</span>
+            <div className={`${styles.wrapText}`}>{title}</div>
+            <div>{descriptor.price}</div>
         </div>
     )
 }
@@ -27,7 +29,8 @@ const icon = (descriptor) => {
 
 const cityField = (descriptor) => {
     return (
-        <div className = {'grid column'}>
+        // <div className = {`${styles.grid} ${styles.column}`} style = {{transform: `rotate(${descriptor.direction})`}}>
+        <div className = {`${styles.grid} ${styles.column}`}>
             <div className = {'colorBar'} style = {{backgroundColor: descriptor.color}}>
             </div>
             {caption(descriptor)}
@@ -38,7 +41,8 @@ const cityField = (descriptor) => {
 }
 const gridIconField = (descriptor) => {
     return (
-        <div className = {'grid column'}>
+        // <div className = {`${styles.grid} ${styles.column}`} style = {{transform: `rotate(${descriptor.direction})`}}>
+        <div className = {`${styles.grid} ${styles.column}`}>
             {caption(descriptor)}
             {icon(descriptor)}
             {caption(descriptor)}
@@ -48,20 +52,24 @@ const gridIconField = (descriptor) => {
 
 const hugeIconField = (descriptor) => {
     return (
-        <div className = {'grid column'}>
-            {icon(descriptor)}
+        <div className = {`${styles.gridWide} ${styles.column}`}>
+            <div style = {{transform: `rotate(${descriptor.direction})`}}>
+                {caption(descriptor)}
+                    {icon(descriptor)}
+                {caption(descriptor)}
+            </div>
         </div>        
     )
 }
 
 const bigIconTypes = [
     'powerStation', 'railway', 'waterPlant', 
-    'tax', 'guardedPark', 'freePark',
-    'go_to_jail'
+    'tax', 'guardedPark', 
 ];
 
 const bigFieldTypes = [
-    'start'
+    'start','freePark',
+    'go_to_jail', 'jail'
 ]
 const cityTypes = ['city']
 
@@ -69,9 +77,9 @@ const special = ['chanceBlue', 'chanceRed', 'jail']
 
 const girdTypeSelect = descriptor => {
     const type = descriptor.type;
-    if (bigIconTypes.includes(type)) return gridIconField;
-    if (bigFieldTypes.includes(type)) return hugeIconField;
-    if (cityTypes.includes(type)) return cityField;
+    if (bigIconTypes.includes(type)) return gridIconField(descriptor);
+    if (bigFieldTypes.includes(type)) return hugeIconField(descriptor);
+    if (cityTypes.includes(type)) return cityField(descriptor);
 }
 
 const Grid = (props) => {

@@ -1,16 +1,25 @@
 .fieldBar{
     position: relative;
     display: flex;
+    display: grid;
+    
 }
 .fieldBarBottom{
     grid-area: f-bot;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 2fr;
 }
 .fieldBarLeft{
     grid-area: f-left;
+    /* transform: rotate(90deg); */
+    /* flex-direction: column; */
 }
 .fieldBarTop{ 
     grid-area: f-top;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 2fr;
+    transform: rotate(180deg);
 }
 .fieldBarRight{
     grid-area: f-right;
+    /* transform: rotate(-90deg); */
+    /* flex-direction: column; */
 }

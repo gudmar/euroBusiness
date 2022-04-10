@@ -220,8 +220,8 @@ const boardFieldView = {
             },
             Tax: {
                 type: 'tax',
-                visit: [200],
-                icon: 'Euro'
+                icon: 'Euro',
+                direction: '270deg',
             },
             Wieden: {
                 width: 1,
