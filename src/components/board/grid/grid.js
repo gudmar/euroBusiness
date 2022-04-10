@@ -26,11 +26,14 @@ const icon = (descriptor) => {
         <div className = {"iconBlank"}></div>
     )
 }
+const isRotated = (descriptor) => {
+    return parseInt(descriptor.direction) === 0 ? '' : `${styles.rotated}`
+}
 
 const cityField = (descriptor) => {
     return (
-        // <div className = {`${styles.grid} ${styles.column}`} style = {{transform: `rotate(${descriptor.direction})`}}>
-        <div className = {`${styles.grid} ${styles.column}`}>
+        <div className = {`${styles.grid} ${styles.column} ${isRotated(descriptor)}`} style = {{transform: `rotate(${descriptor.direction})`}}>
+        {/* <div className = {'${styles.grid} ${styles.column}'}> */}
             <div className = {'colorBar'} style = {{backgroundColor: descriptor.color}}>
             </div>
             {caption(descriptor)}
@@ -38,11 +41,11 @@ const cityField = (descriptor) => {
             {caption(descriptor)}
         </div>
     )
-}
+} 
 const gridIconField = (descriptor) => {
     return (
-        // <div className = {`${styles.grid} ${styles.column}`} style = {{transform: `rotate(${descriptor.direction})`}}>
-        <div className = {`${styles.grid} ${styles.column}`}>
+        <div className = {`${styles.grid} ${styles.column} ${isRotated(descriptor)}`} style = {{transform: `rotate(${descriptor.direction})`}}>
+        {/* <div className = {`${styles.grid} ${styles.column}`}> */}
             {caption(descriptor)}
             {icon(descriptor)}
             {caption(descriptor)}
@@ -62,6 +65,14 @@ const hugeIconField = (descriptor) => {
     )
 }
 
+const chanceField = descriptor => {
+    return (
+        <div className = {`${styles.gridWide} ${styles.column}`}>
+            <div style={{fontSize: '4rem', color:`${descriptor.color}`}}>?</div>
+        </div>
+    )
+}
+
 const bigIconTypes = [
     'powerStation', 'railway', 'waterPlant', 
     'tax', 'guardedPark', 
@@ -73,6 +84,8 @@ const bigFieldTypes = [
 ]
 const cityTypes = ['city']
 
+const chanceTypes = ['chanceBlue', 'chanceRed']
+
 const special = ['chanceBlue', 'chanceRed', 'jail']
 
 const girdTypeSelect = descriptor => {
@@ -80,6 +93,7 @@ const girdTypeSelect = descriptor => {
     if (bigIconTypes.includes(type)) return gridIconField(descriptor);
     if (bigFieldTypes.includes(type)) return hugeIconField(descriptor);
     if (cityTypes.includes(type)) return cityField(descriptor);
+    if (chanceTypes.includes(type)) return chanceField(descriptor);
 }
 
 const Grid = (props) => {

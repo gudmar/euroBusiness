@@ -15,7 +15,7 @@
 }
 .fieldBarTop{ 
     grid-area: f-top;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 2fr;
+    grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
     transform: rotate(180deg);
 }
 .fieldBarRight{
