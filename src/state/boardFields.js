@@ -435,7 +435,7 @@ const descriptors = {
         boardFieldNumber: 36,
         isPlegded: false,
     },
-    Insbruck: {
+    Insbruk: {
         country: 'Austria',
         type: 'city',
         price: 700,
@@ -472,7 +472,7 @@ const descriptors = {
 const boardInOrder = [
     'Start', 'Saloniki', 'Chance_blue', 'Ateny', 'Guarded_Parking', 'South_Railways', 'Neapol', 'Chance_red', 'Mediolan', 'Rome', 'Jail', 'Barcelona',
     'Power_Station', 'Sewilla', 'Madrit', 'West_Railways','Liverpool', 'Chance_blue', 'Glasgow', 'London', 'Free_Parking', 'Rotterdam', 'Chance_red', 
-    'Bruksela', 'Amsterdam', 'North_Rilways', 'Malmo', 'Gotteborg', 'Water_plant', 'Sztokholm', 'Go_to_jail', 'Frankfurt', 'Kolonia', 'Chance_blue', 'Bonn',
+    'Bruksela', 'Amsterdam', 'North_Rilways', 'Malmo', 'Goteborg', 'Water_plant', 'Sztokholm', 'Go_to_jail', 'Frankfurt', 'Kolonia', 'Chance_blue', 'Bonn',
     'East_Railways', 'Chance_red', 'Insbruk', 'Tax', 'Wieden'
 ]
 
