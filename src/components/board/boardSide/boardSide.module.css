@@ -7,9 +7,37 @@
 .fieldBarBottom{
     grid-area: f-bot;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 2fr;
+
+}
+.fieldBarRight {
+    grid-area: f-right;
+    grid-template: 
+                    "1-slot" 2fr 
+                    "2-slot" 1fr 
+                    "3-slot" 1fr 
+                    "4-slot" 1fr
+                    "5-slot" 1fr
+                    "6-slot" 1fr 
+                    "7-slot" 1fr 
+                    "8-slot" 1fr 
+                    "9-slot" 1fr 
+                    "10-slot" 1fr
+                    "11-slot" 1fr;
 }
 .fieldBarLeft{
     grid-area: f-left;
+    grid-template: 
+                     "1-slot" 1fr 
+                     "2-slot" 1fr 
+                     "3-slot" 1fr 
+                     "4-slot" 1fr
+                     "5-slot" 1fr
+                     "6-slot" 1fr 
+                     "7-slot" 1fr 
+                     "8-slot" 1fr 
+                     "9-slot" 1fr 
+                    "10-slot" 1fr
+                    "11-slot" 2fr / 1fr;
     /* transform: rotate(90deg); */
     /* flex-direction: column; */
 }

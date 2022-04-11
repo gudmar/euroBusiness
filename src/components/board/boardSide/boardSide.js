@@ -10,7 +10,7 @@ const BoardSide = (props) => {
     const boardSide = direction => (
         <div className={ `${styles.fieldBar} ${styles[directionClass]}` }>
             {descriptors.map((descriptor, index) => (
-            <Grid descriptor = {descriptor} key = {descriptor.id}/>
+            <Grid descriptor = {descriptor} key = {descriptor.id} index = {index}/>
             ))}
         </div>
     )
