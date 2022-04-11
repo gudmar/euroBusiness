@@ -2,7 +2,7 @@
     position: relative;
     display: flex;
     display: grid;
-    
+    border: solid black medium;
 }
 .fieldBarBottom{
     grid-area: f-bot;
@@ -10,6 +10,7 @@
 
 }
 .fieldBarRight {
+    border-bottom: none;
     grid-area: f-right;
     grid-template: 
                     "1-slot" 2fr 
@@ -22,9 +23,9 @@
                     "8-slot" 1fr 
                     "9-slot" 1fr 
                     "10-slot" 1fr
-                    "11-slot" 1fr;
 }
 .fieldBarLeft{
+    border-top: none;
     grid-area: f-left;
     grid-template: 
                      "1-slot" 1fr 
@@ -36,17 +37,18 @@
                      "7-slot" 1fr 
                      "8-slot" 1fr 
                      "9-slot" 1fr 
-                    "10-slot" 1fr
-                    "11-slot" 2fr / 1fr;
+                    "10-slot" 2fr / 1fr;
     /* transform: rotate(90deg); */
     /* flex-direction: column; */
 }
 .fieldBarTop{ 
+    border-right: none;
     grid-area: f-top;
     grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-    transform: rotate(180deg);
+    /* transform: rotate(180deg); */
 }
 .fieldBarRight{
+    border-bottom: none;
     grid-area: f-right;
     /* transform: rotate(-90deg); */
     /* flex-direction: column; */
