@@ -18,7 +18,7 @@ const Board = (props) => {
     const boardDescriptors = boardDescriptorCreator();
     const bottomSliceDescriptor = boardDescriptors.slice(0, 10).reverse();
     const leftSliceDescriptor = boardDescriptors.slice(10, 20).reverse();
-    const topSliceDescriptor = boardDescriptors.slice(20, 30).reverse();
+    const topSliceDescriptor = boardDescriptors.slice(20, 30);
     const rightSliceDescriptor = boardDescriptors.slice(30, 40)
     console.log(bottomSliceDescriptor)
     return(

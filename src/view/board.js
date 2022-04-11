@@ -176,7 +176,7 @@ const boardFieldView = {
                 icon: undefined,
                 direction: '90deg',
             },
-            Londyn: {
+            London: {
                 width: 1,
                 color: 'orange',
                 icon: undefined,
@@ -257,7 +257,7 @@ const boardFieldView = {
                 icon: 'Train',
                 width: 1,
             },
-            Insbruck: {
+            Insbruk: {
                 width: 1,
                 color: 'black',
                 icon: undefined,

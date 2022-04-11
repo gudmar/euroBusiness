@@ -44,11 +44,11 @@ const isColumn = variant => variant === 'right' ? false :
                             true;
 
 const cityField = (descriptor, variant, index) => {
-    console.log(index)
+    console.log(variant)
     return (
         // <div className = {`${styles.grid} ${styles.column}  ${isRotated(descriptor)}`} style = {{transform: `rotate(${descriptor.direction})`}}>
         <div 
-            className = {`${styles.grid} ${isColumn(variant)?styles.column:''} ${styles.variant}Variant`}
+            className = {`${styles.grid} ${isColumn(variant)?styles.column:''} ${styles[variant+'Variant']}`}
             style = {{gridArea: `${index}-slot`}}
         >
             <div className = {'colorBar'} style = {{backgroundColor: descriptor.color}}>
@@ -59,10 +59,14 @@ const cityField = (descriptor, variant, index) => {
         </div>
     )
 } 
-const gridIconField = (descriptor, variant) => {
+const gridIconField = (descriptor, variant, index) => {
     return (
         // <div className = {`${styles.grid} ${styles.column} ${isRotated(descriptor)}`} style = {{transform: `rotate(${descriptor.direction})`}}>
-        <div className = {`${styles.grid} ${isColumn(variant)?styles.column:''} ${styles.variant}Variant`}>
+        // <div className = {`${styles.grid} ${isColumn(variant)?styles.column:''} ${styles.variant}Variant`}>
+        <div 
+            className = {`${styles.grid} ${isColumn(variant)?styles.column:''} ${styles[variant+'Variant']}`}
+            style = {{gridArea: `${index}-slot`}}
+        >        
             {caption(descriptor)}
             {icon(descriptor)}
             {caption(descriptor)}
@@ -82,9 +86,13 @@ const hugeIconField = (descriptor) => {
     )
 }
 
-const chanceField = descriptor => {
+const chanceField = (descriptor, variant, index) => {
     return (
-        <div className = {`${styles.gridWide} ${styles.column}`}>
+        // <div className = {`${styles.grid} ${styles.column}`}>
+        <div 
+            className = {`${styles.grid} ${isColumn(variant)?styles.column:''} ${styles[variant+'Variant']}`}
+            style = {{gridArea: `${index}-slot`}}
+        >        
             <div style={{fontSize: '4rem', color:`${descriptor.color}`}}>?</div>
         </div>
     )
@@ -103,7 +111,7 @@ const cityTypes = ['city']
 
 const chanceTypes = ['chanceBlue', 'chanceRed']
 
-const special = ['chanceBlue', 'chanceRed', 'jail']
+// const special = ['chanceBlue', 'chanceRed', 'jail']
 
 
 const girdTypeSelect = (descriptor, index) => {
