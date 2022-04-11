@@ -24,14 +24,58 @@ const boardFieldView = {
             Chance_blue: {
                 color: 'blue',
                 width: 1,
-                titleSize: 'huge'
+                titleSize: 'huge',
+                direction: '0deg',
             },
             Chance_red: {
                 color: 'red',
                 width: 1,
                 titleSize: 'huge',
                 icon: QuestionAnswer,
+                direction: '0deg',
             },
+            Chance_blue_left: {
+                color: 'blue',
+                width: 1,
+                titleSize: 'huge',
+                direction: '90deg',
+            },
+            Chance_red_left: {
+                color: 'red',
+                width: 1,
+                titleSize: 'huge',
+                icon: QuestionAnswer,
+                direction: '90deg',
+            },
+            Chance_blue_top: {
+                color: 'blue',
+                width: 1,
+                titleSize: 'huge',
+                direction: '180deg',
+            },
+            Chance_red_top: {
+                color: 'red',
+                width: 1,
+                titleSize: 'huge',
+                icon: QuestionAnswer,
+                direction: '180deg',
+            },
+            Chance_blue_right: {
+                color: 'blue',
+                width: 1,
+                titleSize: 'huge',
+                direction: '270deg',
+            },
+            Chance_red_right: {
+                color: 'red',
+                width: 1,
+                titleSize: 'huge',
+                icon: QuestionAnswer,
+                direction: '270deg',
+            },
+
+
+
             Saloniki: {
                 width: 1,
                 color: 'yellow',
@@ -43,6 +87,7 @@ const boardFieldView = {
                 width: 1,
                 titleSize: 'huge',
                 icon: LocalParking,
+                direction: '0deg',
             },
             Free_Parking: {
                 color: undefined,
@@ -53,7 +98,7 @@ const boardFieldView = {
             Jail: {
                 color: undefined,
                 width: 2,
-                direction: '225deg',
+                direction: '45deg',
                 icon: HouseSharp,
             },
             Go_to_jail: {

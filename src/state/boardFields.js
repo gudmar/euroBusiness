@@ -85,6 +85,24 @@ const descriptors = {
     Chance_red: {
         type: 'chanceRed',
     },
+    Chance_blue_left: {
+        type: 'chanceBlue',
+    },
+    Chance_red_left: {
+        type: 'chanceRed',
+    },
+    Chance_blue_top: {
+        type: 'chanceBlue',
+    },
+    Chance_red_top: {
+        type: 'chanceRed',
+    },
+    Chance_blue_right: {
+        type: 'chanceBlue',
+    },
+    Chance_red_right: {
+        type: 'chanceRed',
+    },
     Saloniki: {
         country: 'Greece',
         type: 'city',
@@ -470,10 +488,10 @@ const descriptors = {
 }
 
 const boardInOrder = [
-    'Start', 'Saloniki', 'Chance_blue', 'Ateny', 'Guarded_Parking', 'South_Railways', 'Neapol', 'Chance_red', 'Mediolan', 'Rome', 'Jail', 'Barcelona',
-    'Power_Station', 'Sewilla', 'Madrit', 'West_Railways','Liverpool', 'Chance_blue', 'Glasgow', 'London', 'Free_Parking', 'Rotterdam', 'Chance_red', 
-    'Bruksela', 'Amsterdam', 'North_Rilways', 'Malmo', 'Goteborg', 'Water_plant', 'Sztokholm', 'Go_to_jail', 'Frankfurt', 'Kolonia', 'Chance_blue', 'Bonn',
-    'East_Railways', 'Chance_red', 'Insbruk', 'Tax', 'Wieden'
+    'Start', 'Saloniki', 'Chance_blue', 'Ateny', 'Guarded_Parking', 'South_Railways', 'Neapol', 'Chance_red', 'Mediolan', 'Rome', 
+    'Jail', 'Barcelona', 'Power_Station', 'Sewilla', 'Madrit', 'West_Railways','Liverpool', 'Chance_blue_left', 'Glasgow', 'London', 
+    'Free_Parking', 'Rotterdam', 'Chance_red_top', 'Bruksela', 'Amsterdam', 'North_Rilways', 'Malmo', 'Goteborg', 'Water_plant', 'Sztokholm', 
+    'Go_to_jail', 'Frankfurt', 'Kolonia', 'Chance_blue_right', 'Bonn', 'East_Railways', 'Chance_red_right', 'Insbruk', 'Tax', 'Wieden'
 ]
 
 export { boardInOrder, descriptors }

@@ -6,15 +6,20 @@
     /* height: 100%; */
     position: relative;
     overflow: hidden;
+    flex-basis: 20px;
 }
 .rotated{
     margin-left: 0;
     margin-right:0;
 }
+.rightVariant {
+    
+}
 .gridWide {
     flex-grow: 2;
     border-left: none;
     border-color: red;
+    flex-basis: 20px;
 }
 .upside {
     transform: rotate('180deg');

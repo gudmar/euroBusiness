@@ -15,7 +15,7 @@
                  "f-left f-left b-mid b-mid b-mid b-mid b-mid b-mid b-mid b-mid b-mid f-right f-right" 1fr
                  "f-left f-left b-mid b-mid b-mid b-mid b-mid b-mid b-mid b-mid b-mid f-right f-right" 1fr
                  "f-left f-left f-bot f-bot f-bot f-bot f-bot f-bot f-bot f-bot f-bot f-bot   f-bot  " 1fr
-                 "f-left f-left f-bot f-bot f-bot f-bot f-bot f-bot f-bot f-bot f-bot f-bot   f-bot  " 1fr;
+                 "f-left f-left f-bot f-bot f-bot f-bot f-bot f-bot f-bot f-bot f-bot f-bot   f-bot  " 1fr / 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr ;
     border: solid thin black;
 }
 

@@ -9,7 +9,16 @@ import LightBulb from '@material-ui/icons';
 import Euro from '@material-ui/icons';
 import styles from './grid.module.css';
 
-
+const direction2variant = direction => {
+    return parseInt(direction) ===  90 ? 'left' :
+           parseInt(direction) === 180 ? 'top'  :
+           parseInt(direction) === 270 ? 'right':
+           parseInt(direction) ===  0  ? 'bottom':
+           parseInt(direction) === 45  ? 'bottom-left':
+           parseInt(direction) === 135 ? 'top-left':
+           parseInt(direction) === 225  ? 'top-right':
+           'bottom-right';
+}
 
 const caption = (descriptor) => {
     const title = descriptor.id.split('_').join(' ');
@@ -30,10 +39,18 @@ const isRotated = (descriptor) => {
     return parseInt(descriptor.direction) === 0 ? '' : `${styles.rotated}`
 }
 
-const cityField = (descriptor) => {
+const isColumn = variant => variant === 'right' ? false :
+                            variant === 'left'  ? false :
+                            true;
+
+const cityField = (descriptor, variant, index) => {
+    console.log(index)
     return (
-        <div className = {`${styles.grid} ${styles.column} ${isRotated(descriptor)}`} style = {{transform: `rotate(${descriptor.direction})`}}>
-        {/* <div className = {'${styles.grid} ${styles.column}'}> */}
+        // <div className = {`${styles.grid} ${styles.column}  ${isRotated(descriptor)}`} style = {{transform: `rotate(${descriptor.direction})`}}>
+        <div 
+            className = {`${styles.grid} ${isColumn(variant)?styles.column:''} ${styles.variant}Variant`}
+            style = {{gridArea: `${index}-slot`}}
+        >
             <div className = {'colorBar'} style = {{backgroundColor: descriptor.color}}>
             </div>
             {caption(descriptor)}
@@ -42,10 +59,10 @@ const cityField = (descriptor) => {
         </div>
     )
 } 
-const gridIconField = (descriptor) => {
+const gridIconField = (descriptor, variant) => {
     return (
-        <div className = {`${styles.grid} ${styles.column} ${isRotated(descriptor)}`} style = {{transform: `rotate(${descriptor.direction})`}}>
-        {/* <div className = {`${styles.grid} ${styles.column}`}> */}
+        // <div className = {`${styles.grid} ${styles.column} ${isRotated(descriptor)}`} style = {{transform: `rotate(${descriptor.direction})`}}>
+        <div className = {`${styles.grid} ${isColumn(variant)?styles.column:''} ${styles.variant}Variant`}>
             {caption(descriptor)}
             {icon(descriptor)}
             {caption(descriptor)}
@@ -88,12 +105,15 @@ const chanceTypes = ['chanceBlue', 'chanceRed']
 
 const special = ['chanceBlue', 'chanceRed', 'jail']
 
-const girdTypeSelect = descriptor => {
+
+const girdTypeSelect = (descriptor, index) => {
+    const variant = direction2variant(descriptor.direction);
+    console.log(descriptor.direction, variant)
     const type = descriptor.type;
-    if (bigIconTypes.includes(type)) return gridIconField(descriptor);
-    if (bigFieldTypes.includes(type)) return hugeIconField(descriptor);
-    if (cityTypes.includes(type)) return cityField(descriptor);
-    if (chanceTypes.includes(type)) return chanceField(descriptor);
+    if (bigIconTypes.includes(type)) return gridIconField(descriptor, variant, index);
+    if (bigFieldTypes.includes(type)) return hugeIconField(descriptor, variant, index);
+    if (cityTypes.includes(type)) return cityField(descriptor, variant, index);
+    if (chanceTypes.includes(type)) return chanceField(descriptor, variant, index);
 }
 
 const Grid = (props) => {
@@ -108,17 +128,19 @@ const Grid = (props) => {
         id,
         icon,
     } = props.descriptor
+    const index = props.index
     console.log(props)
+    console.log(index);
     return (
-    <>{girdTypeSelect(props.descriptor)}</>
+    <>{girdTypeSelect(props.descriptor, index)}</>
     )
 }
 
 Grid.propTypes = {
-    direction: PropTypes.oneOf(['bottom', 'left', 'right', 'top']),
+    direction: PropTypes.string,
     size: PropTypes.oneOf(['narrow', 'wide']),
     descriptor: PropTypes.object,
-    children: PropTypes.element // any
+    index: PropTypes.number
 }
 
 export default Grid;
