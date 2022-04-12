@@ -14,10 +14,10 @@ const direction2variant = direction => {
            parseInt(direction) === 180 ? 'top'  :
            parseInt(direction) === 270 ? 'right':
            parseInt(direction) ===  0  ? 'bottom':
-           parseInt(direction) === 45  ? 'bottom-left':
-           parseInt(direction) === 135 ? 'top-left':
-           parseInt(direction) === 225  ? 'top-right':
-           'bottom-right';
+           parseInt(direction) === 45  ? 'bottomLeft':
+           parseInt(direction) === 135 ? 'topLeft':
+           parseInt(direction) === 225  ? 'topRight':
+           'bottomRight';
 }
 
 const caption = (descriptor) => {
@@ -74,9 +74,10 @@ const gridIconField = (descriptor, variant, index) => {
     )    
 }
 
-const hugeIconField = (descriptor) => {
+const hugeField = (descriptor, variant) => {
+    console.log(variant)
     return (
-        <div className = {`${styles.gridWide} ${styles.column}`}>
+        <div className = {`${styles.gridWide} ${styles.column} ${styles[variant+'Variant']}`}>
             <div style = {{transform: `rotate(${descriptor.direction})`}}>
                 {caption(descriptor)}
                     {icon(descriptor)}
@@ -119,7 +120,7 @@ const girdTypeSelect = (descriptor, index) => {
     console.log(descriptor.direction, variant)
     const type = descriptor.type;
     if (bigIconTypes.includes(type)) return gridIconField(descriptor, variant, index);
-    if (bigFieldTypes.includes(type)) return hugeIconField(descriptor, variant, index);
+    if (bigFieldTypes.includes(type)) return hugeField(descriptor, variant, index);
     if (cityTypes.includes(type)) return cityField(descriptor, variant, index);
     if (chanceTypes.includes(type)) return chanceField(descriptor, variant, index);
 }

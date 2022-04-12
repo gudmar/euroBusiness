@@ -1,13 +1,19 @@
+* {
+    --border-thicknes: thin;
+    --border-color: black;
+    --border-style: solid;
+}
+
 .fieldBar{
     position: relative;
     display: flex;
     display: grid;
-    border: solid black medium;
 }
 .fieldBarBottom{
     grid-area: f-bot;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 2fr;
-
+    border-left: none;
+    border-top: var(--border-thicknes) var(--border-color) var(--border-style);
 }
 .fieldBarRight {
     border-bottom: none;
@@ -26,6 +32,7 @@
 }
 .fieldBarLeft{
     border-top: none;
+    border-right: var(--border-thicknes) var(--border-color) var(--border-style);
     grid-area: f-left;
     grid-template: 
                      "1-slot" 1fr 
@@ -38,18 +45,15 @@
                      "8-slot" 1fr 
                      "9-slot" 1fr 
                     "10-slot" 2fr / 1fr;
-    /* transform: rotate(90deg); */
-    /* flex-direction: column; */
 }
 .fieldBarTop{ 
     border-right: none;
+    border-bottom: var(--border-thicknes) var(--border-color) var(--border-style);
     grid-area: f-top;
     grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-    /* transform: rotate(180deg); */
 }
 .fieldBarRight{
-    border-bottom: none;
+    border-left: var(--border-thicknes) var(--border-color) var(--border-style);
+    border-bottom: var(--border-thicknes) var(--border-color) var(--border-style);
     grid-area: f-right;
-    /* transform: rotate(-90deg); */
-    /* flex-direction: column; */
 }
