@@ -2,11 +2,11 @@
     --border-thicknes: 2px;
     --border-color: black;
     --border-style: solid;
-    --border-size: 900px;
+    --border-size: 800px;
 }
 .board{
     position: relative;
-    width: var(--border-size);
+    width: calc( var(--border-size) * 1.3 );
     height: var(--border-size);
     display: grid;
     grid-template: "f-top f-top f-top f-top f-top f-top f-top f-top f-top f-top f-top f-right f-right" 1fr

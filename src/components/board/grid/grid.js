@@ -8,6 +8,33 @@ import Train from '@material-ui/icons';
 import LightBulb from '@material-ui/icons';
 import Euro from '@material-ui/icons';
 import styles from './grid.module.css';
+import { ThemeProvider, responsiveFontSizes, createTheme } from '@material-ui/core/styles';
+import { Typography } from '@material-ui/core';
+import { typography } from '@material-ui/system';
+
+let  theme = createTheme({
+    typography: {
+      fontFamily: [
+        '-apple-system',
+        'BlinkMacSystemFont',
+        '"Segoe UI"',
+        'Roboto',
+        '"Helvetica Neue"',
+        'Arial',
+        'sans-serif',
+        '"Apple Color Emoji"',
+        '"Segoe UI Emoji"',
+        '"Segoe UI Symbol"',
+      ].join(','),
+    },
+    subtitle1:{
+        fontFamily:'Roboto',
+        fontSize: '0.9rem',
+        fontWeight: 700,
+
+    }
+  });
+theme = responsiveFontSizes(theme);
 
 const direction2variant = direction => {
     return parseInt(direction) ===  90 ? 'left' :
@@ -22,11 +49,16 @@ const direction2variant = direction => {
 
 const caption = (descriptor) => {
     const title = descriptor.id.split('_').join(' ');
+    const price = descriptor.price === undefined ? null : '$' + descriptor.price;
     return (
-        <div className = {'caption'}>
-            <div className={`${styles.wrapText}`}>{title}</div>
-            <div>{descriptor.price}</div>
-        </div>
+        // <div className = {'caption'}>
+        //     <div className={`${styles.wrapText}`}>{title}</div>
+        //     <div>{descriptor.price}</div>
+        // </div>
+        <ThemeProvider theme={theme}>
+            <Typography variant = "subtitle1">{title}</Typography>
+            <Typography variant = "subtitle2">{price}</Typography>
+        </ThemeProvider>
     )
 }
 
@@ -44,7 +76,6 @@ const isColumn = variant => variant === 'right' ? false :
                             true;
 
 const cityField = (descriptor, variant, index) => {
-    console.log(variant)
     return (
         // <div className = {`${styles.grid} ${styles.column}  ${isRotated(descriptor)}`} style = {{transform: `rotate(${descriptor.direction})`}}>
         <div 
@@ -55,7 +86,6 @@ const cityField = (descriptor, variant, index) => {
             </div>
             {caption(descriptor)}
             {icon(descriptor)}
-            {caption(descriptor)}
         </div>
     )
 } 
@@ -69,19 +99,17 @@ const gridIconField = (descriptor, variant, index) => {
         >        
             {caption(descriptor)}
             {icon(descriptor)}
-            {caption(descriptor)}
         </div>
     )    
 }
 
 const hugeField = (descriptor, variant) => {
-    console.log(variant)
     return (
         <div className = {`${styles.gridWide} ${styles.column} ${styles[variant+'Variant']}`}>
-            <div style = {{transform: `rotate(${descriptor.direction})`}}>
+            {/* <div style = {{transform: `rotate(${descriptor.direction})`}}> */}
+            <div>
                 {caption(descriptor)}
                     {icon(descriptor)}
-                {caption(descriptor)}
             </div>
         </div>        
     )
@@ -138,8 +166,6 @@ const Grid = (props) => {
         icon,
     } = props.descriptor
     const index = props.index
-    console.log(props)
-    console.log(index);
     return (
     <>{girdTypeSelect(props.descriptor, index)}</>
     )
