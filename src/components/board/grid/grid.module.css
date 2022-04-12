@@ -1,9 +1,10 @@
+* {
+    --border-thicknes: 2px;
+    --border-color: black;
+    --border-style: solid;
+}
+
 .grid {
-    flex-grow: 1;
-    /* border-top: black medium solid; */
-    /* border-left: black medium solid; */
-    /* border-right: black medium solid; */
-    /* height: 100%; */
     position: relative;
     overflow: hidden;
     flex-basis: 20px;
@@ -12,49 +13,42 @@
 .rotated{
     margin-left: 0;
     margin-right:0;
-    border-right: none;
-    /* border-top: black medium solid; */
 }
 .rightVariant {
-    border-top: none;
-    /* border-left: black medium solid; */
-    border-right: none;
-    border-bottom: black medium solid;
+    border-bottom: var(--border-thicknes) var(--border-color) var(--border-style);
+    border-top: var(--border-thicknes) var(--border-color) var(--border-style);
 }
 .rightVariant:last-child{
     border-bottom: none;
 }
 .leftVariant {
-    border-top: none;
-    /* border-right: black medium solid; */
-    border-left: none;
-    border-bottom: black medium solid;
-}
-.leftVariant:last-child {
-    border-top: none;
+    border-top: var(--border-thicknes) var(--border-color) var(--border-style);
+    border-bottom: var(--border-thicknes) var(--border-color) var(--border-style);
 }
 .topVariant {
     border-top: none;
-    border-right: black medium solid;
-    border-left: none;
-    /* border-bottom: black medium solid; */
+    border-left: var(--border-thicknes) var(--border-color) var(--border-style);
+    border-right: var(--border-thicknes) var(--border-color) var(--border-style);
 }
 .bottomVariant {
     border-bottom: none;
-    border-right: black medium solid;
-    border-left: none;
-    /* border-top: black medium solid; */
+    border-right: var(--border-thicknes) var(--border-color) var(--border-style);
+    border-left: var(--border-thicknes) var(--border-color) var(--border-style);
 }
-.bottomVariant:last-child{
-    border-left: none;
+.bottomLeftVariant{
+    border-top: var(--border-thicknes) var(--border-color) var(--border-style);
 }
-
-
-
+.topLeftVariant{
+    border-right: var(--border-thicknes) var(--border-color) var(--border-style);
+}
+.topRightVariant{
+    border-bottom: var(--border-thicknes) var(--border-color) var(--border-style);
+}
+.bottomRightVariant{
+    border-left: var(--border-thicknes) var(--border-color) var(--border-style);
+}
 .gridWide {
     flex-grow: 2;
-    border-left: none;
-    border-color: red;
     flex-basis: 20px;
 }
 .upside {

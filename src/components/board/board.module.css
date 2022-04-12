@@ -1,7 +1,13 @@
+* {
+    --border-thicknes: 2px;
+    --border-color: black;
+    --border-style: solid;
+    --border-size: 900px;
+}
 .board{
     position: relative;
-    width: 800px;
-    height: 800px;
+    width: var(--border-size);
+    height: var(--border-size);
     display: grid;
     grid-template: "f-top f-top f-top f-top f-top f-top f-top f-top f-top f-top f-top f-right f-right" 1fr
                    "f-top f-top f-top f-top f-top f-top f-top f-top f-top f-top f-top f-right f-right" 1fr
@@ -16,11 +22,13 @@
                  "f-left f-left b-mid b-mid b-mid b-mid b-mid b-mid b-mid b-mid b-mid f-right f-right" 1fr
                  "f-left f-left f-bot f-bot f-bot f-bot f-bot f-bot f-bot f-bot f-bot f-bot   f-bot  " 1fr
                  "f-left f-left f-bot f-bot f-bot f-bot f-bot f-bot f-bot f-bot f-bot f-bot   f-bot  " 1fr / 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr ;
-    border: solid thin black;
+    border: solid 2px black;
+    border-radius: 4px;
 }
 
 
 .middleBoard{
     background-color: yellow;
     grid-area: b-mid;
+    border: var(--border-thicknes) var(--border-color) var(--border-style);
 }
