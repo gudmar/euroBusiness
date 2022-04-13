@@ -53,10 +53,6 @@ const caption = (descriptor) => {
     const title = descriptor.id.split('_').join(' ');
     const price = descriptor.price === undefined ? null : '$' + descriptor.price;
     return (
-        // <div className = {'caption'}>
-        //     <div className={`${styles.wrapText}`}>{title}</div>
-        //     <div>{descriptor.price}</div>
-        // </div>
         <ThemeProvider theme={theme}>
             <Typography variant = "subtitle1">{title}</Typography>
             <Typography variant = "subtitle2">{price}</Typography>
@@ -70,26 +66,15 @@ const FalseIcon = (prop) => {
 }
 
 const icon = (descriptor) => {
-    console.log(descriptor.icon)
-    console.dir(descriptor)
-    // const icon = eval(descriptor.icon)
     const MyIcon = descriptor.icon;
     if (descriptor.icon === undefined) return <div className = {"iconBlank"}></div>
-    try{
     return (
         <div className = {"iconBlank"}>
-            {/* {React.createElement(`${descriptor.icon}`, null, null)} */}
-            {/* {React.createElement(eval(descriptor.icon), null, null)} */}
-            {/* <Train /> // WORKS */}
-            {/* {FalseIcon('<Train />')} */}
-            {/* {React.createElement(eval('Train'), null, null)} */}
             <MyIcon />
         </div>
     )
-} catch (e) {
-    return <div className = {"iconBlank"}></div>
 }
-}
+
 const isRotated = (descriptor) => {
     return parseInt(descriptor.direction) === 0 ? '' : `${styles.rotated}`
 }
@@ -127,12 +112,16 @@ const gridIconField = (descriptor, variant, index) => {
 }
 
 const hugeField = (descriptor, variant) => {
+    const MyIcon = descriptor.icon;
+    const symbol = descriptor.symbol;
+    const content = () => descriptor.symbol === undefined ? <MyIcon /> : <span dangerouslySetInnerHTML={{__html: symbol}} />;
+    // if (descriptor.icon === undefined) return <div className = {"iconBlank"}></div>
     return (
         <div className = {`${styles.gridWide} ${styles.column} ${styles[variant+'Variant']}`}>
             {/* <div style = {{transform: `rotate(${descriptor.direction})`}}> */}
             <div>
                 {caption(descriptor)}
-                    {icon(descriptor)}
+                {content()}
             </div>
         </div>        
     )

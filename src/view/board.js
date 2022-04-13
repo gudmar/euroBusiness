@@ -106,6 +106,7 @@ const boardFieldView = {
                 direction: '225deg',
                 width: 2,
                 color: undefined,
+                // symbol: '&times;',
                 symbol: 'U+1F6A8'
             },
             South_Railways: {
