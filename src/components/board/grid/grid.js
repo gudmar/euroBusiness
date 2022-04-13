@@ -1,16 +1,18 @@
 import PropTypes from 'prop-types';
-import ArrowBack from '@material-ui/icons'
-import QuestionMark from '@material-ui/icons';
-import LocalParking from '@material-ui/icons';
-import DirectionsCar from '@material-ui/icons';
-import HouseSiding from '@material-ui/icons';
-import Train from '@material-ui/icons';
-import LightBulb from '@material-ui/icons';
-import Euro from '@material-ui/icons';
+import React from 'react';
+// import ArrowBack, { CodeSharp } from '@material-ui/icons'
+// import QuestionMark from '@material-ui/icons';
+// import LocalParking from '@material-ui/icons';
+// import DirectionsCar from '@material-ui/icons';
+// import HouseSiding from '@material-ui/icons';
+// import { Train } from '@material-ui/icons';
+// import LightBulb from '@material-ui/icons';
+// import Euro from '@material-ui/icons';
 import styles from './grid.module.css';
 import { ThemeProvider, responsiveFontSizes, createTheme } from '@material-ui/core/styles';
 import { Typography } from '@material-ui/core';
-import { typography } from '@material-ui/system';
+
+import Power from '@material-ui/icons/esm/Power';
 
 let  theme = createTheme({
     typography: {
@@ -62,10 +64,31 @@ const caption = (descriptor) => {
     )
 }
 
+const FalseIcon = (prop) => {
+
+    return  eval(prop)
+}
+
 const icon = (descriptor) => {
+    console.log(descriptor.icon)
+    console.dir(descriptor)
+    // const icon = eval(descriptor.icon)
+    const MyIcon = descriptor.icon;
+    if (descriptor.icon === undefined) return <div className = {"iconBlank"}></div>
+    try{
     return (
-        <div className = {"iconBlank"}></div>
+        <div className = {"iconBlank"}>
+            {/* {React.createElement(`${descriptor.icon}`, null, null)} */}
+            {/* {React.createElement(eval(descriptor.icon), null, null)} */}
+            {/* <Train /> // WORKS */}
+            {/* {FalseIcon('<Train />')} */}
+            {/* {React.createElement(eval('Train'), null, null)} */}
+            <MyIcon />
+        </div>
     )
+} catch (e) {
+    return <div className = {"iconBlank"}></div>
+}
 }
 const isRotated = (descriptor) => {
     return parseInt(descriptor.direction) === 0 ? '' : `${styles.rotated}`

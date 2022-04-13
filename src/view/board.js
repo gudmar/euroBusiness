@@ -6,6 +6,7 @@ import HouseSharp from '@material-ui/icons/HouseSharp';
 import Train from '@material-ui/icons/Train';
 import Power from '@material-ui/icons/esm/Power';
 import Euro from '@material-ui/icons/Euro';
+import WavesSharp from '@material-ui/icons/WavesSharp';
 
 const boardFieldView = {
             Start: {
@@ -110,7 +111,7 @@ const boardFieldView = {
             South_Railways: {
                 color: undefined,
                 direction: '0deg',
-                icon: 'Train',
+                icon: Train,
                 width: 1,
             },
             Neapol: {
@@ -161,7 +162,7 @@ const boardFieldView = {
             West_Railways: {
                 color:undefined,
                 direction: '90deg',
-                icon: 'Train',
+                icon: Train,
                 width: 1,
             },
             Liverpool: {
@@ -222,7 +223,7 @@ const boardFieldView = {
             Water_plant: {
                 width: 1,
                 color: undefined,
-                icon: 'Wash',
+                icon: WavesSharp,
                 direction: '180deg',
 
             },
@@ -265,7 +266,7 @@ const boardFieldView = {
             },
             Tax: {
                 type: 'tax',
-                icon: 'Euro',
+                icon: Euro,
                 direction: '270deg',
             },
             Wieden: {
