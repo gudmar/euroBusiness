@@ -65,9 +65,16 @@
 .bottomRightVariant{
     border-left: var(--border-thicknes) var(--border-color) var(--border-style);
 }
+.chance{
+    font-size: 4rem;
+    align-content: center;
+    justify-content: center;
+}
 .gridWide {
     flex-grow: 2;
     flex-basis: 20px;
+    justify-content: space-around;
+    align-items: center;
 }
 .upside {
     transform: rotate('180deg');
