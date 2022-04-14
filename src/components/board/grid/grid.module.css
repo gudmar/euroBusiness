@@ -11,6 +11,12 @@
     overflow: hidden;
     display: flex;
 }
+.column {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
 .rotated{
     margin-left: 0;
     margin-right:0;
@@ -18,6 +24,8 @@
 .rightVariant {
     border-bottom: var(--border-thicknes) var(--border-color) var(--border-style);
     border-top: var(--border-thicknes) var(--border-color) var(--border-style);
+    justify-content: space-between;
+    align-items: center;
 }
 .rightVariant:last-child{
     border-bottom: none;
@@ -25,6 +33,8 @@
 .leftVariant {
     border-top: var(--border-thicknes) var(--border-color) var(--border-style);
     border-bottom: var(--border-thicknes) var(--border-color) var(--border-style);
+    justify-content: space-between;
+    align-items: center;
 }
 .topVariant {
     border-top: none;
@@ -35,6 +45,13 @@
     border-bottom: none;
     border-right: var(--border-thicknes) var(--border-color) var(--border-style);
     border-left: var(--border-thicknes) var(--border-color) var(--border-style);
+    justify-content: flex-start;
+}
+.iconField, .iconField.topVariant {
+    justify-content: space-around;
+}
+.symbolIcon {
+    font-size: 3.5rem;
 }
 .bottomLeftVariant{
     border-top: var(--border-thicknes) var(--border-color) var(--border-style);
@@ -66,12 +83,6 @@
     height: 1.5rem;
     width: 100%;
     position: relative;
-}
-.column {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
 }
 .iconBlank {
     height: 30%;
