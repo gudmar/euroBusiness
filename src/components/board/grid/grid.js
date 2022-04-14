@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 // import ArrowBack, { CodeSharp } from '@material-ui/icons'
 // import QuestionMark from '@material-ui/icons';
 // import LocalParking from '@material-ui/icons';
@@ -13,6 +13,8 @@ import { ThemeProvider, responsiveFontSizes, createTheme } from '@material-ui/co
 import { Typography } from '@material-ui/core';
 
 import Power from '@material-ui/icons/esm/Power';
+import { useDispatch, useSelector } from 'react-redux';
+import { addField, print, updatePosition } from '../../../state/boardSlice.js'
 
 let  theme = createTheme({
     typography: {
@@ -78,12 +80,13 @@ const isColumn = variant => variant === 'right' ? false :
                             variant === 'left'  ? false :
                             true;
 
-const cityField = (descriptor, variant, index) => {
+const cityField = (descriptor, variant, index, ref) => {
     return (
         // <div className = {`${styles.grid} ${styles.column}  ${isRotated(descriptor)}`} style = {{transform: `rotate(${descriptor.direction})`}}>
         <div 
             className = {`${styles.grid} ${isColumn(variant)?styles.column:''} ${styles[variant+'Variant']}`}
             style = {{gridArea: `${index}-slot`}}
+            ref = {ref}
         >
             <div className = {`${styles['colorBar']}`} style = {{backgroundColor: descriptor.color}}>
             </div>
@@ -92,7 +95,7 @@ const cityField = (descriptor, variant, index) => {
         </div>
     )
 } 
-const gridIconField = (descriptor, variant, index) => {
+const gridIconField = (descriptor, variant, index, ref) => {
     const MyIcon = descriptor.icon;
     const symbol = descriptor.symbol;
     const content = () => descriptor.symbol === undefined ? <MyIcon style = {{fontSize: 50}}/> : <span className={`${styles.symbolIcon}`} dangerouslySetInnerHTML={{__html: symbol}} />;
@@ -102,6 +105,7 @@ const gridIconField = (descriptor, variant, index) => {
         <div 
             className = {`${styles.grid} ${isColumn(variant)?styles.column:''} ${styles[variant+'Variant']} ${styles.iconField}`}
             style = {{gridArea: `${index}-slot`}}
+            ref = {ref}
         >        
             {caption(descriptor)}
             {content()}
@@ -109,13 +113,13 @@ const gridIconField = (descriptor, variant, index) => {
     )    
 }
 
-const hugeField = (descriptor, variant) => {
+const hugeField = (descriptor, variant, index, ref) => {
     const MyIcon = descriptor.icon;
     const symbol = descriptor.symbol;
     const content = () => descriptor.symbol === undefined ? <MyIcon style = {{fontSize: 50}}/> : <span className={`${styles.symbolIcon}`} dangerouslySetInnerHTML={{__html: symbol}} />;
     // if (descriptor.icon === undefined) return <div className = {"iconBlank"}></div>
     return (
-        <div className = {`${styles.gridWide} ${styles.column} ${styles[variant+'Variant']}`}>
+        <div className = {`${styles.gridWide} ${styles.column} ${styles[variant+'Variant']}`} ref = {ref}>
                 {caption(descriptor)}
                 {content()}
                 <div></div>
@@ -151,14 +155,14 @@ const chanceTypes = ['chanceBlue', 'chanceRed']
 // const special = ['chanceBlue', 'chanceRed', 'jail']
 
 
-const girdTypeSelect = (descriptor, index) => {
+const girdTypeSelect = (descriptor, index, ref) => {
     const variant = direction2variant(descriptor.direction);
     console.log(descriptor.direction, variant)
     const type = descriptor.type;
-    if (bigIconTypes.includes(type)) return gridIconField(descriptor, variant, index);
-    if (bigFieldTypes.includes(type)) return hugeField(descriptor, variant, index);
-    if (cityTypes.includes(type)) return cityField(descriptor, variant, index);
-    if (chanceTypes.includes(type)) return chanceField(descriptor, variant, index);
+    if (bigIconTypes.includes(type)) return gridIconField(descriptor, variant, index, ref);
+    if (bigFieldTypes.includes(type)) return hugeField(descriptor, variant, index, ref);
+    if (cityTypes.includes(type)) return cityField(descriptor, variant, index, ref);
+    if (chanceTypes.includes(type)) return chanceField(descriptor, variant, index, ref);
 }
 
 const Grid = (props) => {
@@ -173,9 +177,28 @@ const Grid = (props) => {
         id,
         icon,
     } = props.descriptor
-    const index = props.index
+    const index = props.index;
+    const elRef = useRef();
+
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(addField({ ...props.descriptor, index: index}))
+    }, [])
+    useEffect(() => {
+        
+        try {
+            const { left, right, top, bottom } = elRef.currnet.getBoundingClientRect();
+            dispatch(updatePosition({left, right, top, bottom, index}));
+
+        } catch (e) {
+
+        }
+        
+    })
+
     return (
-    <>{girdTypeSelect(props.descriptor, index)}</>
+    <>{girdTypeSelect(props.descriptor, index, elRef)}</>
     )
 }
 
