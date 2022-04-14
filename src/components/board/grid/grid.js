@@ -16,25 +16,17 @@ import Power from '@material-ui/icons/esm/Power';
 
 let  theme = createTheme({
     typography: {
-      fontFamily: [
-        '-apple-system',
-        'BlinkMacSystemFont',
-        '"Segoe UI"',
-        'Roboto',
-        '"Helvetica Neue"',
-        'Arial',
-        'sans-serif',
-        '"Apple Color Emoji"',
-        '"Segoe UI Emoji"',
-        '"Segoe UI Symbol"',
-      ].join(','),
+        body1: {
+            color: '#345',
+            fontWeight: 'bold',
+            fontSize: '0.8rem',
+        },
+        body2: {
+            color: '#234',
+            fontSize: '0.85rem',
+        }
     },
-    subtitle1:{
-        fontFamily:'Roboto',
-        fontSize: '0.9rem',
-        fontWeight: 700,
 
-    }
   });
 theme = responsiveFontSizes(theme);
 
@@ -53,10 +45,12 @@ const caption = (descriptor) => {
     const title = descriptor.id.split('_').join(' ');
     const price = descriptor.price === undefined ? null : '$' + descriptor.price;
     return (
-        <ThemeProvider theme={theme}>
-            <Typography variant = "subtitle1">{title}</Typography>
-            <Typography variant = "subtitle2">{price}</Typography>
-        </ThemeProvider>
+        <div className={styles.column}>
+            <ThemeProvider theme={theme}>
+                <Typography variant = "body1">{title}</Typography>
+                <Typography variant = "body2">{price}</Typography>
+            </ThemeProvider>
+        </div>
     )
 }
 
@@ -90,7 +84,7 @@ const cityField = (descriptor, variant, index) => {
             className = {`${styles.grid} ${isColumn(variant)?styles.column:''} ${styles[variant+'Variant']}`}
             style = {{gridArea: `${index}-slot`}}
         >
-            <div className = {'colorBar'} style = {{backgroundColor: descriptor.color}}>
+            <div className = {`${styles['colorBar']}`} style = {{backgroundColor: descriptor.color}}>
             </div>
             {caption(descriptor)}
             {icon(descriptor)}
@@ -98,6 +92,9 @@ const cityField = (descriptor, variant, index) => {
     )
 } 
 const gridIconField = (descriptor, variant, index) => {
+    const MyIcon = descriptor.icon;
+    const symbol = descriptor.symbol;
+    const content = () => descriptor.symbol === undefined ? <MyIcon /> : <span dangerouslySetInnerHTML={{__html: symbol}} />;
     return (
         // <div className = {`${styles.grid} ${styles.column} ${isRotated(descriptor)}`} style = {{transform: `rotate(${descriptor.direction})`}}>
         // <div className = {`${styles.grid} ${isColumn(variant)?styles.column:''} ${styles.variant}Variant`}>
@@ -106,7 +103,7 @@ const gridIconField = (descriptor, variant, index) => {
             style = {{gridArea: `${index}-slot`}}
         >        
             {caption(descriptor)}
-            {icon(descriptor)}
+            {content()}
         </div>
     )    
 }

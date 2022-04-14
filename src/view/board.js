@@ -106,13 +106,13 @@ const boardFieldView = {
                 direction: '225deg',
                 width: 2,
                 color: undefined,
-                // symbol: '&times;',
-                symbol: 'U+1F6A8'
+                symbol: '&#x1F6A8;',
             },
             South_Railways: {
                 color: undefined,
                 direction: '0deg',
-                icon: Train,
+                symbol: '&#x1F682;',
+                // icon: Train,
                 width: 1,
             },
             Neapol: {
@@ -163,7 +163,8 @@ const boardFieldView = {
             West_Railways: {
                 color:undefined,
                 direction: '90deg',
-                icon: Train,
+                symbol: '&#x1F682;',
+                // icon: Train,
                 width: 1,
             },
             Liverpool: {
@@ -205,7 +206,8 @@ const boardFieldView = {
             North_Railways: {
                 color:undefined,
                 direction: '180deg',
-                icon: Train,
+                symbol: '&#x1F682;',
+                // icon: Train,
                 width: 1,
             },
             Malmo: {
@@ -224,7 +226,8 @@ const boardFieldView = {
             Water_plant: {
                 width: 1,
                 color: undefined,
-                icon: WavesSharp,
+                symbol: '&#x1F6B0',
+                // icon: WavesSharp,
                 direction: '180deg',
 
             },
@@ -256,7 +259,8 @@ const boardFieldView = {
             East_Railways: {
                 color:undefined,
                 direction: '270deg',
-                icon: 'Train',
+                symbol: '&#x1F682;',
+                // icon: 'Train',
                 width: 1,
             },
             Insbruk: {
