@@ -112,15 +112,13 @@ const gridIconField = (descriptor, variant, index) => {
 const hugeField = (descriptor, variant) => {
     const MyIcon = descriptor.icon;
     const symbol = descriptor.symbol;
-    const content = () => descriptor.symbol === undefined ? <MyIcon /> : <span dangerouslySetInnerHTML={{__html: symbol}} />;
+    const content = () => descriptor.symbol === undefined ? <MyIcon style = {{fontSize: 50}}/> : <span className={`${styles.symbolIcon}`} dangerouslySetInnerHTML={{__html: symbol}} />;
     // if (descriptor.icon === undefined) return <div className = {"iconBlank"}></div>
     return (
         <div className = {`${styles.gridWide} ${styles.column} ${styles[variant+'Variant']}`}>
-            {/* <div style = {{transform: `rotate(${descriptor.direction})`}}> */}
-            <div>
                 {caption(descriptor)}
                 {content()}
-            </div>
+                <div></div>
         </div>        
     )
 }
@@ -129,7 +127,7 @@ const chanceField = (descriptor, variant, index) => {
     return (
         // <div className = {`${styles.grid} ${styles.column}`}>
         <div 
-            className = {`${styles.grid} ${isColumn(variant)?styles.column:''} ${styles[variant+'Variant']}`}
+            className = {`${styles.grid} ${isColumn(variant)?styles.column:''} ${styles[variant+'Variant']} ${styles.chance}`}
             style = {{gridArea: `${index}-slot`}}
         >        
             <div style={{fontSize: '4rem', color:`${descriptor.color}`}}>?</div>
