@@ -9,6 +9,7 @@
     overflow: hidden;
     flex-basis: 20px;
     overflow: hidden;
+    display: flex;
 }
 .rotated{
     margin-left: 0;
@@ -54,8 +55,15 @@
 .upside {
     transform: rotate('180deg');
 }
-.colorBar {
-    height: 2rem;
+
+.leftVariant .colorBar, .rightVariant .colorBar {
+    width: 1.5rem;
+    height: 100%;
+    position: relative;
+}
+
+.bottomVariant .colorBar, .topVariant .colorBar {
+    height: 1.5rem;
     width: 100%;
     position: relative;
 }
