@@ -20,6 +20,7 @@ let  theme = createTheme({
             color: '#345',
             fontWeight: 'bold',
             fontSize: '0.8rem',
+            textAlign: 'center'
         },
         body2: {
             color: '#234',
@@ -94,12 +95,12 @@ const cityField = (descriptor, variant, index) => {
 const gridIconField = (descriptor, variant, index) => {
     const MyIcon = descriptor.icon;
     const symbol = descriptor.symbol;
-    const content = () => descriptor.symbol === undefined ? <MyIcon /> : <span dangerouslySetInnerHTML={{__html: symbol}} />;
+    const content = () => descriptor.symbol === undefined ? <MyIcon style = {{fontSize: 50}}/> : <span className={`${styles.symbolIcon}`} dangerouslySetInnerHTML={{__html: symbol}} />;
     return (
         // <div className = {`${styles.grid} ${styles.column} ${isRotated(descriptor)}`} style = {{transform: `rotate(${descriptor.direction})`}}>
         // <div className = {`${styles.grid} ${isColumn(variant)?styles.column:''} ${styles.variant}Variant`}>
         <div 
-            className = {`${styles.grid} ${isColumn(variant)?styles.column:''} ${styles[variant+'Variant']}`}
+            className = {`${styles.grid} ${isColumn(variant)?styles.column:''} ${styles[variant+'Variant']} ${styles.iconField}`}
             style = {{gridArea: `${index}-slot`}}
         >        
             {caption(descriptor)}
