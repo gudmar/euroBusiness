@@ -13,7 +13,7 @@ import { ThemeProvider, responsiveFontSizes, createTheme } from '@material-ui/co
 import { Typography } from '@material-ui/core';
 
 import Power from '@material-ui/icons/esm/Power';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector, useStore } from 'react-redux';
 import { addField, print, updatePosition } from '../../../state/boardSlice.js'
 
 let  theme = createTheme({
@@ -157,7 +157,6 @@ const chanceTypes = ['chanceBlue', 'chanceRed']
 
 const girdTypeSelect = (descriptor, index, ref) => {
     const variant = direction2variant(descriptor.direction);
-    console.log(descriptor.direction, variant)
     const type = descriptor.type;
     if (bigIconTypes.includes(type)) return gridIconField(descriptor, variant, index, ref);
     if (bigFieldTypes.includes(type)) return hugeField(descriptor, variant, index, ref);
@@ -178,22 +177,29 @@ const Grid = (props) => {
         icon,
     } = props.descriptor
     const index = props.index;
+    const fieldNumber = props.fieldNumber;
     const elRef = useRef();
+    const state = useStore();
+
 
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(addField({ ...props.descriptor, index: index}))
+        console.log(fieldNumber)
+        dispatch(addField({ ...props.descriptor, index: fieldNumber}));
+        console.log(state.getState())    
     }, [])
     useEffect(() => {
         
-        try {
-            const { left, right, top, bottom } = elRef.currnet.getBoundingClientRect();
-            dispatch(updatePosition({left, right, top, bottom, index}));
-
-        } catch (e) {
-
-        }
+        // try {
+            if (elRef.current !== undefined) {
+                const { left, right, top, bottom } = elRef.current.getBoundingClientRect();
+                console.log('%c ' + fieldNumber, 'background-color: yellow;')
+                dispatch(updatePosition({left, right, top, bottom, index:fieldNumber}));
+            }
+        // } catch (e) {
+        //     console.error(e)
+        // }
         
     })
 
@@ -206,7 +212,8 @@ Grid.propTypes = {
     direction: PropTypes.string,
     size: PropTypes.oneOf(['narrow', 'wide']),
     descriptor: PropTypes.object,
-    index: PropTypes.number
+    index: PropTypes.number,
+    fieldNumber: PropTypes.number,
 }
 
 export default Grid;

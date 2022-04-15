@@ -2,7 +2,9 @@ import PropTypes from 'prop-types';
 import styles from './board.module.css';
 import BoardSide from './boardSide/boardSide.js';
 import { boardInOrder, descriptors } from '../../state/boardFields.js';
-import boardFieldView from '../../view/board.js'
+import boardFieldView from '../../view/board.js';
+import { useDispatch, useSelector, useStore } from 'react-redux';
+import { useEffect } from 'react';
 
 const boardDescriptorCreator = (stateDescriptor = descriptors, viewDescriptor = boardFieldView, orderArray = boardInOrder) => {
     return orderArray.map((item, index) => {
@@ -20,7 +22,13 @@ const Board = (props) => {
     const leftSliceDescriptor = boardDescriptors.slice(10, 20).reverse();
     const topSliceDescriptor = boardDescriptors.slice(20, 30);
     const rightSliceDescriptor = boardDescriptors.slice(30, 40)
-    console.log(bottomSliceDescriptor)
+    const gridCords = useSelector(state => state.fieldDescriptors);
+    const state = useStore();
+    useEffect(() => {console.log(state.getState())})
+    // useEffect((gridCords) => {
+    //     console.dir(gridCords)
+    // }, [gridCords])
+    // console.log(bottomSliceDescriptor)
     return(
         <div className={styles.board}>
             <BoardSide direction="Bottom" descriptors = {bottomSliceDescriptor}></BoardSide>
