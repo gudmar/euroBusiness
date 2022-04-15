@@ -20,11 +20,12 @@ const boardSlice = createSlice({
         print(state){console.dir(state)},
         updatePosition(state, action){
             const id = action.payload.index;
+            console.log(action.payload, state.fieldDescriptors)
             state.fieldDescriptors[id].left = action.payload.left;
             state.fieldDescriptors[id].right = action.payload.right;
             state.fieldDescriptors[id].top = action.payload.top;
             state.fieldDescriptors[id].bottom = action.payload.bottom;
-            console.log(state)
+            console.log(state.fieldDescriptors[id])
             // return state;
         }
     }
