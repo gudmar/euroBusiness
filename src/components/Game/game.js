@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import Board from '../board/board.js'
 import Pawn from '../pawn/pawn.js';
 import { useEffect } from 'react';
+import DicesRoller from '../dicesRoller/dicesRoller.js'
 
 
 const Game = props => {
@@ -11,6 +12,7 @@ const Game = props => {
     useEffect(() => {console.log(store.getState())})
     return (
         <div className={`${styles.game}`}>
+            <DicesRoller />
             <Board />
         </div>
     )

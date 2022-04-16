@@ -10,6 +10,12 @@ import { addField, print, updatePosition } from '../../../state/boardSlice.js'
 
 let  theme = createTheme({
     typography: {
+        h3: {
+            color: '#345',
+            fontWeight: 'bold',
+            fontSize: '1.5rem',
+            textAlign: 'center'
+        },
         body1: {
             color: '#345',
             fontWeight: 'bold',

@@ -1,0 +1,58 @@
+* {
+    --size: 30px;
+    --sqrt2: 1.4142135623731;
+    --internalSize: calc( var(--size) / var(--sqrt2));
+    --padding: 2px;
+    --dot: 3px;
+    --front-color: #888;
+}
+
+.diceCircle {
+    position: relative;
+    display: flex;
+    width: var(--size);
+    height: var(--size);
+    border-radius: 50%;
+    /* border: thin solid var(--front-color); */
+    
+    justify-items: center;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    background-color: white;
+}
+.dotWrapper {
+    position: relative;
+    display: grid;
+    width: var(--internalSize);
+    height: var(--internalSize);
+    grid-template: 'a1 a2 a3' 1fr
+                   'a4 a5 a6' 1fr
+                   'a7 a8 a9' 1fr / 1fr 1fr 1fr;
+    justify-content: center;
+    justify-items: center;
+    align-content: center;
+    align-items: center;
+    
+}
+.diceDot {
+    position: relative;
+    width: var(--dot);
+    height: var(--dot);
+    border-radius: 50%;
+    background-color: var(--front-color);
+}
+
+.diceCube {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    width: calc( var(--size) + calc( 2 * var(--padding) ) );
+    height: calc( var(--size) + calc( 2 * var(--padding) ) );
+    padding: var(--padding);
+    border-radius: 5px;
+    margin: 3px;
+    background-color: #ccc;
+}
