@@ -23,8 +23,16 @@ const playerSlice = createSlice({
         orange: defaultPlayer('Player_1', 'orange', 'human', true),
     },
     reducers: {
+        setDiceResult(state, action) {
+            const [outcome1, outcome2] = action.payload;
+            if (outcome1 === outcome2) {
+                state[dublet] =+ 1;
+            }
+            state['diceResult'] =+ (outcome1 + outcome2);
+        },
         move(state, action) {
-            const { player, field } = action.payload;
+            const { player, nrOfFields } = action.payload;
+
             state[player].fieldNumber = field;
         },
         pay(state, action) {
