@@ -1,13 +1,5 @@
 import PropTypes from 'prop-types';
 import React, { useRef, useEffect } from 'react';
-// import ArrowBack, { CodeSharp } from '@material-ui/icons'
-// import QuestionMark from '@material-ui/icons';
-// import LocalParking from '@material-ui/icons';
-// import DirectionsCar from '@material-ui/icons';
-// import HouseSiding from '@material-ui/icons';
-// import { Train } from '@material-ui/icons';
-// import LightBulb from '@material-ui/icons';
-// import Euro from '@material-ui/icons';
 import styles from './grid.module.css';
 import { ThemeProvider, responsiveFontSizes, createTheme } from '@material-ui/core/styles';
 import { Typography } from '@material-ui/core';
@@ -185,22 +177,13 @@ const Grid = (props) => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        console.log(fieldNumber)
         dispatch(addField({ ...props.descriptor, index: fieldNumber}));
-        console.log(state.getState())    
     }, [])
     useEffect(() => {
-        
-        // try {
-            if (elRef.current !== undefined) {
-                const { left, right, top, bottom } = elRef.current.getBoundingClientRect();
-                console.log('%c ' + fieldNumber, 'background-color: yellow;')
-                dispatch(updatePosition({left, right, top, bottom, index:fieldNumber}));
-            }
-        // } catch (e) {
-        //     console.error(e)
-        // }
-        
+        if (elRef.current !== undefined) {
+            const { left, right, top, bottom } = elRef.current.getBoundingClientRect();
+            dispatch(updatePosition({left, right, top, bottom, index:fieldNumber}));
+        }        
     })
 
     return (
