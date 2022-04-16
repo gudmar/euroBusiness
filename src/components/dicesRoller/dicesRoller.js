@@ -5,6 +5,7 @@ import styles from './dicesRoller.module.css';
 import { Typography, ButtonGroup, Button, Box } from '@material-ui/core';
 import { useDispatch, useSelector, useStore } from 'react-redux';
 import Dice from '../dices/dices.js'
+import { setDiceResult } from '../../state/playerSlice.js'
 
 // let themeDices = createTheme({
 //     typography: {
@@ -20,23 +21,25 @@ import Dice from '../dices/dices.js'
 // themeDices = responsiveFontSizes(themeDices);
 
 const DicesRollerTest = props => {
+    const dispatch = useDispatch();
+    const rollDices = (a, b) => () => dispatch(setDiceResult([a, b]));
     return (
     <Box component = "div">
         <Typography variant="h3">
             {"Chose roll a dice variant"}
         </Typography>
         <ButtonGroup variant="outlined">
-            <Button><Dice number={1}/><Dice number={1}/></Button>
-            <Button><Dice number={1}/><Dice number={2}/></Button>
-            <Button><Dice number={1}/><Dice number={3}/></Button>
-            <Button><Dice number={1}/><Dice number={4}/></Button>
-            <Button><Dice number={1}/><Dice number={5}/></Button>
-            <Button><Dice number={1}/><Dice number={6}/></Button>
-            <Button><Dice number={2}/><Dice number={6}/></Button>
-            <Button><Dice number={3}/><Dice number={6}/></Button>
-            <Button><Dice number={4}/><Dice number={6}/></Button>
-            <Button><Dice number={5}/><Dice number={6}/></Button>
-            <Button><Dice number={6}/><Dice number={6}/></Button>
+            <Button onClick = {rollDices(1, 1)}><Dice number={1}/><Dice number={1}/></Button>
+            <Button onClick = {rollDices(1, 2)}><Dice number={1}/><Dice number={2}/></Button>
+            <Button onClick = {rollDices(1, 3)}><Dice number={1}/><Dice number={3}/></Button>
+            <Button onClick = {rollDices(1, 4)}><Dice number={1}/><Dice number={4}/></Button>
+            <Button onClick = {rollDices(1, 5)}><Dice number={1}/><Dice number={5}/></Button>
+            <Button onClick = {rollDices(1, 6)}><Dice number={1}/><Dice number={6}/></Button>
+            <Button onClick = {rollDices(2, 6)}><Dice number={2}/><Dice number={6}/></Button>
+            <Button onClick = {rollDices(3, 6)}><Dice number={3}/><Dice number={6}/></Button>
+            <Button onClick = {rollDices(4, 6)}><Dice number={4}/><Dice number={6}/></Button>
+            <Button onClick = {rollDices(5, 6)}><Dice number={5}/><Dice number={6}/></Button>
+            <Button onClick = {rollDices(6, 6)}><Dice number={6}/><Dice number={6}/></Button>
         </ButtonGroup>
     </Box>
     )

@@ -5,6 +5,7 @@ import Board from '../board/board.js'
 import Pawn from '../pawn/pawn.js';
 import { useEffect } from 'react';
 import DicesRoller from '../dicesRoller/dicesRoller.js'
+import { Button } from '@material-ui/core';
 
 
 const Game = props => {
@@ -14,6 +15,9 @@ const Game = props => {
         <div className={`${styles.game}`}>
             <DicesRoller />
             <Board />
+            <Button onClick = {() => {
+                console.log('State', store.getState())
+            }}>{'Log state'}</Button>
         </div>
     )
 }

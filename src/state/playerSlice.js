@@ -21,19 +21,21 @@ const playerSlice = createSlice({
         red: defaultPlayer('Player_1', 'blue'),
         green: defaultPlayer('Player_1', 'green', 'human', true),
         orange: defaultPlayer('Player_1', 'orange', 'human', true),
+        dublet: 0,
+        diceResult: 0,
     },
     reducers: {
         setDiceResult(state, action) {
             const [outcome1, outcome2] = action.payload;
             if (outcome1 === outcome2) {
-                state[dublet] =+ 1;
+                state['dublet'] += 1;
             }
-            state['diceResult'] =+ (outcome1 + outcome2);
+            state['diceResult'] += (outcome1 + outcome2);
         },
         move(state, action) {
             const { player, nrOfFields } = action.payload;
 
-            state[player].fieldNumber = field;
+            state[player].fieldNumber = nrOfFields;
         },
         pay(state, action) {
             const { player, ammount } = action.payload;
@@ -53,7 +55,12 @@ const playerSlice = createSlice({
         }
     }
 })
-const { actions, reducer } = boardSlice;
-export const { addField, print, updatePosition } = actions;
+const { actions, reducer } = playerSlice;
+export const { 
+    addField, 
+    print, 
+    updatePosition,
+    setDiceResult,
+} = actions;
 // export const { exampleSlice } = exampleSlice.actions;
-export default boardSlice.reducer;
+export default playerSlice.reducer;
