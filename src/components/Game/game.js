@@ -7,6 +7,14 @@ import { useEffect } from 'react';
 import DicesRoller from '../dicesRoller/dicesRoller.js'
 import { Button } from '@material-ui/core';
 
+const Pawns = props => {
+    const players = useSelector(state => state.playerSlice)
+    console.log(players)
+    const pawns = ['blue', 'red', 'green', 'orange'].map(item => 
+        !players[item].hidden ? <Pawn key={item} color={item} /> : null
+    )
+    return pawns;
+}
 
 const Game = props => {
     const store = useStore();
@@ -15,6 +23,7 @@ const Game = props => {
         <div className={`${styles.game}`}>
             <DicesRoller />
             <Board />
+            <Pawns />
             <Button onClick = {() => {
                 console.log('State', store.getState())
             }}>{'Log state'}</Button>
