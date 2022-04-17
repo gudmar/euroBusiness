@@ -23,10 +23,11 @@ import { setDiceResult } from '../../state/playerSlice.js'
 const DicesRollerTest = props => {
     const dispatch = useDispatch();
     const rollDices = (a, b) => () => dispatch(setDiceResult([a, b]));
+    const diceResult = useSelector(state => state.playerSlice.diceResult);
     return (
     <Box component = "div">
         <Typography variant="h3">
-            {"Chose roll a dice variant"}
+            {`Chose roll a dice variant. Dice result is ${diceResult}`}
         </Typography>
         <ButtonGroup variant="outlined">
             <Button onClick = {rollDices(1, 1)}><Dice number={1}/><Dice number={1}/></Button>

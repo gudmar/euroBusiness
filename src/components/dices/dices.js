@@ -27,7 +27,7 @@ const DiceWrapper = props => {
     )
 }
 DiceWrapper.propTypes = {
-    children: PropTypes.element,
+    children: PropTypes.any,
 }
 
 const Dice = props => {
