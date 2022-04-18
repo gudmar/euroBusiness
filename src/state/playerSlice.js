@@ -18,9 +18,12 @@ const playerSlice = createSlice({
     name: 'playerSlice',
     initialState: {
         blue: defaultPlayer('Player_1', 'blue'),
-        red: defaultPlayer('Player_1', 'blue'),
-        green: defaultPlayer('Player_1', 'green', 'human', true),
-        orange: defaultPlayer('Player_1', 'orange', 'human', true),
+        red: defaultPlayer('Player_2', 'red'),
+        // green: defaultPlayer('Player_1', 'green', 'human', true),
+        // orange: defaultPlayer('Player_1', 'orange', 'human', true),
+        green: defaultPlayer('Player_3', 'green'),
+        orange: defaultPlayer('Player_4', 'orange'),
+
         dublet: 0,
         diceResult: 0,
     },
