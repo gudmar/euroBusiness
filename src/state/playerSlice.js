@@ -26,6 +26,7 @@ const playerSlice = createSlice({
 
         dublet: 0,
         diceResult: 0,
+        currentPlayer: 'blue',
     },
     reducers: {
         setDiceResult(state, action) {
@@ -55,6 +56,13 @@ const playerSlice = createSlice({
         useExtraCard(state, action) {
             const { cardId, player } = action.payload;
             state[player].extraCards.splice(cardId, 1);
+        },
+        nextPlayer(state, cation) {
+            const players = ['blue', 'red', 'orange', 'green'];
+            const currentIndex = players.findIndex(item => item === state.currentPlayer);
+            const nextState = (currentIndex + 1) % players.length;
+            console.log(nextState);
+            state['currentPlayer'] = players[nextState];
         }
     }
 })
@@ -64,6 +72,7 @@ export const {
     print, 
     updatePosition,
     setDiceResult,
+    nextPlayer,
 } = actions;
 // export const { exampleSlice } = exampleSlice.actions;
 export default playerSlice.reducer;

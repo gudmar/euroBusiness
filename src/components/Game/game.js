@@ -5,6 +5,7 @@ import Board from '../board/board.js'
 import Pawn from '../pawn/pawn.js';
 import { useEffect } from 'react';
 import DicesRoller from '../dicesRoller/dicesRoller.js'
+import CurrentPlayerIndicator from '../currentPlayer/currentPlayer.js'
 import { Button } from '@material-ui/core';
 
 const Pawns = props => {
@@ -22,6 +23,7 @@ const Game = props => {
     return (
         <div className={`${styles.game}`}>
             <DicesRoller />
+            <CurrentPlayerIndicator />
             <Board />
             <Pawns />
             <Button onClick = {() => {
