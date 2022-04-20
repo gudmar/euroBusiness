@@ -2,13 +2,14 @@ import styles from './pawn.module.css';
 import { useDispatch, useSelector, useStore } from 'react-redux';
 import PropTypes from 'prop-types';
 import { useEffect, useState, useRef } from 'react';
-import { move, setDiceResult, moveOneField } from '../../state/playerSlice';
+import { move, setDiceResult, moveOneField, disactivateDice } from '../../state/playerSlice';
 
 const Pawn = props => {
     const player = useSelector(state => state.playerSlice[props.color]);
     const board = useSelector(state => state.boardSlice)
     const fieldNumber = useSelector(state => state.playerSlice[props.color].fieldNumber);
     const diceResult = useSelector(state => state.playerSlice.diceResult);
+    const diceThrown = useSelector(state => state.playerSlice.diceThrown);
     const currentPlayer = useSelector(state => state.playerSlice.currentPlayer);
     const store = useStore();
     const pawn = useRef();
@@ -20,7 +21,7 @@ const Pawn = props => {
             const average = (a, b) => (a + b) / 2;
             const x = average(left, right);
             const y = average(top, bottom)
-            if (player.color === 'blue') console.log(fieldNr, left, right, top ,bottom, x, y)
+            // if (player.color === 'blue') console.log(fieldNr, left, right, top ,bottom, x, y)
             return {x: average(left, right), y: average(top, bottom)}
         }
         catch(e){
@@ -65,26 +66,28 @@ const Pawn = props => {
         }
 
     }
-    const [cords, setCords] = useState();
-    useEffect(() => {
-        
-        if (diceResult > 0) {  
+
+    const movePawn = delay => {
+        return new Promise(resolve => {
             const t = setTimeout(() => {
-                console.log(diceResult)
-                const nextField = fieldNumber + 1;
-                if (nextField > 40) nextField = 0;
-                // dispatch(move({player: currentPlayer, nrOfFields: nextField}));
-                // dispatch(setDiceResult([diceResult - 1, 0]));
-                console.log(currentPlayer)
-                dispatch(moveOneField(currentPlayer));
-                console.log(diceResult, nextField)
                 clearTimeout(t);
-            }, 1000);
+                dispatch(moveOneField(currentPlayer));
+                resolve(true);
+            }, delay)
+        })
+    }
+
+    const [cords, setCords] = useState();
+    useEffect(async () => {
+        if (diceThrown && currentPlayer === props.color) {
+            dispatch(disactivateDice());
+            for (let diceLeft = diceResult; diceLeft>0; diceLeft--){
+                await movePawn(500);
+            }
         }
-    }, [diceResult]);
+    }, [diceThrown]);
 
     useEffect(() => {
-        if (player.color === 'blue') console.log(fieldNumber)
         if (board.fieldDescriptors.length > 0) {
             setCords(getMiddleCords(fieldNumber))
         }

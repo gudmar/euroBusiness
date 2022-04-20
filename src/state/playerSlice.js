@@ -26,6 +26,7 @@ const playerSlice = createSlice({
 
         dublet: 0,
         diceResult: 0,
+        diceThrown: false,
         currentPlayer: 'blue',
     },
     reducers: {
@@ -36,6 +37,17 @@ const playerSlice = createSlice({
             }
             state['diceResult'] = (outcome1 + outcome2);
         },
+        throwDice(state, action){
+            const [outcome1, outcome2] = action.payload;
+            if ((outcome1 === outcome2) && outcome1 != 0) {
+                state['dublet'] += 1;
+            }
+            state['diceResult'] = (outcome1 + outcome2);
+            state['diceThrown'] = true;
+        },
+        disactivateDice(state){
+            state.diceThrown = false;
+        },
         move(state, action) {
             const { player, nrOfFields } = action.payload;
 
@@ -44,9 +56,9 @@ const playerSlice = createSlice({
         moveOneField(state, action) {
             const player = action.payload;
             const diceResult = state.diceResult;
-            console.log(player)
             if (diceResult > 0){
-                if (state[player].fieldNumber > 39) {
+                console.log(state[player].fieldNumber)
+                if (state[player].fieldNumber > 38) {
                     state[player].fieldNumber = 0;
                 } else {
                     state[player].fieldNumber += 1;
@@ -87,7 +99,9 @@ export const {
     setDiceResult,
     nextPlayer,
     move,
-    moveOneField
+    moveOneField,
+    disactivateDice,
+    throwDice,
 } = actions;
 // export const { exampleSlice } = exampleSlice.actions;
 export default playerSlice.reducer;
