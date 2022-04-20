@@ -125,12 +125,13 @@ const hugeField = (descriptor, variant, index, ref) => {
     )
 }
 
-const chanceField = (descriptor, variant, index) => {
+const chanceField = (descriptor, variant, index, ref) => {
     return (
         // <div className = {`${styles.grid} ${styles.column}`}>
         <div 
             className = {`${styles.grid} ${isColumn(variant)?styles.column:''} ${styles[variant+'Variant']} ${styles.chance}`}
             style = {{gridArea: `${index}-slot`}}
+            ref = {ref}
         >        
             <div style={{fontSize: '4rem', color:`${descriptor.color}`}}>?</div>
         </div>

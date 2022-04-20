@@ -5,7 +5,7 @@ import styles from './dicesRoller.module.css';
 import { Typography, ButtonGroup, Button, Box } from '@material-ui/core';
 import { useDispatch, useSelector, useStore } from 'react-redux';
 import Dice from '../dices/dices.js'
-import { setDiceResult } from '../../state/playerSlice.js'
+import { setDiceResult, throwDice } from '../../state/playerSlice.js'
 
 // let themeDices = createTheme({
 //     typography: {
@@ -22,7 +22,7 @@ import { setDiceResult } from '../../state/playerSlice.js'
 
 const DicesRollerTest = props => {
     const dispatch = useDispatch();
-    const rollDices = (a, b) => () => dispatch(setDiceResult([a, b]));
+    const rollDices = (a, b) => () => dispatch(throwDice([a, b]));
     const diceResult = useSelector(state => state.playerSlice.diceResult);
     return (
     <Box component = "div">
