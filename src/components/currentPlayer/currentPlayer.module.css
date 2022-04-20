@@ -2,6 +2,8 @@
     width: 45px;
     height: 45px;
     cursor: pointer;
+    border-radius: 7px;
+    box-shadow: inset 0px 0px 29px 10px rgba(0,0,0,0.4);
 }
 .wrapper {
     margin: 10px;
