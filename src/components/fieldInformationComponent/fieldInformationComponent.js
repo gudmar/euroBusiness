@@ -53,6 +53,7 @@ const FieldInformationComponent = props => {
 
     const color = calculateForegroundBasedOnBackgroundColor(fieldView.color);
     const bgColor = fieldView.color;
+    const darkTitle = {backgroundColor:'black',color:'white', paddingLeft:'10px'};
 
     const drawTable = tableDescriptor => {
         const headKeys = Object.keys(tableDescriptor.head)
@@ -65,12 +66,12 @@ const FieldInformationComponent = props => {
                 <Table>
                     <TableHead>
                         <TableRow>
-                            {headKeys.map(item => <TableCell variant="head">{item}</TableCell>)}
+                            {headKeys.map(item => <TableCell variant="head" style = {{fontWeight:'bold', textAlign:'center'}}>{item}</TableCell>)}
                         </TableRow>
                     </TableHead>                
                     <TableBody>{
                         tableDescriptor.body.map(row => (
-                            <TableRow>{row.map(item => <TableCell>{item}</TableCell>)}</TableRow>
+                            <TableRow>{row.map(item => <TableCell style = {{textAlign:'center'}}>{item}</TableCell>)}</TableRow>
                         ))
                     }
                     </TableBody>
@@ -97,10 +98,10 @@ const FieldInformationComponent = props => {
     };
     const visitTable = {
         head: {
-            No_building: {
+            'No building': {
                 icon: undefined,
             },
-            Whole_country: {
+            'Whole country': {
                 icon: undefined,
             },
             '1 x house': {
@@ -125,11 +126,15 @@ const FieldInformationComponent = props => {
     }
     const selling = {
         head: {
-            'Sell house': housePrice / 2,
-            'Sell hotel': hotelPrice /2,
-            'Mortage': mortage,
-            'Sell': '???'
-        }
+            'Sell house': {},
+            'Sell hotel': {},
+            'Mortage': {},
+            'Sell': {},
+        },
+        body:
+            [
+                [housePrice/2, hotelPrice/2, mortage, '???']
+            ]
     }
 
     return (
@@ -147,8 +152,14 @@ const FieldInformationComponent = props => {
                     {country}
                 </Typography>
 
-                <Typography variant="h6">Buy</Typography>
+                <Typography variant="h6" style={darkTitle}>Buy</Typography>
                 {drawTable(buyTable)}
+                <Typography variant="h6" style={darkTitle}>Visit</Typography>
+                {drawTable(visitTable)}
+                <Typography variant="h6" style={darkTitle}>Selling</Typography>
+                {drawTable(selling)}
+                <Typography variant="h6" style={darkTitle}>Current state</Typography>
+
 
             </Box>
         </Modal>

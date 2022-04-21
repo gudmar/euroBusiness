@@ -69,7 +69,7 @@ const descriptors = {
         type: 'city',
         country: 'Greece',
         price: 120,
-        mortgage: 60,
+        mortage: 60,
         housePrice: 100,
         hotelPrice: 100,
         visit: [ 10, 40, 120, 360, 640, 900 ], // 0 houses, 1 house, 2 houses...
@@ -107,7 +107,7 @@ const descriptors = {
         country: 'Greece',
         type: 'city',
         price: 120,
-        mortgage: 60,
+        mortage: 60,
         housePrice: 100,
         hotelPrice: 100,
         visit: [ 10, 40, 120, 360, 640, 900 ], // 0 houses, 1 house, 2 houses...
@@ -141,7 +141,7 @@ const descriptors = {
         country: 'Railways',
         type: 'railway',
         price: 400,
-        mortgage: 200,
+        mortage: 200,
         visit: [50, 100, 200, 400],
         owner: 'bank',
         nrInSet: 4,
@@ -152,7 +152,7 @@ const descriptors = {
         country: 'Italy',
         type: 'city',
         price: 200,
-        mortgage: 100,
+        mortage: 100,
         housePrice: 100,
         hotelPrice: 100,
         visit: [ 15, 60, 150, 540, 800, 1100 ], // 0 houses, 1 house, 2 houses...
@@ -166,7 +166,7 @@ const descriptors = {
         country: 'Italy',
         type: 'city',
         price: 200,
-        mortgage: 100,
+        mortage: 100,
         housePrice: 100,
         hotelPrice: 100,
         visit: [ 15, 60, 150, 540, 800, 1100 ], // 0 houses, 1 house, 2 houses...
@@ -180,7 +180,7 @@ const descriptors = {
         country: 'Italy',
         type: 'city',
         price: 240,
-        mortgage: 120,
+        mortage: 120,
         housePrice: 100,
         hotelPrice: 100,
         visit: [ 20, 80, 200, 600, 900, 1200 ], // 0 houses, 1 house, 2 houses...
@@ -194,7 +194,7 @@ const descriptors = {
         country: 'Spain',
         type: 'city',
         price: 280,
-        mortgage: 140,
+        mortage: 140,
         housePrice: 200,
         hotelPrice: 200,
         visit: [ 20, 100, 300, 900, 1250, 1500 ], // 0 houses, 1 house, 2 houses...
@@ -208,7 +208,7 @@ const descriptors = {
         country: undefined,
         type: 'powerStation',
         price: 300,
-        mortgage: 150,
+        mortage: 150,
         owner: 'bank',
         nrInSet: 2,
         boardFieldNumber: 13,
@@ -218,7 +218,7 @@ const descriptors = {
         country: 'Spain',
         type: 'city',
         price: 280,
-        mortgage: 140,
+        mortage: 140,
         housePrice: 200,
         hotelPrice: 200,
         visit: [ 20, 100, 300, 900, 1250, 1500 ], // 0 houses, 1 house, 2 houses...
@@ -232,7 +232,7 @@ const descriptors = {
         country: 'Spain',
         type: 'city',
         price: 320,
-        mortgage: 160,
+        mortage: 160,
         housePrice: 200,
         hotelPrice: 200,
         visit: [ 25, 120, 360, 1000, 1400, 1800 ], // 0 houses, 1 house, 2 houses...
@@ -246,7 +246,7 @@ const descriptors = {
         country: 'Railways',
         type: 'railway',
         price: 400,
-        mortgage: 200,
+        mortage: 200,
         visit: [50, 100, 200, 400],
         owner: 'bank',
         nrInSet: 4,
@@ -257,7 +257,7 @@ const descriptors = {
         country: 'UK',
         type: 'city',
         price: 360,
-        mortgage: 180,
+        mortage: 180,
         housePrice: 200,
         hotelPrice: 200,
         visit: [ 30, 140, 400, 1100, 1500, 1900 ], // 0 houses, 1 house, 2 houses...
@@ -271,7 +271,7 @@ const descriptors = {
         country: 'UK',
         type: 'city',
         price: 360,
-        mortgage: 180,
+        mortage: 180,
         housePrice: 200,
         hotelPrice: 200,
         visit: [ 30, 140, 400, 1100, 1500, 1900 ], // 0 houses, 1 house, 2 houses...
@@ -285,7 +285,7 @@ const descriptors = {
         country: 'UK',
         type: 'city',
         price: 400,
-        mortgage: 200,
+        mortage: 200,
         housePrice: 200,
         hotelPrice: 200,
         visit: [ 35, 160, 440, 1200, 1600, 2000 ], // 0 houses, 1 house, 2 houses...
@@ -299,7 +299,7 @@ const descriptors = {
         country: 'Benelux',
         type: 'city',
         price: 440,
-        mortgage: 220,
+        mortage: 220,
         housePrice: 300,
         hotelPrice: 300,
         visit: [ 35, 180, 500, 1400, 1750, 2100 ], // 0 houses, 1 house, 2 houses...
@@ -313,7 +313,7 @@ const descriptors = {
         country: 'Benelux',
         type: 'city',
         price: 440,
-        mortgage: 220,
+        mortage: 220,
         housePrice: 300,
         hotelPrice: 300,
         visit: [ 35, 180, 500, 1400, 1750, 2100 ], // 0 houses, 1 house, 2 houses...
@@ -327,7 +327,7 @@ const descriptors = {
         country: 'Benelux',
         type: 'city',
         price: 480,
-        mortgage: 240,
+        mortage: 240,
         housePrice: 300,
         hotelPrice: 300,
         visit: [ 40, 200, 600, 1500, 1850, 2200 ], // 0 houses, 1 house, 2 houses...
@@ -341,7 +341,7 @@ const descriptors = {
         country: 'Railways',
         type: 'railway',
         price: 400,
-        mortgage: 200,
+        mortage: 200,
         visit: [50, 100, 200, 400],
         owner: 'bank',
         nrInSet: 4,
@@ -352,7 +352,7 @@ const descriptors = {
         country: 'Sweeden',
         type: 'city',
         price: 520,
-        mortgage: 260,
+        mortage: 260,
         housePrice: 300,
         hotelPrice: 300,
         visit: [ 45, 220, 600, 1600, 1950, 2300 ], // 0 houses, 1 house, 2 houses...
@@ -366,7 +366,7 @@ const descriptors = {
         country: 'Sweeden',
         type: 'city',
         price: 520,
-        mortgage: 260,
+        mortage: 260,
         housePrice: 300,
         hotelPrice: 300,
         visit: [ 45, 220, 600, 1600, 1950, 2300 ], // 0 houses, 1 house, 2 houses...
@@ -380,7 +380,7 @@ const descriptors = {
         country: undefined,
         type: 'waterPlant',
         price: 300,
-        mortgage: 150,
+        mortage: 150,
         owner: 'bank',
         nrInSet: 2,
         boardFieldNumber: 29,
@@ -390,7 +390,7 @@ const descriptors = {
         country: 'Sweeden',
         type: 'city',
         price: 560,
-        mortgage: 280,
+        mortage: 280,
         housePrice: 300,
         hotelPrice: 300,
         visit: [ 50, 240, 720, 1700, 2050, 2400 ], // 0 houses, 1 house, 2 houses...
@@ -404,7 +404,7 @@ const descriptors = {
         country: 'RFN',
         type: 'city',
         price: 600,
-        mortgage: 300,
+        mortage: 300,
         housePrice: 400,
         hotelPrice: 400,
         visit: [ 55, 260, 780, 1900, 2200, 2550 ], // 0 houses, 1 house, 2 houses...
@@ -418,7 +418,7 @@ const descriptors = {
         country: 'RFN',
         type: 'city',
         price: 600,
-        mortgage: 300,
+        mortage: 300,
         housePrice: 400,
         hotelPrice: 400,
         visit: [ 55, 260, 780, 1900, 2200, 2550 ], // 0 houses, 1 house, 2 houses...
@@ -432,7 +432,7 @@ const descriptors = {
         country: 'RFN',
         type: 'city',
         price: 640,
-        mortgage: 320,
+        mortage: 320,
         housePrice: 400,
         hotelPrice: 400,
         visit: [ 50, 300, 900, 2000, 2400, 2800 ], // 0 houses, 1 house, 2 houses...
@@ -446,7 +446,7 @@ const descriptors = {
         country: 'Railways',
         type: 'railway',
         price: 400,
-        mortgage: 200,
+        mortage: 200,
         visit: [50, 100, 200, 400],
         owner: 'bank',
         nrInSet: 4,
@@ -457,7 +457,7 @@ const descriptors = {
         country: 'Austria',
         type: 'city',
         price: 700,
-        mortgage: 350,
+        mortage: 350,
         housePrice: 400,
         hotelPrice: 400,
         visit: [ 70, 350, 1000, 2200, 2600, 3000 ], // 0 houses, 1 house, 2 houses...
@@ -475,7 +475,7 @@ const descriptors = {
         country: 'Austria',
         type: 'city',
         price: 700,
-        mortgage: 350,
+        mortage: 350,
         housePrice: 400,
         hotelPrice: 400,
         visit: [ 70, 350, 1000, 2200, 2600, 3000 ], // 0 houses, 1 house, 2 houses...
