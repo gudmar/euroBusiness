@@ -19,6 +19,7 @@ const FieldActionComponent = props => {
     const playerCash = useSelector(store => getPlayerData(store, 'cash'));
 
     const fieldName = boardInOrder[playerFieldNumber]
+    const title = fieldName.split('_').join(' ');
     const fieldState = descriptors[fieldName];
 
     return (
@@ -27,7 +28,7 @@ const FieldActionComponent = props => {
             onClose = {props.closeHandler}
         >
             <Box variant="div" style={styles.wrapper}>
-                <Typography variant="h4" component="h2">{fieldName}</Typography>
+                <Typography variant="h4" component="h2">{title}</Typography>
                 <Typography variant="h6" component="body1">{fieldState.type}</Typography>
             </Box>
         </Modal>
