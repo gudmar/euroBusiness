@@ -4,6 +4,11 @@ import Grid from '../grid/grid.js'
 
 const BoardSide = (props) => {
     const direction = props.direction;
+    const { informationOpenHandler, setViewedFieldHandler } = props.fieldHandlers;
+    const openInformationHandler = (fieldNumber) => () => {
+        setViewedFieldHandler(fieldNumber);
+        informationOpenHandler(true);
+    }
     const descriptors = props.descriptors;
     const boardSidePositionNumber = ['Bottom', 'Left', 'Top', 'Right'].findIndex(
         (item) => item === direction
@@ -22,7 +27,8 @@ const BoardSide = (props) => {
                 descriptor = {descriptor} 
                 key = {descriptor.id} 
                 index = {index}
-                fieldNumber = {calculateFieldNumber(index)}
+                openInformationHandler = {openInformationHandler(calculateFieldNumber(index))}
+                fieldNumber = {calculateFieldNumber(index)}                
             />
             )}
         </div>
@@ -35,6 +41,7 @@ const BoardSide = (props) => {
 BoardSide.propTypes = {
     direction: PropTypes.oneOf(['Bottom', 'Left', 'Right', 'Top']),
     descriptors: PropTypes.array,
+    fieldHandlers: PropTypes.any,
 }
 
 export default BoardSide;

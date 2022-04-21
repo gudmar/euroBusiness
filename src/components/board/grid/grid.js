@@ -78,13 +78,14 @@ const isColumn = variant => variant === 'right' ? false :
                             variant === 'left'  ? false :
                             true;
 
-const cityField = (descriptor, variant, index, ref) => {
+const cityField = (descriptor, openInfoHandler, variant, index, ref) => {
     return (
         // <div className = {`${styles.grid} ${styles.column}  ${isRotated(descriptor)}`} style = {{transform: `rotate(${descriptor.direction})`}}>
         <div 
             className = {`${styles.grid} ${isColumn(variant)?styles.column:''} ${styles[variant+'Variant']}`}
             style = {{gridArea: `${index}-slot`}}
             ref = {ref}
+            onClick = {openInfoHandler}
         >
             <div className = {`${styles['colorBar']}`} style = {{backgroundColor: descriptor.color}}>
             </div>
@@ -93,7 +94,7 @@ const cityField = (descriptor, variant, index, ref) => {
         </div>
     )
 } 
-const gridIconField = (descriptor, variant, index, ref) => {
+const gridIconField = (descriptor, openInfoHandler, variant, index, ref) => {
     const MyIcon = descriptor.icon;
     const symbol = descriptor.symbol;
     const content = () => descriptor.symbol === undefined ? <MyIcon style = {{fontSize: 50}}/> : <span className={`${styles.symbolIcon}`} dangerouslySetInnerHTML={{__html: symbol}} />;
@@ -104,6 +105,7 @@ const gridIconField = (descriptor, variant, index, ref) => {
             className = {`${styles.grid} ${isColumn(variant)?styles.column:''} ${styles[variant+'Variant']} ${styles.iconField}`}
             style = {{gridArea: `${index}-slot`}}
             ref = {ref}
+            onClick = {openInfoHandler}
         >        
             {caption(descriptor)}
             {content()}
@@ -111,13 +113,17 @@ const gridIconField = (descriptor, variant, index, ref) => {
     )    
 }
 
-const hugeField = (descriptor, variant, index, ref) => {
+const hugeField = (descriptor, openInfoHandler, variant, index, ref) => {
     const MyIcon = descriptor.icon;
     const symbol = descriptor.symbol;
     const content = () => descriptor.symbol === undefined ? <MyIcon style = {{fontSize: 50}}/> : <span className={`${styles.symbolIcon}`} dangerouslySetInnerHTML={{__html: symbol}} />;
     // if (descriptor.icon === undefined) return <div className = {"iconBlank"}></div>
     return (
-        <div className = {`${styles.gridWide} ${styles.column} ${styles[variant+'Variant']}`} ref = {ref}>
+        <div 
+            className = {`${styles.gridWide} ${styles.column} ${styles[variant+'Variant']}`} 
+            ref = {ref}
+            onClick = {openInfoHandler}
+        >
                 {caption(descriptor)}
                 {content()}
                 <div></div>
@@ -125,13 +131,14 @@ const hugeField = (descriptor, variant, index, ref) => {
     )
 }
 
-const chanceField = (descriptor, variant, index, ref) => {
+const chanceField = (descriptor, openInfoHandler, variant, index, ref) => {
     return (
         // <div className = {`${styles.grid} ${styles.column}`}>
         <div 
             className = {`${styles.grid} ${isColumn(variant)?styles.column:''} ${styles[variant+'Variant']} ${styles.chance}`}
             style = {{gridArea: `${index}-slot`}}
             ref = {ref}
+            onClick = {openInfoHandler}
         >        
             <div style={{fontSize: '4rem', color:`${descriptor.color}`}}>?</div>
         </div>
@@ -154,13 +161,13 @@ const chanceTypes = ['chanceBlue', 'chanceRed']
 // const special = ['chanceBlue', 'chanceRed', 'jail']
 
 
-const girdTypeSelect = (descriptor, index, ref) => {
+const girdTypeSelect = (descriptor, openInfoHandler, index, ref) => {
     const variant = direction2variant(descriptor.direction);
     const type = descriptor.type;
-    if (bigIconTypes.includes(type)) return gridIconField(descriptor, variant, index, ref);
-    if (bigFieldTypes.includes(type)) return hugeField(descriptor, variant, index, ref);
-    if (cityTypes.includes(type)) return cityField(descriptor, variant, index, ref);
-    if (chanceTypes.includes(type)) return chanceField(descriptor, variant, index, ref);
+    if (bigIconTypes.includes(type)) return gridIconField(descriptor, openInfoHandler, variant, index, ref);
+    if (bigFieldTypes.includes(type)) return hugeField(descriptor, openInfoHandler, variant, index, ref);
+    if (cityTypes.includes(type)) return cityField(descriptor, openInfoHandler, variant, index, ref);
+    if (chanceTypes.includes(type)) return chanceField(descriptor, openInfoHandler, variant, index, ref);
 }
 
 const Grid = (props) => {
@@ -194,7 +201,7 @@ const Grid = (props) => {
     })
 
     return (
-    <>{girdTypeSelect(props.descriptor, index, elRef)}</>
+        <>{girdTypeSelect(props.descriptor, props.openInformationHandler, index, elRef)}</>
     )
 }
 
@@ -204,6 +211,7 @@ Grid.propTypes = {
     descriptor: PropTypes.object,
     index: PropTypes.number,
     fieldNumber: PropTypes.number,
+    openInformationHandler: PropTypes.func,
 }
 
 export default Grid;

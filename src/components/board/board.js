@@ -31,10 +31,10 @@ const Board = (props) => {
     // console.log(bottomSliceDescriptor)
     return(
         <div className={styles.board}>
-            <BoardSide direction="Bottom" descriptors = {bottomSliceDescriptor}></BoardSide>
-            <BoardSide direction="Left" descriptors = {leftSliceDescriptor}></BoardSide>
-            <BoardSide direction="Top" descriptors = {topSliceDescriptor}></BoardSide>
-            <BoardSide direction="Right" descriptors = {rightSliceDescriptor}></BoardSide>
+            <BoardSide direction="Bottom" descriptors = {bottomSliceDescriptor} fieldHandlers={props.fieldHandlers}></BoardSide>
+            <BoardSide direction="Left" descriptors = {leftSliceDescriptor} fieldHandlers={props.fieldHandlers}></BoardSide>
+            <BoardSide direction="Top" descriptors = {topSliceDescriptor} fieldHandlers={props.fieldHandlers}></BoardSide>
+            <BoardSide direction="Right" descriptors = {rightSliceDescriptor} fieldHandlers={props.fieldHandlers}></BoardSide>
             {/* <div className={ `${styles.fieldBar} ${styles.fieldBarBottom}` }></div>
             <div className={ `${styles.fieldBar} ${styles.fieldBarLeft}` }></div>
             <div className={ `${styles.fieldBar} ${styles.fieldBarTop}` }></div>
@@ -45,7 +45,7 @@ const Board = (props) => {
 }
 
 Board.propTypes = {
-    
+    fieldHandlers: PropTypes.any,    
 }
 
 export default Board;
