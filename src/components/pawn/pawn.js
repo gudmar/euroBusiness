@@ -84,6 +84,8 @@ const Pawn = props => {
             for (let diceLeft = diceResult; diceLeft>0; diceLeft--){
                 await movePawn(500);
             }
+            console.log(props)
+            props.openFieldActionHandler(true);
         }
     }, [diceThrown]);
 
@@ -112,6 +114,7 @@ const Pawn = props => {
 Pawn.propTypes = {
     color: PropTypes.string.isRequired,
     fieldNumber: PropTypes.number,
+    openFieldActionHandler: PropTypes.func,
 }
 
 export default Pawn;
