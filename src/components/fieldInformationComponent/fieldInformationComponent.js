@@ -18,6 +18,7 @@ import {Table} from '@material-ui/core';
 import {TableCell} from '@material-ui/core';
 import {TableRow} from '@material-ui/core';
 import {TableBody} from '@material-ui/core';
+import {Paper} from '@material-ui/core';
 
 
 
@@ -175,9 +176,12 @@ const BuyableFieldInformationComponent = props => {
 const OtherFieldsInformationComponent = props => {
     const fieldState = descriptors[props.fieldName];
     const info = fieldState.info;
+    console.log(fieldState)
     return (
         <Box variant="div">
-            {info}
+            <Paper style={styles.info}>
+                {info}
+            </Paper>
         </Box>
     )
 }

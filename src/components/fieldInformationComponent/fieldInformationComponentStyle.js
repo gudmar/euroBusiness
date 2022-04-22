@@ -13,6 +13,20 @@ const wrapper = {
     textAlign: 'center',
 }
 
+const info = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: '50%',
+    backgroundColor: '#ccc',
+    borderRadius: '10px',
+    boxShadow: 24,
+    padding: '10px',
+    textAlign: 'center',
+    fontWeight: 'bold',
+}
+
 const titleEgg = color => ({
     bgColor: color,
     backgroundColor: color === undefined ? 'transparent': color,
@@ -31,6 +45,6 @@ const titleEgg = color => ({
     marginBottom: '10px',
 });
 
-const styles = { wrapper, titleEgg };
+const styles = { wrapper, titleEgg, info };
 
 export default styles;
