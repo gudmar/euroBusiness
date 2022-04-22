@@ -4,7 +4,8 @@
 // yellow) there is no need to implement a complicate function
 
 const calculateForegroundBasedOnBackgroundColor = (bgColor) => {
-    if (bgColor === 'yellow' || bgColor === 'orange') {
+    console.log(bgColor)
+    if (['yellow', 'orange', 'transparent', undefined].includes(bgColor)){
         return 'black'
     }
     return 'white';
