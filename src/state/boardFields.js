@@ -63,7 +63,8 @@ const descriptors = {
     Start: {
         type: 'start',
         boardFieldNumber: 1,
-        visit: [-400]
+        visit: [-400],
+        info: 'Does nothing, a player gets $400 after passing this field.'
     },
     Ateny: {
         type: 'city',
@@ -81,27 +82,35 @@ const descriptors = {
     },
     Chance_blue: {
         type: 'chanceBlue',
+        info: 'Draw a blue chance card'
     },
     Chance_red: {
         type: 'chanceRed',
+        info: 'Draw a red chance card',
     },
     Chance_blue_left: {
         type: 'chanceBlue',
+        info: 'Draw a blue chance card',
     },
     Chance_red_left: {
         type: 'chanceRed',
+        info: 'Draw a red chance card',
     },
     Chance_blue_top: {
         type: 'chanceBlue',
+        info: 'Draw a blue chance card',
     },
     Chance_red_top: {
         type: 'chanceRed',
+        info: 'Draw a red chance card',
     },
     Chance_blue_right: {
         type: 'chanceBlue',
+        info: 'Draw a blue chance card',
     },
     Chance_red_right: {
         type: 'chanceRed',
+        info: 'Draw a red chance card',
     },
     Saloniki: {
         country: 'Greece',
@@ -121,21 +130,25 @@ const descriptors = {
         type: 'guardedPark',
         boardFieldNumber: 5,
         visit: [400],
+        info: 'You pay $400 for staying one extra trun here. This is mandatory,',
     },
     Free_Parking: {
         type: 'freePark',
         boardFieldNumber: 11,
         visit: [0],
-        wait: 1
+        wait: 1,
+        info: 'You spend one extra turn here. The only good news is, there is no fee for staying here',
     },
     Jail: {
         type: 'jail',
         boardFieldNumber: 11,
-        wait: 2
+        wait: 2,
+        info: 'You spend 2 extra turns here.',
     },
     Go_to_jail: {
         type: 'go_to_jail',
         boardFieldNumber: 31,
+        info: 'You go to field 11, jail and spend 2 extra turns there.'
     },
     South_Railways: {
         country: 'Railways',
@@ -469,7 +482,8 @@ const descriptors = {
     },
     Tax: {
         type: 'tax',
-        visit: [200]
+        visit: [200],
+        info: 'You pay $200, nothing more happens here.',
     },
     Wieden: {
         country: 'Austria',

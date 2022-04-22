@@ -37,7 +37,7 @@ const FieldInformationComponent = props => {
     const title = fieldName.split('_').join(' ');
     const fieldState = descriptors[fieldName];
     const fieldView = views[fieldName];
-    console.log(descriptors, views['Ateny'], fieldName)
+    console.log(descriptors, views['Ateny'], fieldName, views)
     const {
         country,
         hotelPrice,
@@ -78,6 +78,23 @@ const FieldInformationComponent = props => {
                 </Table>
             </TableContainer>
         )
+    }
+
+    const currentState = {
+        head: {
+            "Number of houses": {},
+            "Hotels": {},
+            "Current owner": {},
+            "Is plegged": {},
+        },
+        body:[
+            [
+                nrOfHouses < 5 ? nrOfHouses : 0, 
+                nrOfHouses === 5 ? 1 : 0, 
+                owner,
+                isPlegded ? 'Yes' : 'No',
+            ]
+        ]
     }
 
     const buyTable = {
@@ -143,15 +160,16 @@ const FieldInformationComponent = props => {
             onClose = {props.closeHandler}
         >
             <Box variant="div" style={styles.wrapper}>
-                <Typography variant="h4" component="h2">{title}</Typography>
-                <Typography 
-                    variant="h6" 
-                    component="h6"
-                    style={{textAlign: 'center', fontStyle: 'italic'}}
-                >
-                    {country}
-                </Typography>
-
+                <div style = {styles.titleEgg(bgColor)}>
+                    <Typography variant="h4" component="h2">{title}</Typography>
+                    <Typography 
+                        variant="h6" 
+                        component="h6"
+                        style={{textAlign: 'center', fontStyle: 'italic'}}
+                    >
+                        {country}
+                    </Typography>
+                </div>
                 <Typography variant="h6" style={darkTitle}>Buy</Typography>
                 {drawTable(buyTable)}
                 <Typography variant="h6" style={darkTitle}>Visit</Typography>
@@ -159,7 +177,7 @@ const FieldInformationComponent = props => {
                 <Typography variant="h6" style={darkTitle}>Selling</Typography>
                 {drawTable(selling)}
                 <Typography variant="h6" style={darkTitle}>Current state</Typography>
-
+                {drawTable(currentState)}
 
             </Box>
         </Modal>
