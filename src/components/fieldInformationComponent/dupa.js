@@ -21,24 +21,58 @@ import {TableBody} from '@material-ui/core';
 
 
 
-const BuyableFieldInformationComponent = props => {
-    const title = props.fieldName.split('_').join(' ');
-    const fieldState = descriptors[props.fieldName];
-    const fieldView = views[props.fieldName];
-    // console.log(descriptors, views['Ateny'], fieldName, views)
-    const {
-        country,
-        hotelPrice,
-        housePrice,
-        isPlegded,
-        nrOfHouses,
-        owner,
-        price,
-        visit,
-        mortage,
-    } = fieldState;
 
 
+
+const FieldInformationComponent = props => {
+
+    
+
+
+    const isOpen = props.isOpen;
+    const index = props.index;
+
+    const fieldName = boardInOrder[index]
+    const title = fieldName.split('_').join(' ');
+    const fieldState = descriptors[fieldName];
+    const fieldView = views[fieldName];
+
+    const isBuyableField = ['city', 'railway', 'powerStation', 'waterPlant'].includes(fieldState.type);
+    const isOtherField = ['start', 'chanceBlue', 'chanceRed', 'guardedPark', 'jail', 'go_to_jail', 'tax'].includes(fieldState.type);
+
+    const currentState = {
+        head: {
+            "Number of houses": {},
+            "Hotels": {},
+            "Current owner": {},
+            "Is plegged": {},
+        },
+        body:[
+            [
+                nrOfHouses < 5 ? nrOfHouses : 0, 
+                nrOfHouses === 5 ? 1 : 0, 
+                owner,
+                isPlegded ? 'Yes' : 'No',
+            ]
+        ]
+    }
+
+    const buyTable = {
+        head: {
+            Price: {
+                icon: Euro,
+            },
+            House: {
+                icon: HouseSharp,
+            },
+            Hotel: {
+                icon: Hotel,
+            },
+        },
+        body: [
+            [price, housePrice, hotelPrice]
+        ]
+    };
     const visitTable = {
         head: {
             'No building': {
@@ -63,11 +97,10 @@ const BuyableFieldInformationComponent = props => {
                 icon: HouseSharp,
             }
         },
-        body: visit ? [
+        body: [
             [visit[0], visit[0] * 2, visit[1], visit[2], visit[3], visit[4], visit[5] ],
-        ] : []
+        ]
     }
-
     const selling = {
         head: {
             'Sell house': {},
@@ -81,39 +114,43 @@ const BuyableFieldInformationComponent = props => {
             ]
     };
 
-    const buyTable = {
-        head: {
-            Price: {
-                icon: Euro,
-            },
-            House: {
-                icon: HouseSharp,
-            },
-            Hotel: {
-                icon: Hotel,
-            },
-        },
-        body: [
-            [price, housePrice, hotelPrice]
-        ]
-    };
+    return (
+        <Modal 
+            open = {isOpen}
+            onClose = {props.closeHandler}
+        >
+            {isBuyableField ? 
+                <BuyableFieldInformationComponent props={props} 
+            />: <></>};
+            {isOtherField ? <OtherFieldsInformationComponent props={props} />: <></>};
+        </Modal>
+    )
+    
+}
 
-    const currentState = {
-        head: {
-            "Number of houses": {},
-            "Hotels": {},
-            "Current owner": {},
-            "Is plegged": {},
-        },
-        body:[
-            [
-                nrOfHouses < 5 ? nrOfHouses : 0, 
-                nrOfHouses === 5 ? 1 : 0, 
-                owner,
-                isPlegded ? 'Yes' : 'No',
-            ]
-        ]
-    }
+
+const BuyableFieldInformationComponent = props => {
+    const index = props.index;
+
+    // const fieldName = boardInOrder[index]
+    // const title = fieldName.split('_').join(' ');
+    const fieldState = descriptors[fieldName];
+    const fieldName = boardInOrder[index];
+    const fieldView = views[fieldName];
+    const title = fieldName.split('_').join(' ');
+    // const fieldView = views[fieldName];
+    // console.log(descriptors, views['Ateny'], fieldName, views)
+    const {
+        country,
+        hotelPrice,
+        housePrice,
+        isPlegded,
+        nrOfHouses,
+        owner,
+        price,
+        visit,
+        mortage,
+    } = fieldState;
 
 
     const color = calculateForegroundBasedOnBackgroundColor(fieldView.color);
@@ -146,7 +183,7 @@ const BuyableFieldInformationComponent = props => {
     }
 
 
-    return (
+
     <Box variant="div" style={styles.wrapper}>
     <div style = {styles.titleEgg(bgColor)}>
         <Typography variant="h4" component="h2">{title}</Typography>
@@ -168,77 +205,17 @@ const BuyableFieldInformationComponent = props => {
     {drawTable(currentState)}
 
 </Box>
-    )
 }
 
 
 const OtherFieldsInformationComponent = props => {
-    const fieldState = descriptors[props.fieldName];
-    const info = fieldState.info;
+    const info = props.info;
     return (
         <Box variant="div">
             {info}
         </Box>
     )
 }
-
-
-const FieldInformationComponent = props => {
-
-    const isOpen = props.isOpen;
-    const index = props.index;    
-    const fieldName = boardInOrder[index]
-    const fieldState = descriptors[fieldName];
-    const type = fieldState.type;
-    const isBuyableField = ['city', 'railway', 'powerStation', 'waterPlant'].includes(fieldState.type);
-    const isOtherField = ['start', 'chanceBlue', 'chanceRed', 'guardedPark', 'jail', 'go_to_jail', 'tax'].includes(fieldState.type);
-
-    // console.log(isBuyableField, isOtherField, fieldName, isOpen)
-    const buyable = isBuyableField ? <BuyableFieldInformationComponent fieldName={fieldName}/> : null;
-    const otherField = isOtherField ? <OtherFieldsInformationComponent fieldName={fieldName} />: null;
-    console.log(isBuyableField, isOtherField, fieldState.type)
-    if (isBuyableField) return (
-        <Modal 
-            open = {isOpen}
-            onClose = {props.closeHandler}
-        ><BuyableFieldInformationComponent fieldName={fieldName}/>
-        </Modal>
-    )
-    if (isOtherField) return (
-        <Modal 
-            open = {isOpen}
-            onClose = {props.closeHandler}
-        ><OtherFieldsInformationComponent fieldName={fieldName} />
-        </Modal>
-    )
-    return (
-        <Modal 
-            open = {isOpen}
-            onClose = {props.closeHandler}
-        >
-        <span></span>
-        </Modal>        
-    )
-    // return (
-    //     <Modal 
-    //         open = {isOpen}
-    //         onClose = {props.closeHandler}
-    //     >
-    //     {/* <OtherFieldsInformationComponent fieldName={fieldName} /> */}
-    //     <BuyableFieldInformationComponent fieldName={fieldName}/>
-    //     {/* {buyable}
-    //     {otherField} */}
-    //     </Modal>
-    // )
-    
-}
-
-        //     {/* {BuyableField ? 
-        //         <BuyableFieldInformationComponent
-        //             fieldName={fieldName}
-        //     />: <></>};
-        //     {isOtherField ? <OtherFieldsInformationComponent fieldName={fieldName} />: <></>}; */}
-
 
 OtherFieldsInformationComponent.propTypes = {
     isOpen: PropTypes.bool,
