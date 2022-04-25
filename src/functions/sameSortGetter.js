@@ -32,4 +32,6 @@ const getSameTypes = (descriptors, keyToMatch) => {
 const getTargetPlayerBelongings = (descriptors, playerName) => 
     descriptors.filter(item => item.owner === playerName);
 
-export { getTargetPlayerBelongings, getSameTypes };
+const getTargetPlayerEstatesNames = (descriptors, playerName) => Object.keys(getTargetPlayerBelongings(descriptors, playerName))
+
+export { getTargetPlayerBelongings, getSameTypes, getTargetPlayerEstatesNames };
