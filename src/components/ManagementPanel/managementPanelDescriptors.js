@@ -91,7 +91,15 @@ const getBodyDescriptor = (descriptors, descriptor, template, fieldName) => {
     const result = {};
     const keys = Object.keys(template);
     keys.forEach(key => {
-        result[key] = descriptorReducer(key, descriptors[descriptor], fieldName, descriptor)
+        result[key] = descriptorReducer(key, descriptor, fieldName, descriptors)
     })
+}
 
+const getBody = (descriptors, template) => {
+    const result = [];
+    descriptors.forEach(item => {
+        if (item.type in estate) {
+            result.push(item);
+        }
+    })
 }
