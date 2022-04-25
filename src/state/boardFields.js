@@ -218,7 +218,7 @@ const descriptors = {
         isPlegded: false,
     },
     Power_Station: {
-        country: undefined,
+        country: 'Plant',
         type: 'powerStation',
         price: 300,
         mortage: 150,
@@ -390,7 +390,7 @@ const descriptors = {
         isPlegded: false,
     },
     Water_plant: {
-        country: undefined,
+        country: 'Plant',
         type: 'waterPlant',
         price: 300,
         mortage: 150,

@@ -32,6 +32,26 @@ const getSameTypes = (descriptors, keyToMatch) => {
 const getTargetPlayerBelongings = (descriptors, playerName) => 
     descriptors.filter(item => item.owner === playerName);
 
-const getTargetPlayerEstatesNames = (descriptors, playerName) => Object.keys(getTargetPlayerBelongings(descriptors, playerName))
+const getTargetPlayerEstatesNames = (descriptors, playerName) => Object.keys(getTargetPlayerBelongings(descriptors, playerName));
 
-export { getTargetPlayerBelongings, getSameTypes, getTargetPlayerEstatesNames };
+const areAllEstatesSamePlayer = (descriptor, descriptors, player) => {
+    const queriedCountry = descriptor.country;
+    const owner = descriptor.owner;
+    if (owner === undefined || country === undefined) return false;
+    if (owner === 'bank') return false;
+    return descriptors.reduce((acc, item) => {
+        if (acc === false) return false;
+        if (item.country === queriedCountry){
+            if (item.owner === owner) return true;
+            return false;
+        }
+        return acc;
+    }, true)
+}
+
+export { 
+    getTargetPlayerBelongings, 
+    getSameTypes, 
+    getTargetPlayerEstatesNames,
+    areAllEstatesSamePlayer
+};
