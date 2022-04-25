@@ -69,13 +69,29 @@ const descriptorReducer = (key, descriptor, fieldName, descriptors) => {
     }
 }
 
-const getBodyDescriptor = (descriptors, template) => {
+// Ateny: {
+//     type: 'city',
+//     country: 'Greece',
+//     price: 120,
+//     mortage: 60,
+//     housePrice: 100,
+//     hotelPrice: 100,
+//     visit: [ 10, 40, 120, 360, 640, 900 ], // 0 houses, 1 house, 2 houses...
+//     owner: 'bank',
+//     nrOfHouses: 0, // 5 houses === hotel
+//     nrInSet: 2, // 2 cities in the country
+//     boardFieldNumber: 2,
+//     isPlegded: false, // zastawiony
+// },
+
+const getBodyDescriptor = (descriptors, descriptor, template, fieldName) => {
     //template => headerOrder
     // descriptors => boardFields
+    // descriptors for calculating visit price
     const result = {};
     const keys = Object.keys(template);
     keys.forEach(key => {
-
+        result[key] = descriptorReducer(key, descriptors[descriptor], fieldName, descriptor)
     })
 
 }
