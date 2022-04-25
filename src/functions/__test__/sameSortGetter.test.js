@@ -1,4 +1,4 @@
-import areAllEstatesSamePleyer from '../sameSortGetter.js';
+import {areAllEstatesSamePleyer} from '../sameSortGetter.js';
 
 const testSet1 = {
     Ateny: {
