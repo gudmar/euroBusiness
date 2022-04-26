@@ -99,7 +99,7 @@ const getBody = (descriptors, template) => {
     const result = [];
     descriptors.forEach(item => {
         if (item.type in estate) {
-            result.push(item);
+            result.push(getBodyDescriptor(item));
         }
     })
 }
