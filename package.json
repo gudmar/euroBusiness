@@ -2,7 +2,7 @@
   "name": "euro-business",
   "version": "0.1.0",
   "private": true,
-  "type": "module",
+  "type1": "module",
   "dependencies": {
     "@material-ui/core": "^4.12.4",
     "@material-ui/icons": "^4.11.3",
@@ -22,8 +22,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test1": "react-scripts test",
-    "test": "jest",
+    "test1": "react-scripts test --testPathIgnorePatterns=e2e/*",
+    "test": "jest --testPathIgnorePatterns=e2e/*",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -49,10 +49,11 @@
     "react-test-renderer": "^18.0.0"
   },
   "jest": {
-    "verbose": true,
-    "transformIgnorePatterns": [
+    "verbose": true,    
+    "moduleFileExtensions": ["js", "json", "jsx", "node"],
+    "transform": {},
+    "transformIgnorePatterns1": [
       "node_modules/(?!(jest-)?react-native|react-clone-referenced-element|@react-native-community|expo(nent)?|@expo(nent)?/.*|react-navigation|@react-navigation/.*|@unimodules/.*|unimodules|sentry-expo|native-base|@sentry/.*)"
-    ],
-    "moduleFileExtensions": ["js", "json", "jsx", "node"]
+    ]
   }
 }
