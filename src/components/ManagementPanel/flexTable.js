@@ -9,6 +9,7 @@ import {
 
 
 
+
 const classes = useStyles;
 
 const sort = (data, fieldId, direction, getData = data => data) => {
@@ -42,9 +43,8 @@ const searchAll = (data, stringTemplate, getData) => {
     return result;
 }
 
-
-
 const FlexTable = (props) => {
+
 
 }
 
