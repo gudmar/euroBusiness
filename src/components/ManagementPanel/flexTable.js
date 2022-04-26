@@ -6,6 +6,9 @@ import {
         getHeaderDescriptors,
         getBody,
     }from './managementPanelDescriptors.js';
+import FlexTableHead from './flexTableHead.js'
+import { useSelector, useDispatch } from 'react-redux/index.js';
+import { useReducer } from 'react/index.js';
 
 
 
@@ -43,8 +46,50 @@ const searchAll = (data, stringTemplate, getData) => {
     return result;
 }
 
-const FlexTable = (props) => {
+const getInitialState = (bodyData, headData) => ({
+    orderById: headData[0].payload,
+    orderDirection: 'asc',
+    filter: '',
+    originalData: bodyData,
+    dataToDisplay: bodyData,
+})
 
+const makeReducer = initialState => (state, action) => {
+    if (state === undefined) return initialState;
+    const toggleOrderDirection = dir => dir === 'asc' ? 'desc' : 'asc';
+    switch(action.type) {
+        case ('HANDLE_COLUMN_CLICK'):
+            if (state.orderById === action.payload) {
+                return {
+                    ...state,
+                    orderDirection: toggleOrderDirection(state.orderDirection),
+                }
+            }
+            return {
+                ...state,
+                orderById: action.payload
+            }
+        case ('SEARCH'):
+            return {
+                ...state,
+                filter: action.payload,
+                dataToDisplay: searchAll(state.originalData, action.payload)
+            }
+        default: return state;
+    }
+}
+const action = (type, payload) => ({type:type, payload:payload});
+const handleColumnClick = (columnId) => () => dispatch(action('HANDLE_COLUMN_CLICK', columnId));
+const handleSearch = filter => dispatch(action('SEARCH', filter))
+
+const FlexTable = (props) => {
+    const boardDescriptors = useSelector(store => store.boardSlice);
+    const playerDescriptors = useSelector(store => store.playerSlice);
+    const headerDescriptors = getHeaderDescriptors(headerOrder);
+    const bodyDescriptors = getBody(boardDescriptors, headerOrder);
+    const initialLocalState = getInitialState(bodyDescriptors, headerDescriptors);
+    const reducer = useReducer();
+    const [localState, localDispatch] = useReducer(reducer, initialLocalState);
 
 }
 
