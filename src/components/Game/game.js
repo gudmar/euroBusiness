@@ -14,7 +14,6 @@ import { Button } from '@material-ui/core';
 const Pawns = props => {
     const players = useSelector(state => state.playerSlice)
     const openFieldActionHandler = props.openFieldActionHandler;
-    console.log(players)
     const pawns = ['blue', 'red', 'green', 'orange'].map(item => 
         !players[item].hidden ? <Pawn key={item} color={item} openFieldActionHandler={openFieldActionHandler} /> : null
     )
@@ -56,7 +55,6 @@ const Game = props => {
             <Pawns openFieldActionHandler = {setFieldActionOpen}/>
             <ManagementPanel open = {openManagement}/>
             <Button onClick = {() => {
-                console.log('State', store.getState())
             }}>{'Log state'}</Button>
         </div>
     )

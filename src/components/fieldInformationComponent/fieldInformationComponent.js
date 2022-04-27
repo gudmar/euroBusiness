@@ -138,7 +138,6 @@ const BuyableFieldInformationComponent = props => {
         const singleRow = item => (
             <TableCell>{item}</TableCell>
         )
-        console.log(tableDescriptor)
         return (
             <TableContainer>
                 <Table>
@@ -208,7 +207,6 @@ const BuyableFieldInformationComponent = props => {
 const OtherFieldsInformationComponent = props => {
     const fieldState = descriptors[props.fieldName];
     const info = fieldState.info;
-    console.log(fieldState)
     return (
         <Box variant="div">
             <Paper style={styles.info}>
@@ -230,7 +228,6 @@ const FieldInformationComponent = props => {
     const isOtherField = ['start', 'chanceBlue', 'chanceRed', 'guardedPark', 'jail', 'go_to_jail', 'tax', 'freePark'].includes(fieldState.type);
     const buyable = isBuyableField ? <BuyableFieldInformationComponent fieldName={fieldName}/> : null;
     const otherField = isOtherField ? <OtherFieldsInformationComponent fieldName={fieldName} />: null;
-    console.log(isBuyableField, isOtherField, fieldState.type)
     if (isBuyableField) return (
         <Modal 
             open = {isOpen}

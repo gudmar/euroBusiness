@@ -1,4 +1,5 @@
 import { getTargetPlayerEstatesNames } from '../../functions/sameSortGetter.js'
+import { getNrOfCitiesPlayerHas, countVisitFeeChecker } from '../../state/boardFields.js'
 
 const headerDescriptors = {
     country: {
@@ -46,7 +47,7 @@ const convertName = name => {
 }
 
 const descriptorReducer = (key, descriptor, fieldName, descriptors) => {
-    console.log(key, descriptor, fieldName, descriptors)
+    // console.log(key, descriptor, fieldName, descriptors)
     const type = descriptor.type;
     switch (key) {
         case 'country': 
@@ -56,9 +57,12 @@ const descriptorReducer = (key, descriptor, fieldName, descriptors) => {
         case 'city': 
             return convertName(fieldName);
         case 'visit': 
-            const player = descriptor.player;
+            const player = descriptor.owner;
             const playersEstates = getTargetPlayerEstatesNames(descriptors, player);
-            return playersEstates;
+            const rate = getNrOfCitiesPlayerHas(descriptors, player, descriptor.country);
+            const fee = countVisitFeeChecker(descriptor)
+            debugger
+            return fee;
         case 'owner':
             return descriptor.owner;
         case 'isPlagded':
@@ -76,7 +80,7 @@ const getBodyDescriptor = (descriptors, descriptor, template, fieldName) => {
     //template => headerOrder
     // descriptors => boardFields
     // descriptors for calculating visit price
-    console.log(descriptors, descriptor, template, fieldName)
+    // console.log(descriptors, descriptor, template, fieldName)
     const result = {};
     const keys = Object.keys(template);
     template.forEach(key => {

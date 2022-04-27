@@ -29,10 +29,11 @@ const getSameTypes = (descriptors, keyToMatch) => {
     }
 }
 
-const getTargetPlayerBelongings = (descriptors, playerName) => 
-    descriptors.filter(item => item.owner === playerName);
+const getTargetPlayerBelongings = (descriptors, playerName) => {
+    return descriptors.filter(item => item.owner === playerName);
+}
 
-const getTargetPlayerEstatesNames = (descriptors, playerName) => Object.keys(getTargetPlayerBelongings(descriptors, playerName));
+const getTargetPlayerEstatesNames = (descriptors, playerName) => getTargetPlayerBelongings(descriptors, playerName);
 
 const areAllEstatesSamePlayer = (descriptor, descriptors, player) => {
     const queriedCountry = descriptor.country;
