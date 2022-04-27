@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 import FlexTableHead from './flexTableHead.js'
 // import { useSelector, useDispatch } from 'react-redux/index.js';
 import { useReducer } from 'react/index.js';
-import { TableContainer, TableBody, TableRow, TableCell } from '@material-ui/core';
+import { TableContainer, TableBody, TableRow, TableCell, Table } from '@material-ui/core';
 
 
 
@@ -96,33 +96,36 @@ const FlexTable = (props) => {
     const handleColumnClick = (columnId) => () => localDispatch(action('HANDLE_COLUMN_CLICK', columnId));
     const handleSearch = filter => localDispatch(action('SEARCH', filter))
 
-
     return (
         <TableContainer>
-            <FlexTableHead 
-                headerDescriptors={headerDescriptors}
-                orderById={localState.orderById}
-                orderDirection={localState.orderDirection}
-                changeSortDirection={handleColumnClick}
-            />
-            <TableBody>
-                {
-                    bodyDescriptors.map(row => {
-                        const cells = Object.values(row);
-                        return (
-                            <TableRow>
-                                {
-                                    cells.map(cell => (
-                                        <TableCell>
-                                            {cell}
-                                        </TableCell>
-                                    ))
-                                }
-                            </TableRow>
-                        )
-                    })
-                }
-            </TableBody>
+            <Table>
+                <FlexTableHead 
+                    headerDescriptors={headerDescriptors}
+                    orderById={localState.orderById}
+                    orderDirection={localState.orderDirection}
+                    changeSortDirection={handleColumnClick}
+                />
+                <TableBody>
+                    {
+                        bodyDescriptors.map(row => {
+                            console.log(row)
+                            const cells = Object.values(row);
+                            console.log(cells)
+                            return (
+                                <TableRow>
+                                    {
+                                        cells.map(cell => (
+                                            <TableCell>
+                                                {cell}
+                                            </TableCell>
+                                        ))
+                                    }
+                                </TableRow>
+                            )
+                        })
+                    }
+                </TableBody>
+            </Table>
         </TableContainer>
     )
 }

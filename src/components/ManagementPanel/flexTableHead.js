@@ -21,13 +21,13 @@ const FlexTableHead =  props => {
                         <TableCell
                             key={id}
                             padding = 'normal'
-                            sortDriection={orderById === id ? orderDirection : false} // or false when off, or desc
                         >
                             <TableSortLabel
                                 active={orderById === id} // if sorted by column
                                 direction={orderDirection}
                                 onClick={changeSortDirection(id)}
                             />
+                            {headerDataGetter(cell)}
                         </TableCell>
                     )
                 })}

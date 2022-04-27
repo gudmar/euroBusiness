@@ -16,12 +16,12 @@ import {
 
 const ManagementPanel = props => {
     const { open } = props;
-    const boardDescriptors = useSelector(store => store.boardSlice);
+    const boardDescriptors = useSelector(store => store.boardSlice.fieldDescriptors);
     const playerDescriptors = useSelector(store => store.playerSlice);
     const headerDescriptors = getHeaderDescriptors(headerOrder);
     const bodyDescriptors = getBody(boardDescriptors, headerOrder);
     const close = () => open = false;
-
+    console.log(bodyDescriptors, boardDescriptors, headerOrder)
     return (
         <Dialog 
             fullWidth={true}

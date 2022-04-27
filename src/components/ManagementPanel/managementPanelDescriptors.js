@@ -46,11 +46,13 @@ const convertName = name => {
 }
 
 const descriptorReducer = (key, descriptor, fieldName, descriptors) => {
+    console.log(key, descriptor, fieldName, descriptors)
+    const type = descriptor.type;
     switch (key) {
         case 'country': 
-            if (key in railway) return 'Railway';
-            if (key in city) return descriptor.country;
-            if (key in powerWaterPlant) return 'Plant';
+            if (railway.includes(type)) return 'Railway';
+            if (city.includes(type)) return descriptor.country;
+            if (powerWaterPlant.includes(type)) return 'Plant';
         case 'city': 
             return convertName(fieldName);
         case 'visit': 
@@ -74,19 +76,20 @@ const getBodyDescriptor = (descriptors, descriptor, template, fieldName) => {
     //template => headerOrder
     // descriptors => boardFields
     // descriptors for calculating visit price
+    console.log(descriptors, descriptor, template, fieldName)
     const result = {};
     const keys = Object.keys(template);
-    keys.forEach(key => {
+    template.forEach(key => {
         result[key] = descriptorReducer(key, descriptor, fieldName, descriptors)
     })
+    return result;
 }
 
 const getBody = (descriptors, template) => {
     const result = [];
-    const values = Object.values(descriptors);
-    values.forEach(item => {
-        if (item.type in estate) {
-            result.push(getBodyDescriptor(item));
+    descriptors.forEach(item => {
+        if (estate.includes(item.type)) {
+            result.push(getBodyDescriptor(descriptors, item, template, item.id));
         }
     })
     return result;
