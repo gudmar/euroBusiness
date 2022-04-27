@@ -1,4 +1,4 @@
-import getTargetPlayerEstatesNames from '../../functions/sameSortGetter.js'
+import { getTargetPlayerEstatesNames } from '../../functions/sameSortGetter.js'
 
 const headerDescriptors = {
     country: {
@@ -8,7 +8,7 @@ const headerDescriptors = {
     city: {
         type: 'text',
         payload: 'Name',
-    },
+    },        
     visit: {
         type: 'text',
         payload: 'Visit'
@@ -16,18 +16,18 @@ const headerDescriptors = {
     owner: {
         type: 'text',
         payload: 'Owner'
-    },
+    },        
     isPlagded: {
         type: 'text',
         payload: 'is plagded'
-    },
+    },        
     nrOfHouses: {
         type: 'text',
         payload: 'Houses'
     }
 }
 
-const headerOrder = [country, city, visit, owner];
+const headerOrder = ['country', 'city', 'visit', 'owner'];
 
 const getHeaderDescriptors = (orderArray) => {
     const result = {};
@@ -69,20 +69,6 @@ const descriptorReducer = (key, descriptor, fieldName, descriptors) => {
     }
 }
 
-// Ateny: {
-//     type: 'city',
-//     country: 'Greece',
-//     price: 120,
-//     mortage: 60,
-//     housePrice: 100,
-//     hotelPrice: 100,
-//     visit: [ 10, 40, 120, 360, 640, 900 ], // 0 houses, 1 house, 2 houses...
-//     owner: 'bank',
-//     nrOfHouses: 0, // 5 houses === hotel
-//     nrInSet: 2, // 2 cities in the country
-//     boardFieldNumber: 2,
-//     isPlegded: false, // zastawiony
-// },
 
 const getBodyDescriptor = (descriptors, descriptor, template, fieldName) => {
     //template => headerOrder
@@ -97,9 +83,23 @@ const getBodyDescriptor = (descriptors, descriptor, template, fieldName) => {
 
 const getBody = (descriptors, template) => {
     const result = [];
-    descriptors.forEach(item => {
+    const values = Object.values(descriptors);
+    values.forEach(item => {
         if (item.type in estate) {
             result.push(getBodyDescriptor(item));
         }
     })
+    return result;
+}
+
+
+
+export { 
+    headerDescriptors, 
+    headerOrder, 
+    getHeaderDescriptors, 
+    estate, 
+    convertName, 
+    descriptorReducer, 
+    getBody
 }
