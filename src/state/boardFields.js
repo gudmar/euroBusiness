@@ -1,3 +1,5 @@
+import { descriptorReducer } from "../components/ManagementPanel/managementPanelDescriptors";
+
 const getRandomInteger = (min, max) => {
     min = Math.ceil(min); max = Math.floor(max);
     return Math.floor(Math.random() * (max - min + 1)) + min
@@ -12,8 +14,8 @@ const throwDices = async () => {
 const getNrOfCitiesPlayerHas = (descriptors, player, country) => {
     let nrSoFar = 0;
     let wholeNumber = 0;
-    Object.values(descriptors).forEach( item => {
-        if ((item.country === country) && (item.player === player)) {
+    descriptors.forEach( item => {
+        if ((item.country === country) && (item.owner === player)) {
             wholeNumber = item.nrInSet;
             nrSoFar += 1;
         }
@@ -22,6 +24,10 @@ const getNrOfCitiesPlayerHas = (descriptors, player, country) => {
 }
 
 const countWaterPlantVisitFee = async (object) => {
+
+    TU JEST PROBLEM: descriptorReducer nie obsługuje async, zreszta nie wiadomo czy
+    rzut koscmi cos zwraca
+
     if (object.isPlegded) return 0;
     if (object.owner === 'bank') return 0;
     const { owns, outOf } = getNrOfCitiesPlayerHas(descriptors, object.owner, object.country);
@@ -56,6 +62,7 @@ const countVisitFeeChecker = (object) => {
         case 'tax': return countTaxFee();
         case 'waterPlant': return countWaterPlantVisitFee(object);
         case 'powerStation': return countWaterPlantVisitFee(object);
+        default: return 1234;
     }
 }
 
@@ -510,4 +517,4 @@ const boardInOrder = [
     'Go_to_jail', 'Frankfurt', 'Kolonia', 'Chance_blue_right', 'Bonn', 'East_Railways', 'Chance_red_right', 'Insbruk', 'Tax', 'Wieden'
 ]
 
-export { boardInOrder, descriptors }
+export { boardInOrder, descriptors, countVisitFeeChecker,  getNrOfCitiesPlayerHas, }

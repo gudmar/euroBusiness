@@ -48,7 +48,6 @@ const searchAll = (data, stringTemplate, getData) => {
 }
 
 const getInitialState = (bodyData, headData) => {
-    console.log(headData);
     return {
     orderById: Object.values(headData).payload,
     orderDirection: 'asc',
@@ -108,9 +107,7 @@ const FlexTable = (props) => {
                 <TableBody>
                     {
                         bodyDescriptors.map(row => {
-                            console.log(row)
                             const cells = Object.values(row);
-                            console.log(cells)
                             return (
                                 <TableRow>
                                     {

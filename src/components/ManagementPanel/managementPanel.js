@@ -21,7 +21,6 @@ const ManagementPanel = props => {
     const headerDescriptors = getHeaderDescriptors(headerOrder);
     const bodyDescriptors = getBody(boardDescriptors, headerOrder);
     const close = () => open = false;
-    console.log(bodyDescriptors, boardDescriptors, headerOrder)
     return (
         <Dialog 
             fullWidth={true}
