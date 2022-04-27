@@ -225,6 +225,7 @@ const descriptors = {
         owner: 'bank',
         nrInSet: 2,
         boardFieldNumber: 13,
+        visit: [ '10 x thrown dice result', '20 x thrown dice result'],
         isPlegded: false,
     },
     Sewilla: {
@@ -397,6 +398,7 @@ const descriptors = {
         owner: 'bank',
         nrInSet: 2,
         boardFieldNumber: 29,
+        visit: [ '10 x thrown dice result', '20 x thrown dice result'],
         isPlegded: false,
     },
     Sztokholm: {

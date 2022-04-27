@@ -37,39 +37,38 @@ const BuyableFieldInformationComponent = props => {
         price,
         visit,
         mortage,
+        type,
     } = fieldState;
 
 
-    const visitTable = {
+    const visitTable = type === 'city' ? {
         head: {
-            'No building': {
-                icon: undefined,
-            },
-            'Whole country': {
-                icon: undefined,
-            },
-            '1 x house': {
-                icon: HouseSharp,
-            },
-            '2 x house': {
-                icon: HouseSharp,
-            },
-            '3 x house': {
-                icon: HouseSharp,
-            },
-            '4 x house': {
-                icon: HouseSharp,
-            },
-            'hotel': {
-                icon: HouseSharp,
-            }
+            'No building': {icon: undefined,},
+            'Whole country': {icon: undefined,},
+            '1 x house': {icon: HouseSharp,},
+            '2 x house': {icon: HouseSharp,},
+            '3 x house': {icon: HouseSharp,},
+            '4 x house': {icon: HouseSharp,},
+            'hotel': {icon: HouseSharp,}
         },
         body: visit ? [
             [visit[0], visit[0] * 2, visit[1], visit[2], visit[3], visit[4], visit[5] ],
         ] : []
+    } : type === "powerStation" || type === "waterPlant" ?
+    {
+        head: {
+            'Single estate': {}, 
+            'All estates': {}
+        },
+        body: [visit],
+    } : {
+        head: {
+            '1 estate': {}, '2 estates': {}, '3 estates': {}, 'All estates': {}
+        },
+        body: [visit]
     }
 
-    const selling = {
+    const selling = type === "city" ? {
         head: {
             'Sell house': {},
             'Sell hotel': {},
@@ -80,9 +79,14 @@ const BuyableFieldInformationComponent = props => {
             [
                 [housePrice/2, hotelPrice/2, mortage, '???']
             ]
+    } : {
+        head: {
+            'Mortage': {}, 'Sell': {}
+        },
+        body: [[ mortage, price/2 ]]
     };
 
-    const buyTable = {
+    const buyTable = type === 'city' ? {
         head: {
             Price: {
                 icon: Euro,
@@ -97,9 +101,11 @@ const BuyableFieldInformationComponent = props => {
         body: [
             [price, housePrice, hotelPrice]
         ]
+    } : {
+        head: {Price:{}}, body: [[price]]
     };
 
-    const currentState = {
+    const currentState = type==="city" ? {
         head: {
             "Number of houses": {},
             "Hotels": {},
@@ -114,6 +120,12 @@ const BuyableFieldInformationComponent = props => {
                 isPlegded ? 'Yes' : 'No',
             ]
         ]
+    } : {
+        head: {
+            "Current owner": {},
+            "Is plegged": {},
+        },
+        body: [[owner, isPlegded?'Yes':'No']]
     }
 
 
@@ -132,12 +144,32 @@ const BuyableFieldInformationComponent = props => {
                 <Table>
                     <TableHead>
                         <TableRow>
-                            {headKeys.map(item => <TableCell variant="head" style = {{fontWeight:'bold', textAlign:'center'}}>{item}</TableCell>)}
+                            {
+                                headKeys.map(
+                                    (item,index) => <TableCell 
+                                        key={index} 
+                                        variant="head" 
+                                        style = {{fontWeight:'bold', textAlign:'center'}}
+                                    >
+                                        {item}
+                                    </TableCell>)
+                            }
                         </TableRow>
                     </TableHead>                
                     <TableBody>{
-                        tableDescriptor.body.map(row => (
-                            <TableRow>{row.map(item => <TableCell style = {{textAlign:'center'}}>{item}</TableCell>)}</TableRow>
+                        tableDescriptor.body.map(
+                            (row, rowId) => (<TableRow 
+                                key={rowId}
+                            >
+                                {row.map(
+                                    (item, index) => <TableCell 
+                                        key={`${rowId}.${index}`} 
+                                        style = {{textAlign:'center'}}
+                                    >
+                                        {item}
+                                    </TableCell>
+                                )}
+                            </TableRow>
                         ))
                     }
                     </TableBody>
@@ -195,9 +227,7 @@ const FieldInformationComponent = props => {
     const fieldState = descriptors[fieldName];
     const type = fieldState.type;
     const isBuyableField = ['city', 'railway', 'powerStation', 'waterPlant'].includes(fieldState.type);
-    const isOtherField = ['start', 'chanceBlue', 'chanceRed', 'guardedPark', 'jail', 'go_to_jail', 'tax'].includes(fieldState.type);
-
-    // console.log(isBuyableField, isOtherField, fieldName, isOpen)
+    const isOtherField = ['start', 'chanceBlue', 'chanceRed', 'guardedPark', 'jail', 'go_to_jail', 'tax', 'freePark'].includes(fieldState.type);
     const buyable = isBuyableField ? <BuyableFieldInformationComponent fieldName={fieldName}/> : null;
     const otherField = isOtherField ? <OtherFieldsInformationComponent fieldName={fieldName} />: null;
     console.log(isBuyableField, isOtherField, fieldState.type)
@@ -205,14 +235,20 @@ const FieldInformationComponent = props => {
         <Modal 
             open = {isOpen}
             onClose = {props.closeHandler}
-        ><BuyableFieldInformationComponent fieldName={fieldName}/>
+        >
+            <Box>
+                <BuyableFieldInformationComponent fieldName={fieldName}/>
+            </Box>
         </Modal>
     )
     if (isOtherField) return (
         <Modal 
             open = {isOpen}
             onClose = {props.closeHandler}
-        ><OtherFieldsInformationComponent fieldName={fieldName} />
+        >
+            <Box>
+                <OtherFieldsInformationComponent fieldName={fieldName} />
+            </Box>
         </Modal>
     )
     return (

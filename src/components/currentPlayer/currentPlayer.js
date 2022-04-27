@@ -12,6 +12,7 @@ const CurrentPlayerIndicator = props => {
     const color = useSelector(state => state.playerSlice.currentPlayer);
     const dispatch = useDispatch();
     const switchPlayer = () => dispatch(nextPlayer());
+    console.log('CurrentPlayerIndicator')
 
     return (
         <div className={styles.wrapper}>
