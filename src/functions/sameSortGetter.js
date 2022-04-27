@@ -37,7 +37,7 @@ const getTargetPlayerEstatesNames = (descriptors, playerName) => Object.keys(get
 const areAllEstatesSamePlayer = (descriptor, descriptors, player) => {
     const queriedCountry = descriptor.country;
     const owner = descriptor.owner;
-    if (owner === undefined || country === undefined) return false;
+    if (owner === undefined || queriedCountry === undefined) return false;
     if (owner === 'bank') return false;
     return descriptors.reduce((acc, item) => {
         if (acc === false) return false;

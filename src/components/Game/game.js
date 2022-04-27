@@ -8,6 +8,7 @@ import DicesRoller from '../dicesRoller/dicesRoller.js'
 import FieldActionComponent from '../fieldActionComponent/fieldActionComponent.js'
 import FieldInformationComponent from '../fieldInformationComponent/fieldInformationComponent.js';
 import CurrentPlayerIndicator from '../currentPlayer/currentPlayer.js'
+import ManagementPanel from '../ManagementPanel/managementPanel.js'
 import { Button } from '@material-ui/core';
 
 const Pawns = props => {
@@ -19,12 +20,24 @@ const Pawns = props => {
     )
     return pawns;
 }
+const OpenManagementPanelButton = props => {
+    const {open, setOpen} = props;
+    const openPanel = () => setOpen(true);
+    return (
+        <Button
+            onClick={openPanel}
+            >
+            Open Management
+        </Button>
+    )
+}
 
 const Game = props => {
     const store = useStore();
     const [fieldActionOpen, setFieldActionOpen] = useState(false);
     const [fieldInformationOpen, setFieldInformationOpen] = useState(false);
     const [currentlyViewedField, setCurrentlyViewedField] = useState(0);
+    const [openManagement, setOpenManagement] = useState(false);
     useEffect(() => {console.log(store.getState())})
 
     return (
@@ -33,8 +46,14 @@ const Game = props => {
             <FieldInformationComponent index = {currentlyViewedField} isOpen = {fieldInformationOpen} closeHandler = {() => setFieldInformationOpen(false)}/>
             <DicesRoller />
             <CurrentPlayerIndicator />
+            <OpenManagementPanelButton
+                open = {openManagement}
+                setOpen = {setOpenManagement}
+            />
+
             <Board fieldHandlers = {{informationOpenHandler: setFieldInformationOpen, setViewedFieldHandler: setCurrentlyViewedField}}/>
             <Pawns openFieldActionHandler = {setFieldActionOpen}/>
+            <ManagementPanel open = {openManagement}/>
             <Button onClick = {() => {
                 console.log('State', store.getState())
             }}>{'Log state'}</Button>

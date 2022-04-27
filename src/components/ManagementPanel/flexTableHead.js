@@ -11,12 +11,12 @@ const headerDataGetter = data => data.payload;
 
 const FlexTableHead =  props => {
     const {orderById, orderDirection, headerDescriptors, changeSortDirection} = props;
-
+    const headers = Object.values(headerDescriptors);
     return (
         <TableHead>
             <TableRow>
-                {headerDescriptors.map(cell => {
-                    id = headerDataGetter(cell);
+                {headers.map(cell => {
+                    const id = headerDataGetter(cell);
                     return (
                         <TableCell
                             key={id}
@@ -37,10 +37,10 @@ const FlexTableHead =  props => {
 }
 
 FlexTableHead.propTypes = {
-   headerDescriptors: PropTypes.any,
-   orderById = PropTypes.string,
-   orderDirection = PropTypes.oneOf(['asc', 'desc']),
-   changeSortDirection = PropTypes.func
+   headerDescriptors: PropTypes.any.isRequired,
+   orderById: PropTypes.string,
+   orderDirection: PropTypes.oneOf(['asc', 'desc']),
+   changeSortDirection: PropTypes.func
 }
 
 export default FlexTableHead;
