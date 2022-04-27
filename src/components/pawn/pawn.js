@@ -95,6 +95,8 @@ const Pawn = props => {
         }
     }, [fieldNumber]);
 
+    console.log('Pawn')
+
     return (
         <div 
             ref = {pawn}

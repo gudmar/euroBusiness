@@ -23,6 +23,7 @@ const Pawns = props => {
 const OpenManagementPanelButton = props => {
     const {open, setOpen} = props;
     const openPanel = () => setOpen(true);
+    console.log('OpenManagementPalneButton')
     return (
         <Button
             onClick={openPanel}
