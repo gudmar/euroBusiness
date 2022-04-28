@@ -50,9 +50,17 @@ const areAllEstatesSamePlayer = (descriptor, descriptors, player) => {
     }, true)
 }
 
+const getSameSetEstates = (descriptors, estateCountry) => {
+    const keys = Object.keys(descriptors);
+    return keys.reduce((acc, key) => {
+        if (descriptors[key] === estateCountry) Object.assign(acc, descriptors[key]);
+    }, {})
+}
+
 export { 
     getTargetPlayerBelongings, 
     getSameTypes, 
     getTargetPlayerEstatesNames,
-    areAllEstatesSamePlayer
+    areAllEstatesSamePlayer,
+    getSameSetEstates
 };

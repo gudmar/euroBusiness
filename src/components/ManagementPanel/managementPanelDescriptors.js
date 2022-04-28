@@ -1,5 +1,5 @@
 import { getTargetPlayerEstatesNames } from '../../functions/sameSortGetter.js'
-import { getNrOfCitiesPlayerHas, countVisitFeeChecker } from '../../state/boardFields.js'
+import { getNrOfCitiesPlayerHas, assumpVisitFeeChecker } from '../../state/boardFields.js'
 
 const headerDescriptors = {
     country: {
@@ -60,8 +60,7 @@ const descriptorReducer = (key, descriptor, fieldName, descriptors) => {
             const player = descriptor.owner;
             const playersEstates = getTargetPlayerEstatesNames(descriptors, player);
             const rate = getNrOfCitiesPlayerHas(descriptors, player, descriptor.country);
-            const fee = countVisitFeeChecker(descriptor)
-            debugger
+            const fee = assumpVisitFeeChecker(descriptor);
             return fee;
         case 'owner':
             return descriptor.owner;

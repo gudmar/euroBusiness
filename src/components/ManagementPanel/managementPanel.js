@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
-import FlexTable from './flexTable.js'
+import FlexTable from './flexTable.js';
+import React, { useState } from 'react';
 import {
     headerDescriptors,
     headerOrder,
@@ -12,21 +13,29 @@ import {
     DialogContent,
     DialogActions,
     Button,
+    Box,
 } from '@material-ui/core';
+import useStyles from './managementPanelStyles.js';
 
 const ManagementPanel = props => {
-    const { open } = props;
+    // const { open, setOpen } = useState(props.open);
+    const {open, setOpen} = props;
     const boardDescriptors = useSelector(store => store.boardSlice.fieldDescriptors);
     const playerDescriptors = useSelector(store => store.playerSlice);
     const headerDescriptors = getHeaderDescriptors(headerOrder);
     const bodyDescriptors = getBody(boardDescriptors, headerOrder);
-    const close = () => open = false;
+    const classes = useStyles();
+    const close = () => setOpen(false);
     return (
         <Dialog 
             fullWidth={true}
             open = {open}
             onClose = {close}
         >
+        <Box className={classes.headSection}>
+            <span className={classes.title}>Management panel</span>
+        </Box>
+        
             <DialogContent>
                 <FlexTable
                     headerDescriptors={headerDescriptors}

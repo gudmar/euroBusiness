@@ -10,6 +10,7 @@ import FlexTableHead from './flexTableHead.js'
 // import { useSelector, useDispatch } from 'react-redux/index.js';
 import { useReducer } from 'react/index.js';
 import { TableContainer, TableBody, TableRow, TableCell, Table } from '@material-ui/core';
+import { maxHeight } from '@material-ui/system';
 
 
 
@@ -89,6 +90,7 @@ const FlexTable = (props) => {
     // const headerDescriptors = getHeaderDescriptors(headerOrder);
     // const bodyDescriptors = getBody(boardDescriptors, headerOrder);
     const {bodyDescriptors, headerDescriptors} = props;
+    const maxHeight = props.maxHeight || '50vh';
     const initialLocalState = getInitialState(bodyDescriptors, headerDescriptors);
     const reducer = useReducer();
     const [localState, localDispatch] = useReducer(reducer, initialLocalState);
@@ -96,8 +98,8 @@ const FlexTable = (props) => {
     const handleSearch = filter => localDispatch(action('SEARCH', filter))
 
     return (
-        <TableContainer>
-            <Table>
+        <TableContainer style={{maxHeight: maxHeight}}>
+            <Table stickyHeader>
                 <FlexTableHead 
                     headerDescriptors={headerDescriptors}
                     orderById={localState.orderById}
@@ -129,7 +131,8 @@ const FlexTable = (props) => {
 
 FlexTable.propTypes = {
    headerDescriptors: PropTypes.any.isRequired,
-   bodyDescriptors: PropTypes.any.isRequired
+   bodyDescriptors: PropTypes.any.isRequired,
+   maxHeight: PropTypes.string,
 }
 
 export default FlexTable;

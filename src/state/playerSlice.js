@@ -1,34 +1,10 @@
 
 import { createSlice } from "@reduxjs/toolkit";
-
-const defaultPlayer = (name, color, controller = 'human', hidden = false) => {
-    return {
-        name: name,
-        color: color,
-        fieldNumber: 0,
-        cash: 3000,
-        extraCards: [],
-        turnsToStale: 0, // jail etc,
-        controledBy: controller,
-        hidden: hidden,
-    }
-}
+import initialState from "./initialState.js"
 
 const playerSlice = createSlice({
     name: 'playerSlice',
-    initialState: {
-        blue: defaultPlayer('Player_1', 'blue'),
-        red: defaultPlayer('Player_2', 'red'),
-        // green: defaultPlayer('Player_1', 'green', 'human', true),
-        // orange: defaultPlayer('Player_1', 'orange', 'human', true),
-        green: defaultPlayer('Player_3', 'green'),
-        orange: defaultPlayer('Player_4', 'orange'),
-
-        dublet: 0,
-        diceResult: 0,
-        diceThrown: false,
-        currentPlayer: 'blue',
-    },
+    initialState: initialState.playerSlice,
     reducers: {
         setDiceResult(state, action) {
             const [outcome1, outcome2] = action.payload;
@@ -92,16 +68,28 @@ const playerSlice = createSlice({
     }
 })
 const { actions, reducer } = playerSlice;
-export const { 
-    addField, 
-    print, 
-    updatePosition,
+export const {
     setDiceResult,
-    nextPlayer,
+    throwDice,
+    disactivateDice,
     move,
     moveOneField,
-    disactivateDice,
-    throwDice,
-} = actions;
+    pay,
+    sleep,
+    addExtraCard,
+    useExtraCard,
+    nextPlayer,
+} = actions
+// export const { 
+//     addField, 
+//     print, 
+//     updatePosition,
+//     setDiceResult,
+//     nextPlayer,
+//     move,
+//     moveOneField,
+//     disactivateDice,
+//     throwDice,
+// } = actions;
 // export const { exampleSlice } = exampleSlice.actions;
-export default playerSlice.reducer;
+export default reducer;

@@ -6,12 +6,15 @@ import {
     TableCell,
 } from '@material-ui/core';
 
+import useStyles from './flexTableStyle.js'
+
 
 const headerDataGetter = data => data.payload;
 
 const FlexTableHead =  props => {
     const {orderById, orderDirection, headerDescriptors, changeSortDirection} = props;
     const headers = Object.values(headerDescriptors);
+    const classes = useStyles();
     return (
         <TableHead>
             <TableRow>
@@ -21,6 +24,7 @@ const FlexTableHead =  props => {
                         <TableCell
                             key={id}
                             padding = 'normal'
+                            className={classes.header}
                         >
                             <TableSortLabel
                                 active={orderById === id} // if sorted by column
