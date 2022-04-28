@@ -25,9 +25,6 @@ const getNrOfCitiesPlayerHas = (descriptors, player, country) => {
 
 const countWaterPlantVisitFee = async (object) => {
 
-    TU JEST PROBLEM: descriptorReducer nie obsługuje async, zreszta nie wiadomo czy
-    rzut koscmi cos zwraca
-
     if (object.isPlegded) return 0;
     if (object.owner === 'bank') return 0;
     const { owns, outOf } = getNrOfCitiesPlayerHas(descriptors, object.owner, object.country);
@@ -36,6 +33,14 @@ const countWaterPlantVisitFee = async (object) => {
     return 0;
 }
 const countTaxFee = () => 200;
+
+const asumpWaterPlantVisitFee = object => {
+    if (object.isPlegded) return 0;
+    if (object.owner === 'bank') return 0;
+    const { owns, outOf } = getNrOfCitiesPlayerHas(descriptors, object.owner, object.country);
+    const factor = (owns === outOf) ? 20 : 10;
+    return `${factor} x dice throw result`
+}
 
 const counntParkingFee = () => 400;
 
@@ -54,17 +59,31 @@ const countRailwayVisitFee = (object) => {
     const { owns, outOf } = getNrOfCitiesPlayerHas(descriptors, object.owner, object.country);
     return object.visit[owns];
 }
-const countVisitFeeChecker = (object) => {
+const countExectVisitFeeChecker = async (object) => {
+    console.log(descriptors)
     switch (object.type) {
         case 'city': return countCityVisitFee(object);
         case 'railway': return countRailwayVisitFee(object);
         case 'parking': return counntParkingFee();
         case 'tax': return countTaxFee();
-        case 'waterPlant': return countWaterPlantVisitFee(object);
-        case 'powerStation': return countWaterPlantVisitFee(object);
+        case 'waterPlant': return await countWaterPlantVisitFee(object);
+        case 'powerStation': return await countWaterPlantVisitFee(object);
         default: return 1234;
     }
 }
+
+const assumpVisitFeeChecker = (object) => {
+    switch (object.type) {
+        case 'city': return countCityVisitFee(object);
+        case 'railway': return countRailwayVisitFee(object);
+        case 'parking': return counntParkingFee();
+        case 'tax': return countTaxFee();
+        case 'waterPlant': return asumpWaterPlantVisitFee(object);
+        case 'powerStation': return asumpWaterPlantVisitFee(object);
+        default: return 1234;
+    }
+}
+
 
 const descriptors = {
     Start: {
@@ -517,4 +536,10 @@ const boardInOrder = [
     'Go_to_jail', 'Frankfurt', 'Kolonia', 'Chance_blue_right', 'Bonn', 'East_Railways', 'Chance_red_right', 'Insbruk', 'Tax', 'Wieden'
 ]
 
-export { boardInOrder, descriptors, countVisitFeeChecker,  getNrOfCitiesPlayerHas, }
+export { 
+    boardInOrder, 
+    descriptors,
+    getNrOfCitiesPlayerHas, 
+    assumpVisitFeeChecker,
+    countExectVisitFeeChecker,
+}

@@ -53,7 +53,7 @@ const Game = props => {
 
             <Board fieldHandlers = {{informationOpenHandler: setFieldInformationOpen, setViewedFieldHandler: setCurrentlyViewedField}}/>
             <Pawns openFieldActionHandler = {setFieldActionOpen}/>
-            <ManagementPanel open = {openManagement}/>
+            <ManagementPanel open = {openManagement} setOpen = {setOpenManagement}/>
             <Button onClick = {() => {
             }}>{'Log state'}</Button>
         </div>
