@@ -1,4 +1,5 @@
 import initialState from './initialState.js'
+import { areAllEstatesSamePlayer, getSameSetEstates, doAllBelongToSamePleyer } from '../functions/sameSortGetter.js'
 
 const transactionsReducer = (state, {type, payload}) => {
     if (state === undefined || state === null) return initialState;
@@ -47,6 +48,13 @@ const transactionsReducer = (state, {type, payload}) => {
         case 'SELL_ALL_HOUSES':
             return sellHouse(payload);
         case 'PURCHASE_HOUSE':
+            const estate = payload;
+            const country = state.boardSlice[estate].country;
+            const sameSortDescriptors = getSameSetEstates(state.boardSlice, country);
+            const doBelongToPlayer = doAllBelongToSamePleyer(state.boardSlice, estate);
+            if (!doBelongToPlayer) return state;
+            //Check if other fields have more or same number of houses,
+            // if so then first set houses on them
             return state;
         case 'PURCHASE_HOTEL':
             return state;
