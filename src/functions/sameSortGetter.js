@@ -2,23 +2,29 @@
 // get all railways,
 // get power plant and water plant
 const throwError = (message) => { throw new Error('sameSortGetter: ' + message) };
-const getSameCities = (descriptors, keyToMatch) => {
+const getSameCountries = (descriptors, keyToMatch) => {
     const pattern = descriptors[keyToMatch];
     const { country } = pattern;
-    return descriptors.filter(item => item.country === country)
+    const filtered = Object.keys(descriptors).filter(key => descriptors[key].country === country);
+    const result = filtered.reduce((acc, key) => {
+        acc[key] = descriptors[key];
+        return acc;
+    }, {})
+    return result;
 }
 const getRailways = descriptors => descriptors.filter(item => item.type === 'railway');
 const getWaterPowerPlants = descriptors => descriptors.filter(item => ['powerStation', 'waterPlant'].includes(item.type))
-const getSameTypes = (descriptors, keyToMatch) => {
+const getSameSetOfSameType = (descriptors, keyToMatch) => {
     if (!descriptors) throwError('descriptors undefined');
     if (!keyToMatch) throwError('keyToMatch not defined');
-    if (descriptors[keyToMatch]) throwError('descriptors[keyToMatch] undefined');
+    if (!descriptors[keyToMatch]) throwError('descriptors[keyToMatch] undefined');
     const pattern = descriptors[keyToMatch];
+    
     const type = pattern.type;
     if (!type) throwError('type not known');
     switch(type) {
         case 'city':
-            return getSameCities(descriptors, keyToMatch);
+            return getSameCountries(descriptors, keyToMatch);
         case 'railway':
             return getRailways(descriptors);
         case 'powerStation':
@@ -38,7 +44,6 @@ const getTargetPlayerEstatesNames = (descriptors, playerName) => getTargetPlayer
 const areAllEstatesSamePlayer = (descriptor, descriptors, player) => {
     const queriedCountry = descriptor.country;
     const owner = descriptor.owner;
-    console.log('ARE ALL ESTATES SAME ...', descriptor)
     if (owner === undefined || queriedCountry === undefined) return false;
     if (owner === 'bank') return false;
     return Object.values(descriptors).reduce((acc, item) => {
@@ -70,7 +75,7 @@ const doAllBelongToSamePleyer = (descriptors, estateName) => {
 
 export { 
     getTargetPlayerBelongings, 
-    getSameTypes, 
+    getSameSetOfSameType, 
     getTargetPlayerEstatesNames,
     areAllEstatesSamePlayer,
     getSameSetEstates,
