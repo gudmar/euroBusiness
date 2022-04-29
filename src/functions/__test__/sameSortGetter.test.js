@@ -69,28 +69,28 @@ describe('areAllEstatesSamePlayer', () => {
         const result = areAllEstatesSamePlayer(descriptor, testSet1, player)
         expect(result).toBe(false);
     })
-    // it('Should return false if player Lolek, as Barcelona belongs to Reksio', () => {
-    //     const descriptor = testSet1['Spain'];
-    //     const player = 'Lolek';
-    //     const result = areAllEstatesSamePlayer(descriptor, testSet1, player)
-    //     expect(result).toBe(false);
-    // })
-    // it('Should return false if player is Reksio', () => {
-    //     const descriptor = testSet1['Barcelona'];
-    //     const player = 'Lolek';
-    //     const result = areAllEstatesSamePlayer(descriptor, testSet1, player)
-    //     expect(result).toBe(true);
-    // })
-    // it('Should return fasle if player is Romek', () => {
-    //     const descriptor = testSet1['Berlin'];
-    //     const player = 'Romek';
-    //     const result = areAllEstatesSamePlayer(descriptor, testSet1, player)
-    //     expect(result).toBe(false);
-    // })
-    // it('Should return true if player is mr Been', () => {
-    //     const descriptor = testSet1['Glasgow'];
-    //     const player = 'Mr Been';
-    //     const result = areAllEstatesSamePlayer(descriptor, testSet1, player)
-    //     expect(result).toBe(true);
-    // })
+    it('Should return false if player Lolek, as Barcelona belongs to Reksio', () => {
+        const descriptor = testSet1['Madryt'];
+        const player = 'Lolek';
+        const result = areAllEstatesSamePlayer(descriptor, testSet1, player)
+        expect(result).toBe(false);
+    })
+    it('Should return false if player is not Reksio', () => {
+        const descriptor = testSet1['Barcelona'];
+        const player = 'Lolek';
+        const result = areAllEstatesSamePlayer(descriptor, testSet1, player)
+        expect(result).toBe(false);
+    })
+    it('Should return fasle if player is Romek', () => {
+        const descriptor = testSet1['Berlin'];
+        const player = 'Romek';
+        const result = areAllEstatesSamePlayer(descriptor, testSet1, player)
+        expect(result).toBe(false);
+    })
+    it('Should return true if player is mr Been', () => {
+        const descriptor = testSet1['Glasgow'];
+        const player = 'Mr Been';
+        const result = areAllEstatesSamePlayer(descriptor, testSet1, player)
+        expect(result).toBe(true);
+    })
 })
