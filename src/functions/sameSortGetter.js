@@ -38,9 +38,10 @@ const getTargetPlayerEstatesNames = (descriptors, playerName) => getTargetPlayer
 const areAllEstatesSamePlayer = (descriptor, descriptors, player) => {
     const queriedCountry = descriptor.country;
     const owner = descriptor.owner;
+    console.log('ARE ALL ESTATES SAME ...', descriptors)
     if (owner === undefined || queriedCountry === undefined) return false;
     if (owner === 'bank') return false;
-    return descriptors.reduce((acc, item) => {
+    return Object.values(descriptors).reduce((acc, item) => {
         if (acc === false) return false;
         if (item.country === queriedCountry){
             if (item.owner === owner) return true;
@@ -57,10 +58,21 @@ const getSameSetEstates = (descriptors, estateCountry) => {
     }, {})
 }
 
+const doAllBelongToSamePleyer = (descriptors, estateName) => {
+    const country = descriptors[estateName].country;
+    const player = descriptors[estateName].owner;
+    const values = Object.values(descriptors);
+    return values.reduce((acc, val) => {
+        if (val.country !== country) return false;
+        return true;
+    }, true)
+}
+
 export { 
     getTargetPlayerBelongings, 
     getSameTypes, 
     getTargetPlayerEstatesNames,
     areAllEstatesSamePlayer,
-    getSameSetEstates
+    getSameSetEstates,
+    doAllBelongToSamePleyer,
 };
