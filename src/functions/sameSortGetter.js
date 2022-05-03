@@ -2,18 +2,38 @@
 // get all railways,
 // get power plant and water plant
 const throwError = (message) => { throw new Error('sameSortGetter: ' + message) };
-const getSameCountries = (descriptors, keyToMatch) => {
-    const pattern = descriptors[keyToMatch];
+
+const getSameCountries = (descriptor, keyToMatch) => {
+    const pattern = descriptor[keyToMatch];
     const { country } = pattern;
-    const filtered = Object.keys(descriptors).filter(key => descriptors[key].country === country);
+    const filtered = Object.keys(descriptor).filter(key => descriptor[key].country === country);
     const result = filtered.reduce((acc, key) => {
-        acc[key] = descriptors[key];
+        acc[key] = descriptor[key];
         return acc;
     }, {})
     return result;
 }
-const getRailways = descriptor => Object.values(descriptor).filter(item => item.type === 'railway');
-const getWaterPowerPlants = descriptors => descriptors.filter(item => ['powerStation', 'waterPlant'].includes(item.type))
+
+const getSameKeyTypes = keyType => (descriptor, keyToMatch) => {
+    const pattern = descriptor[keyToMatch];
+    const keyTypeValue = pattern[keyType]
+    const filtered = Object.keys(descriptor).filter(key => descriptor[key][keyType] === keyTypeValue);
+    const result = filtered.reduce((acc, key) => {
+        acc[key] = descriptor[key];
+        return acc;
+    }, {})
+    return result;
+}
+
+const getRailways = (descriptor, keyToMatch) => {
+    return getSameKeyTypes('type')(descriptor,keyToMatch);
+}
+
+const getWaterPowerPlants = (descriptor, keyToMatch) => {
+    const set = getSameKeyTypes('country')(descriptor, keyToMatch);
+    return set;
+}
+
 const getSameSetOfSameType = (descriptors, keyToMatch) => {
     if (!descriptors) throwError('descriptors undefined');
     if (!keyToMatch) throwError('keyToMatch not defined');
@@ -26,11 +46,11 @@ const getSameSetOfSameType = (descriptors, keyToMatch) => {
         case 'city':
             return getSameCountries(descriptors, keyToMatch);
         case 'railway':
-            return getRailways(descriptors);
+            return getRailways(descriptors, keyToMatch);
         case 'powerStation':
-            return getWaterPowerPlants(descriptors);
+            return getWaterPowerPlants(descriptors, keyToMatch);
         case 'waterPlant' :
-            return getWaterPowerPlants(descriptors);
+            return getWaterPowerPlants(descriptors, keyToMatch);
         default: return null;
     }
 }
