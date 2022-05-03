@@ -2,6 +2,7 @@ import  {
     areAllEstatesSamePlayer,
     getSameSetOfSameType,
     getTargetPlayerBelongings,
+    doAllBelongToSamePlayer,
 }  from '../sameSortGetter.js';
 
 
@@ -133,7 +134,7 @@ const testSet1 = {
 
 }
 
-describe('areAllEstatesSamePlayer', () => {
+describe('sameSortGetter: areAllEstatesSamePlayer', () => {
 
     it('Should return true if owner is Bolek and Greece', () => {
         const descriptor = testSet1['Ateny'];
@@ -173,7 +174,7 @@ describe('areAllEstatesSamePlayer', () => {
     })
 })
 
-describe('getSameSetOfSameType should return proper values', () => {
+describe('sameSortGetter: getSameSetOfSameType should return proper values', () => {
     it('Should return London, Glasgow, Liverpool if keyToMatch is London, or Galsgow', () => {
         const result1 = getSameSetOfSameType(testSet1, 'London');
         const {London, Glasgow, Liverpool} = testSet1;
@@ -198,7 +199,7 @@ describe('getSameSetOfSameType should return proper values', () => {
     });
 })
 
-describe('getTargetPlayerBelongings', () => {
+describe('sameSortGetter: getTargetPlayerBelongings', () => {
     it('Should return all Boleks belongings', () => {
         const { Saloniki, Ateny } = testSet1;
         const expected = {Saloniki, Ateny};
@@ -211,6 +212,17 @@ describe('getTargetPlayerBelongings', () => {
         console.log('result', result)
         console.log('expected', expected)
         expect(expected).toEqual(result)
+    })
+})
+
+describe('sameSortGetter: soAllBelongToSamePlayer should work as expected', () => {
+    it('Should return true for Saloniki', () => {
+        const result = doAllBelongToSamePlayer(testSet1, 'Saloniki');
+        expect(result).toBe(true);
+    });
+    it('Should return true for railways (warning: belongs to bank)', () => {
+        const result = doAllBelongToSamePlayer(testSet1, 'South_Railways');
+        expect(result).toBe(true)
     })
 })
 
