@@ -89,10 +89,13 @@ const getSameSetEstates = (descriptors, estateCountry) => {
 
 const doAllBelongToSamePlayer = (descriptors, estateName) => {
     const country = descriptors[estateName].country;
+    console.log('country', country)
     const player = descriptors[estateName].owner;
+    console.log('player', player)
     const values = Object.values(descriptors);
+    console.log('values', values)
     return values.reduce((acc, val) => {
-        if (val.country !== country) return false;
+        if ((val.country === country) && (val.owner === player)) return false;
         return true;
     }, true)
 }
