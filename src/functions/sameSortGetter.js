@@ -12,7 +12,7 @@ const getSameCountries = (descriptors, keyToMatch) => {
     }, {})
     return result;
 }
-const getRailways = descriptors => descriptors.filter(item => item.type === 'railway');
+const getRailways = descriptor => Object.values(descriptor).filter(item => item.type === 'railway');
 const getWaterPowerPlants = descriptors => descriptors.filter(item => ['powerStation', 'waterPlant'].includes(item.type))
 const getSameSetOfSameType = (descriptors, keyToMatch) => {
     if (!descriptors) throwError('descriptors undefined');
