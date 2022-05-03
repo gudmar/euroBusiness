@@ -106,11 +106,34 @@ const testSet1 = {
         owner:'bank',
         isPlagded: false,
         nrInSet: 4,
-    }
+    },
+    Water_plant: {
+        country: 'Plant',
+        type: 'waterPlant',
+        price: 300,
+        mortage: 150,
+        owner: 'bank',
+        nrInSet: 2,
+        boardFieldNumber: 29,
+        visit: [ '10 x thrown dice result', '20 x thrown dice result'],
+        isPlegded: false,
+    },
+    Power_Station: {
+        country: 'Plant',
+        type: 'powerStation',
+        price: 300,
+        mortage: 150,
+        owner: 'bank',
+        nrInSet: 2,
+        boardFieldNumber: 13,
+        visit: [ '10 x thrown dice result', '20 x thrown dice result'],
+        isPlegded: false,
+    },
 
 }
 
 describe('areAllEstatesSamePlayer', () => {
+
     it('Should return true if owner is Bolek and Greece', () => {
         const descriptor = testSet1['Ateny'];
         const player = 'Bolek';
@@ -155,14 +178,21 @@ describe('getSameSetOfSameType should return proper values', () => {
         const {London, Glasgow, Liverpool} = testSet1;
         const expected = { London, Glasgow, Liverpool }
         expect(result1).toEqual(expected);
-    }),
+    });
     it('Sould return all railways', () => {
         const result = getSameSetOfSameType(testSet1, 'South_Railways');
         const { South_Railways, North_Railways, West_Railways, East_Railways } = testSet1;
-        const expected = [ South_Railways, North_Railways, West_Railways, East_Railways ];
+        const expected = { South_Railways, North_Railways, West_Railways, East_Railways };
+        console.log('result', result)
+        console.log(expected)
         expect(result).toEqual(expected);
-    }),
+    });
     it('Should return water and power plant', () => {
-        
-    })
+        const result = getSameSetOfSameType(testSet1, 'Power_Station');
+        const {Power_Station, Water_plant} = testSet1;
+        const expected = { Power_Station, Water_plant };
+        console.log('result', result);
+
+        expect(result).toEqual(expected);
+    });
 })
