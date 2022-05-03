@@ -1,6 +1,7 @@
 import  {
     areAllEstatesSamePlayer,
     getSameSetOfSameType,
+    getTargetPlayerBelongings,
 }  from '../sameSortGetter.js';
 
 
@@ -107,7 +108,7 @@ const testSet1 = {
         isPlagded: false,
         nrInSet: 4,
     },
-    Water_plant: {
+    Water_Plant: {
         country: 'Plant',
         type: 'waterPlant',
         price: 300,
@@ -189,10 +190,29 @@ describe('getSameSetOfSameType should return proper values', () => {
     });
     it('Should return water and power plant', () => {
         const result = getSameSetOfSameType(testSet1, 'Power_Station');
-        const {Power_Station, Water_plant} = testSet1;
-        const expected = { Power_Station, Water_plant };
+        const {Power_Station, Water_Plant} = testSet1;
+        const expected = { Power_Station, Water_Plant };
         console.log('result', result);
 
         expect(result).toEqual(expected);
     });
 })
+
+describe('getTargetPlayerBelongings', () => {
+    it('Should return all Boleks belongings', () => {
+        const { Saloniki, Ateny } = testSet1;
+        const expected = {Saloniki, Ateny};
+        expect(expected).toEqual(getTargetPlayerBelongings(testSet1, 'Bolek'));
+    });
+    it('Should return all bank estates', () => {
+        const { Power_Station, Water_Plant, East_Railways, South_Railways,North_Railways, West_Railways } = testSet1;
+        const expected = { Power_Station, Water_Plant, East_Railways, South_Railways,North_Railways, West_Railways };
+        const result = getTargetPlayerBelongings(testSet1, 'bank');
+        console.log('result', result)
+        console.log('expected', expected)
+        expect(expected).toEqual(result)
+    })
+})
+
+
+

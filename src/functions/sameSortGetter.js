@@ -55,8 +55,12 @@ const getSameSetOfSameType = (descriptors, keyToMatch) => {
     }
 }
 
-const getTargetPlayerBelongings = (descriptors, playerName) => {
-    return descriptors.filter(item => item.owner === playerName);
+const getTargetPlayerBelongings = (descriptor, playerName) => {
+    const keys = Object.keys(descriptor);
+    return keys.filter(key => descriptor[key].owner === playerName).reduce((acc, key) => {
+        acc[key] = descriptor[key];
+        return acc;
+    }, {})
 }
 
 const getTargetPlayerEstatesNames = (descriptors, playerName) => getTargetPlayerBelongings(descriptors, playerName);
@@ -83,7 +87,7 @@ const getSameSetEstates = (descriptors, estateCountry) => {
     }, {})
 }
 
-const doAllBelongToSamePleyer = (descriptors, estateName) => {
+const doAllBelongToSamePlayer = (descriptors, estateName) => {
     const country = descriptors[estateName].country;
     const player = descriptors[estateName].owner;
     const values = Object.values(descriptors);
@@ -99,5 +103,5 @@ export {
     getTargetPlayerEstatesNames,
     areAllEstatesSamePlayer,
     getSameSetEstates,
-    doAllBelongToSamePleyer,
+    doAllBelongToSamePlayer,
 };
