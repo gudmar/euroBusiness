@@ -70,7 +70,44 @@ const testSet1 = {
         country: 'UK',
         owner: 'Mr Been',
         type: 'city',
+    },
+    South_Railways: {
+        country: "Railways",
+        type:'railway',
+        price: 400,
+        mortage: 200,
+        owner:'bank',
+        isPlagded: false,
+        nrInSet: 4,
+    },
+    North_Railways: {
+        country: "Railways",
+        type:'railway',
+        price: 400,
+        mortage: 200,
+        owner:'bank',
+        isPlagded: false,
+        nrInSet: 4,
+    },
+    West_Railways: {
+        country: "Railways",
+        type:'railway',
+        price: 400,
+        mortage: 200,
+        owner:'bank',
+        isPlagded: false,
+        nrInSet: 4,
+    },
+    East_Railways: {
+        country: "Railways",
+        type:'railway',
+        price: 400,
+        mortage: 200,
+        owner:'bank',
+        isPlagded: false,
+        nrInSet: 4,
     }
+
 }
 
 describe('areAllEstatesSamePlayer', () => {
@@ -120,7 +157,10 @@ describe('getSameSetOfSameType should return proper values', () => {
         expect(result1).toEqual(expected);
     }),
     it('Sould return all railways', () => {
-
+        const result = getSameSetOfSameType(testSet1, 'South_Railways');
+        const { South_Railways, North_Railways, West_Railways, East_Railways } = testSet1;
+        const expected = [ South_Railways, North_Railways, West_Railways, East_Railways ];
+        expect(result).toEqual(expected);
     }),
     it('Should return water and power plant', () => {
         
