@@ -35,15 +35,16 @@ const transactionsReducer = (state, {type, payload}) => {
             newState.boardSlice.fieldDescriptors[estateIndex].owner = buyer;
             return newState;
         case 'MORTAGE':
-            // const estate = payload;
             // const {owner, mortage, isPlegded, nrOfHouses} = state.boardSlice[estate];
             if (nrOfHouses > 0) return state;
+            const owner = state.boardSlice.fieldDescriptors[estateIndex].owner
             // const newState = cpState(state);
-            newState.boardSlice[estate].isPlegded = true;
-            newState.playerSlice[estate].cash += mortage;
+            newState.boardSlice.fieldDescriptors[estateIndex].isPlegded = true;
+            newState.playerSlice[owner].cash += mortage;
+            // newState.playerSlice[estate].cash += mortage;
             return newState;
         case 'PAY_MORTAGE':
-            const estate = payload;
+            // const estate = payload;
             // const {owner, mortage, isPlegded, nrOfHouses} = state.boardSlice[estate];
             if (!isPlegded) return state;
             // const newState = cpState(state);
