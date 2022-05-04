@@ -223,7 +223,7 @@ const boardFieldView = {
                 direction: '180deg',
 
             },
-            Water_plant: {
+            Water_Plant: {
                 width: 1,
                 color: undefined,
                 symbol: '&#x1F6B0',
