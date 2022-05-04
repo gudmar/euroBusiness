@@ -97,6 +97,7 @@ const cityField = (descriptor, openInfoHandler, variant, index, ref) => {
 const gridIconField = (descriptor, openInfoHandler, variant, index, ref) => {
     const MyIcon = descriptor.icon;
     const symbol = descriptor.symbol;
+    
     const content = () => descriptor.symbol === undefined ? <MyIcon style = {{fontSize: 50}}/> : <span className={`${styles.symbolIcon}`} dangerouslySetInnerHTML={{__html: symbol}} />;
     return (
         // <div className = {`${styles.grid} ${styles.column} ${isRotated(descriptor)}`} style = {{transform: `rotate(${descriptor.direction})`}}>
@@ -164,6 +165,9 @@ const chanceTypes = ['chanceBlue', 'chanceRed']
 const girdTypeSelect = (descriptor, openInfoHandler, index, ref) => {
     const variant = direction2variant(descriptor.direction);
     const type = descriptor.type;
+    console.log('descriptor', descriptor)
+    console.log('openInfoHandler', openInfoHandler)
+    console.log('index', index)
     if (bigIconTypes.includes(type)) return gridIconField(descriptor, openInfoHandler, variant, index, ref);
     if (bigFieldTypes.includes(type)) return hugeField(descriptor, openInfoHandler, variant, index, ref);
     if (cityTypes.includes(type)) return cityField(descriptor, openInfoHandler, variant, index, ref);
@@ -186,6 +190,7 @@ const Grid = (props) => {
     const fieldNumber = props.fieldNumber;
     const elRef = useRef();
     const state = useStore();
+    console.log(props)
 
 
     const dispatch = useDispatch();
@@ -200,9 +205,9 @@ const Grid = (props) => {
         }        
     })
 
-    return (
-        <>{girdTypeSelect(props.descriptor, props.openInformationHandler, index, elRef)}</>
-    )
+    return (            
+               girdTypeSelect(props.descriptor, props.openInformationHandler, index, elRef)
+            )
 }
 
 Grid.propTypes = {

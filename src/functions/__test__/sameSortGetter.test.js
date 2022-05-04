@@ -185,16 +185,12 @@ describe('sameSortGetter: getSameSetOfSameType should return proper values', () 
         const result = getSameSetOfSameType(testSet1, 'South_Railways');
         const { South_Railways, North_Railways, West_Railways, East_Railways } = testSet1;
         const expected = { South_Railways, North_Railways, West_Railways, East_Railways };
-        console.log('result', result)
-        console.log(expected)
         expect(result).toEqual(expected);
     });
     it('Should return water and power plant', () => {
         const result = getSameSetOfSameType(testSet1, 'Power_Station');
         const {Power_Station, Water_Plant} = testSet1;
         const expected = { Power_Station, Water_Plant };
-        console.log('result', result);
-
         expect(result).toEqual(expected);
     });
 })
@@ -209,8 +205,6 @@ describe('sameSortGetter: getTargetPlayerBelongings', () => {
         const { Power_Station, Water_Plant, East_Railways, South_Railways,North_Railways, West_Railways } = testSet1;
         const expected = { Power_Station, Water_Plant, East_Railways, South_Railways,North_Railways, West_Railways };
         const result = getTargetPlayerBelongings(testSet1, 'bank');
-        console.log('result', result)
-        console.log('expected', expected)
         expect(expected).toEqual(result)
     })
 })
