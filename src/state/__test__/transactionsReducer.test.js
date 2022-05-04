@@ -71,6 +71,12 @@ describe('transactionsReducer: MORTAGE should work as expected', () => {
         neapol.owner = 'green';
         return state;
     }
+    const giveNeapolToGreenAndBuidAHouseModifier = (state) => {
+        const neapol = state.boardSlice.fieldDescriptors[neapolIndex];
+        neapol.owner = 'green';
+        neapol.nrOfHouses = 1;
+        return state;
+    }
     const mortageNeapolModifier = state => {
         const neapol = state.boardSlice.fieldDescriptors[neapolIndex];
         neapol.isPlegded = true;
@@ -80,6 +86,12 @@ describe('transactionsReducer: MORTAGE should work as expected', () => {
     it('Neapol should be mortaged succesfully from the green player', () => {
         const startState = getInitialState(giveNeapolToGreenModifier);
         const expectedState = getInitialState(mortageNeapolModifier);
+        const result = transactionsReducer(startState, action('MORTAGE', {estate: 'Neapol'}));
+        expect(result).toEqual(expectedState);
+    })
+    it('Should return initial state if nr of houses > 0 ', () => {
+        const startState = getInitialState(giveNeapolToGreenAndBuidAHouseModifier);
+        const expectedState = getInitialState(giveNeapolToGreenAndBuidAHouseModifier);
         const result = transactionsReducer(startState, action('MORTAGE', {estate: 'Neapol'}));
         expect(result).toEqual(expectedState);
     })
