@@ -1,4 +1,4 @@
-import { descriptorReducer } from "../components/ManagementPanel/managementPanelDescriptors";
+// import { descriptorReducer } from "../components/ManagementPanel/managementPanelDescriptors";
 
 const getRandomInteger = (min, max) => {
     min = Math.ceil(min); max = Math.floor(max);

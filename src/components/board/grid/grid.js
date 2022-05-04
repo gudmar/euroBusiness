@@ -190,7 +190,6 @@ const Grid = (props) => {
     const fieldNumber = props.fieldNumber;
     const elRef = useRef();
     const state = useStore();
-    console.log(props)
 
 
     const dispatch = useDispatch();

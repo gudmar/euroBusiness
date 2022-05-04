@@ -8,6 +8,7 @@ module.exports = {
       '@babel/plugin-transform-runtime',
       '@babel/proposal-class-properties',
       '@babel/transform-regenerator',
-      '@babel/plugin-transform-template-literals'
+      '@babel/plugin-transform-template-literals',
+      ["@babel/plugin-transform-destructuring", { "useBuiltIns": true }],
     ],
   }
