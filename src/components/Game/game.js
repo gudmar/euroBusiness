@@ -55,6 +55,7 @@ const Game = props => {
             <Pawns openFieldActionHandler = {setFieldActionOpen}/>
             <ManagementPanel open = {openManagement} setOpen = {setOpenManagement}/>
             <Button onClick = {() => {
+                console.log(store.getState())
             }}>{'Log state'}</Button>
         </div>
     )
