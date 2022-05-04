@@ -43,10 +43,24 @@ describe('transactionsReducer: PURCHASE should work as expected', () => {
         state.playerSlice.blue.cash -= 120;
         return state;
     }
+    const blueBoughtAtenyModifier = state => {
+        const atenyIndex = getFieldIndex('Ateny');
+        const ateny = state.boardSlice.fieldDescriptors[atenyIndex];
+        ateny.owner = 'blue';
+        state.playerSlice.blue.cash -= 60;
+        state.playerSlice.red.cash += 60;
+        return state;
+    }
     it('Saloniki should be bought by blue player from the bank', () => {
         const expectedState = getInitialState(blueBoughtSalonikiModifier);
         const preState = getInitialState();
         const result = transactionsReducer(preState, action('PURCHASE', {seller: 'bank', buyer: 'blue', price: 120, estate: 'Saloniki'}));
+        expect(result).toEqual(expectedState);
+    });
+    it('Ateny should be bought by blue player from red player', () => {
+        const expectedState = getInitialState(blueBoughtAtenyModifier);
+        const preState = getInitialState();
+        const result = transactionsReducer(preState, action('PURCHASE', {seller: 'red', buyer: 'blue', price: 60, estate: 'Ateny'}));
         expect(result).toEqual(expectedState);
     })
 })
