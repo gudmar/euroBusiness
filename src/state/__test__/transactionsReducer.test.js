@@ -112,6 +112,21 @@ describe('transactionsReducer: PAY_MORTAGE tests', () => {
         state.playerSlice.blue.cash -= Math.floor(140 * 1.1);
         return state;
     }
+    const setBlueSewillaNotEnoughCash = state => {
+        state = cp(state);
+        const sewilla = state.boardSlice.fieldDescriptors[sewillaIndex];
+        sewilla.owner = 'blue';
+        sewilla.isPlegded = true;
+        state.playerSlice.blue.cash = 139;
+        return state;        
+    }
+    const notPlegdedStartStateModifier = state => {
+        state = cp(state);
+        const sewilla = state.boardSlice.fieldDescriptors[sewillaIndex];
+        sewilla.owner = 'blue';
+        return state;        
+    }
+    
     it('Should set plagded of Sewilla to false and get money from blue user account if user has enough money', ()=>{
         const startState = getInitialState(setSewillaToPlagdedModifier);
         const expectedState = getInitialState(setSewillasUnplagdedModifier)
@@ -119,6 +134,15 @@ describe('transactionsReducer: PAY_MORTAGE tests', () => {
         expect(result).toEqual(expectedState);
     })
     it('Should return not changed state if user has not enough dough', () => {
-
+        const startState = getInitialState(setBlueSewillaNotEnoughCash);
+        const expectedState = getInitialState(setBlueSewillaNotEnoughCash);
+        const result = transactionsReducer(startState, action('PAY_MORTAGE', {estate: 'Sewilla'}));
+        expect(result).toEqual(expectedState);
+    })
+    it('Should return not changed state if is not plegded', () => {
+        const startState = getInitialState(notPlegdedStartStateModifier);
+        const expectedState = getInitialState(notPlegdedStartStateModifier);
+        const result = transactionsReducer(startState, action('PAY_MORTAGE', {estate: 'Sewilla'}));
+        expect(result).toEqual(expectedState);
     })
 })

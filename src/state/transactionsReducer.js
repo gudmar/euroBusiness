@@ -50,7 +50,10 @@ const transactionsReducer = (state, {type, payload}) => {
         case 'PAY_MORTAGE':
             // const estate = payload;
             // const {owner, mortage, isPlegded, nrOfHouses} = state.boardSlice[estate];
+            console.log('BEFORE CONDITION', newState.boardSlice.fieldDescriptors[13])
             if (!isPlegded) return state;
+            if (newState.playerSlice[owner].cash < Math.floor(mortage * 1.1)) return state;
+            console.log('AFTER CONDITION ', newState.playerSlice[owner].cash, Math.floor(mortage * 1.1))
             // const newState = cpState(state);
             newState.boardSlice.fieldDescriptors[estateIndex].isPlegded = false;
             newState.playerSlice[owner].cash -= Math.floor(mortage * 1.1);
