@@ -96,3 +96,29 @@ describe('transactionsReducer: MORTAGE should work as expected', () => {
         expect(result).toEqual(expectedState);
     })
 })
+describe('transactionsReducer: PAY_MORTAGE tests', () => {
+    const sewillaIndex = getFieldIndex('Sewilla');
+    const setSewillaToPlagdedModifier = (state) => {
+        state = cp(state);
+        const sewilla = state.boardSlice.fieldDescriptors[sewillaIndex];
+        sewilla.owner = 'blue';
+        sewilla.isPlegded = true;
+        return state;
+    }
+    const setSewillasUnplagdedModifier = state => {
+        const sewilla = state.boardSlice.fieldDescriptors[sewillaIndex];
+        sewilla.owner = 'blue';
+        sewilla.isPlegded = false;
+        state.playerSlice.blue.cash -= Math.floor(140 * 1.1);
+        return state;
+    }
+    it('Should set plagded of Sewilla to false and get money from blue user account if user has enough money', ()=>{
+        const startState = getInitialState(setSewillaToPlagdedModifier);
+        const expectedState = getInitialState(setSewillasUnplagdedModifier)
+        const result = transactionsReducer(startState, action('PAY_MORTAGE', {estate: 'Sewilla'}));
+        expect(result).toEqual(expectedState);
+    })
+    it('Should return not changed state if user has not enough dough', () => {
+
+    })
+})

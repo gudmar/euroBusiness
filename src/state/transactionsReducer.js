@@ -20,7 +20,11 @@ const transactionsReducer = (state, {type, payload}) => {
         newState.playerSlice[owner].cash += toPay;
         return newState;
     }
-    const {seller, buyer, price, estate} = payload;
+    const getPayload = () => payload === undefined ? {} : payload;
+    const {seller} = getPayload();
+    const {buyer} = getPayload();
+    const {price} = getPayload();
+    const {estate} = getPayload();
     const estateIndex = getFieldIndex(state, estate);
     const {owner, mortage, isPlegded, nrOfHouses} = state.boardSlice.fieldDescriptors[estateIndex];
     const newState = cpState(state);
@@ -37,7 +41,7 @@ const transactionsReducer = (state, {type, payload}) => {
         case 'MORTAGE':
             // const {owner, mortage, isPlegded, nrOfHouses} = state.boardSlice[estate];
             if (nrOfHouses > 0) return state;
-            const owner = state.boardSlice.fieldDescriptors[estateIndex].owner
+            // const owner = state.boardSlice.fieldDescriptors[estateIndex].owner
             // const newState = cpState(state);
             newState.boardSlice.fieldDescriptors[estateIndex].isPlegded = true;
             newState.playerSlice[owner].cash += mortage;
@@ -48,8 +52,8 @@ const transactionsReducer = (state, {type, payload}) => {
             // const {owner, mortage, isPlegded, nrOfHouses} = state.boardSlice[estate];
             if (!isPlegded) return state;
             // const newState = cpState(state);
-            newState.boardSlice[estate].isPlegded = false;
-            newState.playerSlice[estate].cash += Math.floor(mortage * 1.1);
+            newState.boardSlice.fieldDescriptors[estateIndex].isPlegded = false;
+            newState.playerSlice[owner].cash -= Math.floor(mortage * 1.1);
             return newState;
         case 'SELL_ONE_HOUSE':
             return sellHouse(payload)
