@@ -9,13 +9,14 @@ const transactionsReducer = (state, {type, payload}) => {
     const sellHouse = payload => {
         const estate = payload.estate;
         const howMany = payload.howMany === undefined ? 1 : payload.howMany;
-        const {owner, housePrice, hotelPrice, nrOfHouses} = payload;
+        const estateIndex = getFieldIndex(state, estate);
+        const {owner, housePrice, hotelPrice, nrOfHouses} = state.boardSlice.fieldDescriptors[estateIndex];
         if (nrOfHouses < howMany) return state;
         const newState = cpState(state);
         const toPay = nrOfHouses === 5 ? 
             2 * housePrice + 0.5  * hotelPrice :
             0.5 * housePrice * howMany;
-        newState.boardSlice[estate].nrOfHouses = nrOfHouses === 5?
+        newState.boardSlice.fieldDescriptors[estateIndex].nrOfHouses = nrOfHouses === 5?
             0 : nrOfHouses - howMany;
         newState.playerSlice[owner].cash += toPay;
         return newState;
@@ -31,30 +32,19 @@ const transactionsReducer = (state, {type, payload}) => {
 
     switch(type) {
         case 'PURCHASE':
-            // const {seller, buyer, price, estate} = payload;
             if (state.playerSlice[buyer].cash < price) return state;
-            // const newState = cpState(state);
             if (seller != 'bank') newState.playerSlice[seller].cash += price;
             if (buyer != 'bank') newState.playerSlice[buyer].cash -= price;
             newState.boardSlice.fieldDescriptors[estateIndex].owner = buyer;
             return newState;
         case 'MORTAGE':
-            // const {owner, mortage, isPlegded, nrOfHouses} = state.boardSlice[estate];
             if (nrOfHouses > 0) return state;
-            // const owner = state.boardSlice.fieldDescriptors[estateIndex].owner
-            // const newState = cpState(state);
             newState.boardSlice.fieldDescriptors[estateIndex].isPlegded = true;
             newState.playerSlice[owner].cash += mortage;
-            // newState.playerSlice[estate].cash += mortage;
             return newState;
         case 'PAY_MORTAGE':
-            // const estate = payload;
-            // const {owner, mortage, isPlegded, nrOfHouses} = state.boardSlice[estate];
-            console.log('BEFORE CONDITION', newState.boardSlice.fieldDescriptors[13])
             if (!isPlegded) return state;
             if (newState.playerSlice[owner].cash < Math.floor(mortage * 1.1)) return state;
-            console.log('AFTER CONDITION ', newState.playerSlice[owner].cash, Math.floor(mortage * 1.1))
-            // const newState = cpState(state);
             newState.boardSlice.fieldDescriptors[estateIndex].isPlegded = false;
             newState.playerSlice[owner].cash -= Math.floor(mortage * 1.1);
             return newState;

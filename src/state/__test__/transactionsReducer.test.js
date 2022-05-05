@@ -145,4 +145,66 @@ describe('transactionsReducer: PAY_MORTAGE tests', () => {
         const result = transactionsReducer(startState, action('PAY_MORTAGE', {estate: 'Sewilla'}));
         expect(result).toEqual(expectedState);
     })
+});
+describe('transactionsReducer: SELL_ONE_HOUSE', () => {
+    const barcelonaIndex = getFieldIndex('Barcelona');
+    const blueInBarcelonaModifier = state => {
+        state = cp(state);
+        const barcelona = state.boardSlice.fieldDescriptors[barcelonaIndex];
+        barcelona.owner = 'blue';
+        barcelona.nrOfHouses = 3;
+        return state;
+    };
+    const expectedBlueInBarcelonaModifier = nrOfHousesToSell => state => {
+        state = cp(state);
+        const barcelona = state.boardSlice.fieldDescriptors[barcelonaIndex];
+        const singleHousePrice = state.boardSlice.fieldDescriptors[barcelonaIndex].housePrice;
+        barcelona.owner = 'blue';
+        barcelona.nrOfHouses = 3 - nrOfHousesToSell;
+        state.playerSlice.blue.cash += nrOfHousesToSell * singleHousePrice * 0.5;
+        return state;
+    };
+    const blueInBarcelonaNoHousesModifier = state => {
+        state = cp(state);
+        const barcelona = state.boardSlice.fieldDescriptors[barcelonaIndex];
+        barcelona.owner = 'blue';
+        barcelona.nrOfHouses = 0;
+        return state;        
+    }
+    const blueHasHotelInBarcelonaModifier = state => {
+        state = cp(state);
+        const barcelona = state.boardSlice.fieldDescriptors[barcelonaIndex];
+        barcelona.owner = 'blue';
+        barcelona.nrOfHouses = 5;
+        return state;                
+    }
+    const blueSellsHotelInBarcelonaModifier = state => {
+        state = cp(state);
+        const barcelona = state.boardSlice.fieldDescriptors[barcelonaIndex];
+        const singleHousePrice = state.boardSlice.fieldDescriptors[barcelonaIndex].housePrice;
+        const singleHotelPrice = state.boardSlice.fieldDescriptors[barcelonaIndex].hotelPrice;
+        barcelona.owner = 'blue';
+        barcelona.nrOfHouses = 0;
+        state.playerSlice.blue.cash += 2 * singleHousePrice + 0.5 * singleHotelPrice;
+        return state;                
+    }
+    
+    it ('Should sell house (not hotel) in Barcelona: owners cash increased, city nrOfHouses reduced', () => {
+        const startState = getInitialState(blueInBarcelonaModifier);
+        const expectedState = getInitialState(expectedBlueInBarcelonaModifier(1));
+        const result = transactionsReducer(startState, action('SELL_ONE_HOUSE', {estate: 'Barcelona', howMany: 1}))
+        expect(result).toEqual(expectedState);
+    });
+    it ('Should return not changed state if no houses', () => {
+        const startState = getInitialState(blueInBarcelonaNoHousesModifier);
+        const expectedState = getInitialState(blueInBarcelonaNoHousesModifier);
+        const result = transactionsReducer(startState, action('SELL_ONE_HOUSE', {estate: 'Barcelona', howMany: 1}))
+        expect(result).toEqual(expectedState);
+    });
+    it ('Should return sell a hotel if there is one: reduce houses number from 5 to 0, increase users account by half of its value and by value of 2 houses,', () => {
+        const startState = getInitialState(blueHasHotelInBarcelonaModifier);
+        const expectedState = getInitialState(blueSellsHotelInBarcelonaModifier);
+        const result = transactionsReducer(startState, action('SELL_ONE_HOUSE', {estate: 'Barcelona', howMany: 1}))
+        expect(result).toEqual(expectedState);
+    })
 })
