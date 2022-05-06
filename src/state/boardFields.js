@@ -12,15 +12,15 @@ const throwDices = async () => {
 }
 
 const getNrOfCitiesPlayerHas = (descriptors, player, country) => {
-    let nrSoFar = 0;
-    let wholeNumber = 0;
-    descriptors.forEach( item => {
-        if ((item.country === country) && (item.owner === player)) {
-            wholeNumber = item.nrInSet;
-            nrSoFar += 1;
-        }
-    });
-    return { owns: nrSoFar, outOf: wholeNumber }
+    // From a single country | player === color
+    console.log(descriptors, player, country);
+    const result = Object.values(descriptors).reduce((acc,item) => {
+        if ((item.country === country) && (item.owner === player)) acc.owns += 1;
+        if (item.country === country) acc.outOf += 1;
+        return acc;
+    }, {owns: 0, outOf: 0});
+    console.log('Result: ', result)
+    return result;
 }
 
 const countWaterPlantVisitFee = async (object) => {
