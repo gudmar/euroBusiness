@@ -206,5 +206,7 @@ describe('transactionsReducer: SELL_ONE_HOUSE', () => {
         const expectedState = getInitialState(blueSellsHotelInBarcelonaModifier);
         const result = transactionsReducer(startState, action('SELL_ONE_HOUSE', {estate: 'Barcelona', howMany: 1}))
         expect(result).toEqual(expectedState);
-    })
+    });
+
+
 })
