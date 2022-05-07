@@ -1,36 +1,23 @@
 // import { descriptorReducer } from "../components/ManagementPanel/managementPanelDescriptors";
-
-const getRandomInteger = (min, max) => {
-    min = Math.ceil(min); max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min + 1)) + min
-}
-
-const throwDices = async () => {
-    return new Promise((resolve) => { // Promise in case animation for throwing is made
-        resolve(getRandomInteger(2, 12))
-    })
-}
+import throwDices from '../functions/throwDices.js'
 
 const getNrOfCitiesPlayerHas = (descriptors, player, country) => {
     // From a single country | player === color
-    console.log(descriptors, player, country);
     const result = Object.values(descriptors).reduce((acc,item) => {
         if ((item.country === country) && (item.owner === player)) acc.owns += 1;
         if (item.country === country) acc.outOf += 1;
         return acc;
     }, {owns: 0, outOf: 0});
-    console.log('Result: ', result)
     return result;
 }
 
-const countWaterPlantVisitFee = async (object) => {
-
+const countWaterPlantVisitFee = async (descriptors, object) => {
     if (object.isPlegded) return 0;
     if (object.owner === 'bank') return 0;
     const { owns, outOf } = getNrOfCitiesPlayerHas(descriptors, object.owner, object.country);
     const diceResult = await throwDices();
     if (owns === outOf) return diceResult * 20;
-    return 0;
+    return diceResult * 10;
 }
 const countTaxFee = () => 200;
 
@@ -542,4 +529,6 @@ export {
     getNrOfCitiesPlayerHas, 
     assumpVisitFeeChecker,
     countExectVisitFeeChecker,
+    countWaterPlantVisitFee,
+    throwDices,
 }
