@@ -54,16 +54,23 @@ const testState = {
         country: 'UK',
         owner: 'Mr Been',
         type: 'city',
+        isPlegded: false,
+        nrOfHouses: 0,
     },
     Glasgow: {
         country: 'UK',
         owner: 'Mr Been',
         type: 'city',
+        isPlegded: false,
+        nrOfHouses: 0,
     },
     Liverpool: {
         country: 'UK',
         owner: 'Mr Been',
         type: 'city',
+        isPlegded: false,
+        visit: [30, 140, 400, 1100, 1500, 1900],
+        nrOfHouses: 0,
     },
     South_Railways: {
         country: "Railways",

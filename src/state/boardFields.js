@@ -23,7 +23,7 @@ const getNotPlegdedNrOfCitiesPlayerHas = (descriptors, player, country) => {
 const countWaterPlantVisitFee = async (descriptors, object) => {
     if (object.isPlegded) return 0;
     if (object.owner === 'bank') return 0;
-    const { owns, outOf } = getNotPlegdedNrOfCitiesPlayerHas(descriptors, object.owner, object.country);
+    const { owns, outOf } = getNrOfCitiesPlayerHas(descriptors, object.owner, object.country);
     const diceResult = await throwDices();
     if (owns === outOf) return diceResult * 20;
     return diceResult * 10;
@@ -33,7 +33,7 @@ const countTaxFee = () => 200;
 const asumpWaterPlantVisitFee = (descriptors, object) => {
     if (object.isPlegded) return 0;
     if (object.owner === 'bank') return 0;
-    const { owns, outOf } = getNotPlegdedNrOfCitiesPlayerHas(descriptors, object.owner, object.country);
+    const { owns, outOf } = getNrOfCitiesPlayerHas(descriptors, object.owner, object.country);
     const factor = (owns === outOf) ? 20 : 10;
     return `${factor} x dice throw result`
 }
@@ -41,10 +41,11 @@ const asumpWaterPlantVisitFee = (descriptors, object) => {
 const counntParkingFee = () => 400;
 
 const countCityVisitFee = (descriptors, object) => {
+    const {owns: ownsErrorCheck, outOf: outOfErrorCheck} = getNotPlegdedNrOfCitiesPlayerHas(descriptors, object.owner, object.country);
+    if ((ownsErrorCheck != outOfErrorCheck) && object.nrOfHouses > 0) throw new Error('In countCityVisitFee in boardFields: one city is plegded but there are houses');
+    const {owns, outOf} = getNrOfCitiesPlayerHas(descriptors, object.owner, object.country);
     if (object.owner === 'bank') return 0;
     if (object.isPlegded) return 0;
-    if (object.nrOfHouses === 0);
-    const {owns, outOf} = getNrOfCitiesPlayerHas(descriptors, object.owner, object.country);
     const feeToPay = object.visit[object.nrOfHouses];
     if ((owns === outOf) && (object.nrOfHouses === 0)) return feeToPay * 2;
     return feeToPay;
@@ -52,7 +53,7 @@ const countCityVisitFee = (descriptors, object) => {
 const countRailwayVisitFee = (descriptors, object) => {
     if (object.owner === 'bank') return 0;
     if (object.isPlegded) return 0;
-    const { owns, outOf } = getNrOfCitiesPlayerHas(descriptors, object.owner, object.country);
+    const { owns, outOf } = getNotPlegdedNrOfCitiesPlayerHas(descriptors, object.owner, object.country);
     return object.visit[owns];
 }
 const countExectVisitFeeChecker = async (object) => {
@@ -540,5 +541,6 @@ export {
     asumpWaterPlantVisitFee,
     countExectVisitFeeChecker,
     countWaterPlantVisitFee,
+    countCityVisitFee,
     throwDices,
 }
