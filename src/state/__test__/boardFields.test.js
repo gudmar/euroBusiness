@@ -1,11 +1,14 @@
+// https://medium.com/welldone-software/jest-how-to-mock-a-function-call-inside-a-module-21c05c57a39f
+// Mocking an internal function. Important to use not default imports
+
 import testState from './stateForTests.js'
 import { 
     getNrOfCitiesPlayerHas,
-    // throwDices,
     countWaterPlantVisitFee,
 } from '../boardFields.js'
 
 const throwDice = require('../../functions/throwDices.js');
+const bf = require('../boardFields.js');
 
 
 const cp = state => JSON.parse(JSON.stringify(state));
@@ -54,15 +57,10 @@ describe('boardFields: countWaterPlantVisitFee', () => {
     })
     it('Should return 50 in case 5 is thrown and owner has only one object', async () => {
             const throwDices = jest.spyOn(throwDice, 'throwDices').mockImplementation(async () => 5)
-            throwDice.throwDices = jest.spyOn(throwDice, 'throwDices').mockImplementation(async () => 5)
-            console.log('TH DICES', await throwDices())
-            console.log('TH DICES', await throwDices())
-            console.log('TH DICES', await throwDices())
-            console.log('TH DICES', await throwDices())
             const state = cp(testState);
             const waterPlant = getWaterPlant(state);
             waterPlant.owner = 'Bolek';
-            const result = await countWaterPlantVisitFee(state, waterPlant);
+            const result = await bf.countWaterPlantVisitFee(state, waterPlant);
             const expected = 50;
             expect(result).toBe(expected);        
     })

@@ -1,5 +1,5 @@
 // import { descriptorReducer } from "../components/ManagementPanel/managementPanelDescriptors";
-import throwDices from '../functions/throwDices.js'
+import {throwDices} from '../functions/throwDices.js'
 
 const getNrOfCitiesPlayerHas = (descriptors, player, country) => {
     // From a single country | player === color
