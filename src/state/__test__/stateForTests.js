@@ -89,6 +89,7 @@ const testState = {
         owner:'bank',
         isPlagded: false,
         nrInSet: 4,
+        visit: [50, 100, 200, 400]
     },
     West_Railways: {
         country: "Railways",

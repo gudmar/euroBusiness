@@ -53,8 +53,8 @@ const countCityVisitFee = (descriptors, object) => {
 const countRailwayVisitFee = (descriptors, object) => {
     if (object.owner === 'bank') return 0;
     if (object.isPlegded) return 0;
-    const { owns, outOf } = getNotPlegdedNrOfCitiesPlayerHas(descriptors, object.owner, object.country);
-    return object.visit[owns];
+    const { owns, outOf } = getNrOfCitiesPlayerHas(descriptors, object.owner, object.country);
+    return object.visit[owns - 1];
 }
 const countExectVisitFeeChecker = async (object) => {
     console.log(descriptors)
@@ -542,5 +542,6 @@ export {
     countExectVisitFeeChecker,
     countWaterPlantVisitFee,
     countCityVisitFee,
+    countRailwayVisitFee,
     throwDices,
 }

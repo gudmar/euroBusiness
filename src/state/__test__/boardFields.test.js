@@ -256,3 +256,71 @@ describe('boardFields: countCityVisitFee', () => {
         expect(result).toBe(1900)
     })
 })
+
+describe('boardFields: countRailwayVisitFee', () => {
+    let state = undefined;
+    let nRailway, sRailway, eRailway, wRailway = undefined;
+    const getNRailway = () => state.North_Railways;
+    const getSRailway = () => state.South_Railways;
+    const getERailway = () => state.East_Railways;
+    const getWRailway = () => state.West_Railways;
+    const setVariables = () => {
+        state = cp(testState);
+        nRailway = getNRailway();
+        sRailway = getSRailway();
+        eRailway = getERailway();
+        wRailway = getWRailway();
+    }
+    const setAllTheSameProp = (prop, val) => {
+        nRailway[prop] = sRailway[prop] = eRailway[prop] = wRailway[prop] = val;
+    }
+    it('Should return 0 if mortaged and all railways belong to a single user', () => {
+        setVariables();
+        setAllTheSameProp('owner', 'Bolek');
+        nRailway.isPlegded = true;
+        const result = countRailwayVisitFee(state, nRailway);
+        const expected = 0;
+        expect(result).toBe(expected);
+    });
+    it('Should return 0 if target railway belongs to the bank', () => {
+        setVariables();
+        setAllTheSameProp('owner', 'Bolek');
+        nRailway.owner = 'bank';
+        const result = countRailwayVisitFee(state, nRailway);
+        const expected = 0;
+        expect(result).toBe(expected);
+    });
+    it('Should return 50 if only target railway belongs to a player', () => {
+        setVariables();
+        setAllTheSameProp('owner', 'Bolek');
+        nRailway.owner = 'Lolek';
+        const result = countRailwayVisitFee(state, nRailway);
+        const expected = 50;
+        expect(result).toBe(expected);
+    });
+    it('Should return 100 if 2 railways including target belong to the player', () => {
+        setVariables();
+        setAllTheSameProp('owner', 'Bolek');
+        nRailway.owner = 'Lolek';
+        sRailway.owner = 'Lolek';
+        const result = countRailwayVisitFee(state, nRailway);
+        const expected = 100;
+        expect(result).toBe(expected);
+    })
+    it('Should return 200 if 3 railways including target belong to the player', () => {
+        setVariables();
+        setAllTheSameProp('owner', 'Bolek');
+        sRailway.owner = 'Lolek';
+        const result = countRailwayVisitFee(state, nRailway);
+        const expected = 200;
+        expect(result).toBe(expected);
+    })
+    it('Should return 400 if all railways belong th the player', () => {
+        setVariables();
+        setAllTheSameProp('owner', 'Bolek');
+        sRailway.isPlegded = true; // Should have no influence on result
+        const result = countRailwayVisitFee(state, nRailway);
+        const expected = 400;
+        expect(result).toBe(expected);
+    })
+})
