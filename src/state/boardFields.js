@@ -11,27 +11,36 @@ const getNrOfCitiesPlayerHas = (descriptors, player, country) => {
     return result;
 }
 
+const getNotPlegdedNrOfCitiesPlayerHas = (descriptors, player, country) => {
+    const result = Object.values(descriptors).reduce((acc,item) => {
+        if ((item.country === country) && (item.owner === player) && (!item.isPlegded)) acc.owns += 1;
+        if (item.country === country) acc.outOf += 1;
+        return acc;
+    }, {owns: 0, outOf: 0});
+    return result;    
+}
+
 const countWaterPlantVisitFee = async (descriptors, object) => {
     if (object.isPlegded) return 0;
     if (object.owner === 'bank') return 0;
-    const { owns, outOf } = getNrOfCitiesPlayerHas(descriptors, object.owner, object.country);
+    const { owns, outOf } = getNotPlegdedNrOfCitiesPlayerHas(descriptors, object.owner, object.country);
     const diceResult = await throwDices();
     if (owns === outOf) return diceResult * 20;
     return diceResult * 10;
 }
 const countTaxFee = () => 200;
 
-const asumpWaterPlantVisitFee = object => {
+const asumpWaterPlantVisitFee = (descriptors, object) => {
     if (object.isPlegded) return 0;
     if (object.owner === 'bank') return 0;
-    const { owns, outOf } = getNrOfCitiesPlayerHas(descriptors, object.owner, object.country);
+    const { owns, outOf } = getNotPlegdedNrOfCitiesPlayerHas(descriptors, object.owner, object.country);
     const factor = (owns === outOf) ? 20 : 10;
     return `${factor} x dice throw result`
 }
 
 const counntParkingFee = () => 400;
 
-const countCityVisitFee = (object) => {
+const countCityVisitFee = (descriptors, object) => {
     if (object.owner === 'bank') return 0;
     if (object.isPlegded) return 0;
     if (object.nrOfHouses === 0);
@@ -40,7 +49,7 @@ const countCityVisitFee = (object) => {
     if ((owns === outOf) && (object.nrOfHouses === 0)) return feeToPay * 2;
     return feeToPay;
 }
-const countRailwayVisitFee = (object) => {
+const countRailwayVisitFee = (descriptors, object) => {
     if (object.owner === 'bank') return 0;
     if (object.isPlegded) return 0;
     const { owns, outOf } = getNrOfCitiesPlayerHas(descriptors, object.owner, object.country);
@@ -49,24 +58,24 @@ const countRailwayVisitFee = (object) => {
 const countExectVisitFeeChecker = async (object) => {
     console.log(descriptors)
     switch (object.type) {
-        case 'city': return countCityVisitFee(object);
-        case 'railway': return countRailwayVisitFee(object);
+        case 'city': return countCityVisitFee(descriptors, object);
+        case 'railway': return countRailwayVisitFee(descriptors, object);
         case 'parking': return counntParkingFee();
         case 'tax': return countTaxFee();
-        case 'waterPlant': return await countWaterPlantVisitFee(object);
-        case 'powerStation': return await countWaterPlantVisitFee(object);
+        case 'waterPlant': return await countWaterPlantVisitFee(descriptors, object);
+        case 'powerStation': return await countWaterPlantVisitFee(descriptors, object);
         default: return 1234;
     }
 }
 
 const assumpVisitFeeChecker = (object) => {
     switch (object.type) {
-        case 'city': return countCityVisitFee(object);
-        case 'railway': return countRailwayVisitFee(object);
+        case 'city': return countCityVisitFee(descriptors, object);
+        case 'railway': return countRailwayVisitFee(descriptors, object);
         case 'parking': return counntParkingFee();
         case 'tax': return countTaxFee();
-        case 'waterPlant': return asumpWaterPlantVisitFee(object);
-        case 'powerStation': return asumpWaterPlantVisitFee(object);
+        case 'waterPlant': return asumpWaterPlantVisitFee(descriptors, object);
+        case 'powerStation': return asumpWaterPlantVisitFee(descriptors, object);
         default: return 1234;
     }
 }
@@ -528,6 +537,7 @@ export {
     descriptors,
     getNrOfCitiesPlayerHas, 
     assumpVisitFeeChecker,
+    asumpWaterPlantVisitFee,
     countExectVisitFeeChecker,
     countWaterPlantVisitFee,
     throwDices,
