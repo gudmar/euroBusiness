@@ -3,22 +3,40 @@ const testState = {
         country: 'Greece',
         owner: 'Bolek',
         type: 'city',
+        mortage: false,
+        housePrice: 100,
+        hotelPrice: 100,
+        nrOfHouses: 0,
+        nrOfHousesToPurchace: 0,
+        nrOfHousesToSell: 0,
+        isPlagded: false,
 
     },
     Saloniki: {
         country:'Greece',
         owner: 'Bolek',
         type: 'city',
+        mortage: false,
+        housePrice: 100,
+        hotelPrice: 100,
+        nrOfHouses: 0,
+        nrOfHousesToPurchace: 0,
+        nrOfHousesToSell: 0,
+        isPlagded: false,
+
     },
     Antarktyda: {
         country: 'None',
         owner: undefined,
         type: 'city',
+
     },
     Arktyka: {
         country: 'None',
         owner: undefined,
         type: 'city',
+
+
     },
     Madryt: {
         country: 'Spain',
@@ -29,26 +47,66 @@ const testState = {
         country: 'Spain',
         owner: 'Lolek',
         type: 'city',
+        mortage: false,
+        housePrice: 100,
+        hotelPrice: 100,
+        nrOfHouses: 0,
+        nrOfHousesToPurchace: 0,
+        nrOfHousesToSell: 0,
+        isPlagded: false,
+
     },
     Barcelona: {
         country: 'Spain',
         owner: 'Reksio',
         type: 'city',
+        mortage: false,
+        housePrice: 100,
+        hotelPrice: 100,
+        nrOfHouses: 0,
+        nrOfHousesToPurchace: 0,
+        nrOfHousesToSell: 0,
+        isPlagded: false,
+
     },
     Berlin: {
         country: 'Germany',
         owner:'Romek',
         type: 'city',
+        mortage: false,
+        housePrice: 100,
+        hotelPrice: 100,
+        nrOfHouses: 0,
+        nrOfHousesToPurchace: 0,
+        nrOfHousesToSell: 0,
+        isPlagded: false,
+
     },
     Frankfurt: {
         country: 'Germany',
         owner: 'Atomek',
         type: 'city',
+        mortage: false,
+        housePrice: 100,
+        hotelPrice: 100,
+        nrOfHouses: 0,
+        nrOfHousesToPurchace: 0,
+        nrOfHousesToSell: 0,
+        isPlagded: false,
+
     },
     Munich: {
         country: 'Germany',
         owner: 'Romek',
         type: 'city',
+        mortage: false,
+        housePrice: 100,
+        hotelPrice: 100,
+        nrOfHouses: 0,
+        nrOfHousesToPurchace: 0,
+        nrOfHousesToSell: 0,
+        isPlagded: false,
+
     },
     London: {
         country: 'UK',
