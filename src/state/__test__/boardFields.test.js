@@ -1,6 +1,10 @@
 // https://medium.com/welldone-software/jest-how-to-mock-a-function-call-inside-a-module-21c05c57a39f
 // Mocking an internal function. Important to use not default imports
 
+// const result = async () => await countExectVisitFeeChecker(state, {type:'NotImplemented'});
+// await expect(result).rejects.toThrow();
+//  A way to deal with an async function that shuld throw
+
 import testState from './stateForTests.js'
 import { 
     getNrOfCitiesPlayerHas,
@@ -43,6 +47,17 @@ describe('boardFields: getNrOfCitiesPlayerHas', () => {
         const result = getNrOfCitiesPlayerHas(testState, 'bank', 'Railways');
         const expected = {owns: 4, outOf: 4};
         expect(result).toEqual(expected);
+    })
+    it('Should throw in case descriptors is not defined', () => {
+        const result = () => getNrOfCitiesPlayerHas(undefined, 'bank', 'Railways');
+        expect(result).toThrow();
+    })
+    it('Should throw an error in case player or country are undefined', () => {
+        const state = cp(testState);
+        const playerUndef = () => getNrOfCitiesPlayerHas(state, undefined, 'Railways');
+        const countryUndef = () => getNrOfCitiesPlayerHas(state, 'bank', undefined);
+        expect(playerUndef).toThrow();
+        expect(countryUndef).toThrow();
     })
 })
 
@@ -94,6 +109,25 @@ describe('boardFields: countWaterPlantVisitFee', () => {
         const result = await bf.countWaterPlantVisitFee(state, powerStation);
         const expected = 100;
         expect(result).toBe(expected);
+    })
+    it('Should throw an error in case descriptors is undefined', async () => {
+        const state = cp(testState);
+        const powerStation = getPowerStation(state);
+        const result = async () => await countWaterPlantVisitFee(undefined, powerStation);
+        await expect(result).rejects.toThrow();
+    })
+    it('Should throw an error in case object is undefined', async () => {
+        const state = cp(testState);
+        const powerStation = getPowerStation(state);
+        const result = () => countWaterPlantVisitFee(state, undefined);
+        expect(result).rejects.toThrow();
+    })
+    it('Should throw an error in case owner is not defined', async () => {
+        const state = cp(testState);
+        const powerStation = getPowerStation(state);
+        powerStation.owner = undefined;
+        const result = async () => await countWaterPlantVisitFee(state, powerStation);
+        await expect(result).rejects.toThrow();
     })
 })
 
@@ -162,10 +196,6 @@ describe('boardFields: countCityVisitFee', () => {
         London = getLondon(state);
     }
     it('Should throw and error in case any city of certain country is plegded or not owned by player, and there are houses', () => {
-        // const state = cp(testState);
-        // const Liverpool = getLiverpool(state);
-        // const Glasgow = getGlasgow(state);
-        // const London = getLondon(state);
         setVariables();
         Liverpool.owner = 'Lolek';
         Liverpool.nrOfHouses = 2;
@@ -176,10 +206,6 @@ describe('boardFields: countCityVisitFee', () => {
         expect(result).toThrow();
     });
     it('Should return 30 in case of Liverpool owned by player A and rest of UK owned by other player, and Loverpool not plegded', () => {
-        // const state = cp(testState);
-        // const Liverpool = getLiverpool(state);
-        // const Glasgow = getGlasgow(state);
-        // const London = getLondon(state);
         setVariables();
         Liverpool.owner = 'Lolek';
         London.owner = 'bank';
@@ -255,6 +281,12 @@ describe('boardFields: countCityVisitFee', () => {
         const result = countCityVisitFee(state, Liverpool);
         expect(result).toBe(1900)
     })
+    it('Should throw in case object.owner is not defined', () => {
+        setVariables();
+        Liverpool.owner = undefined;
+        const result = () => countCityVisitFee(state, Liverpool);
+        expect(result).toThrow();
+    })
 })
 
 describe('boardFields: countRailwayVisitFee', () => {
@@ -323,6 +355,12 @@ describe('boardFields: countRailwayVisitFee', () => {
         const expected = 400;
         expect(result).toBe(expected);
     })
+    it('Should throw an error in case object.owner is not defined', () => {
+        setVariables();
+        sRailway.owner = undefined;
+        const result = () => countRailwayVisitFee(state, sRailway);
+        expect(result).toThrow();
+    })
 })
 
 describe('boardField: countExectVisitFeeChecker', () => {
@@ -376,6 +414,34 @@ describe('boardField: countExectVisitFeeChecker', () => {
     it('Should throw if type not recognized', async () => {
         const state = getState();
         const result = async () => await countExectVisitFeeChecker(state, {type:'NotImplemented'});
-        expect(result).toBe(3);
+        await expect(result).rejects.toThrow();
+    })
+    it('Should throw an error in case descriptors or object is undefined', async () => {
+        const state = getState();
+        const resultState = async () => await countExectVisitFeeChecker(undefined, state.Power_Station);
+        const resultObject = async () => await countExectVisitFeeChecker(state, undefined);
+        await expect(resultState).rejects.toThrow()
+        await expect(resultObject).rejects.toThrow()
+    });
+})
+
+describe('boardField, assumpVisitFeeChecker', () => {
+    const getState = () => cp(testState);
+    const setAllTheSameProp = (state, estates, prop, val) => {
+        estates.forEach(estate => state[estate][prop] = val);
+    }
+
+    it('Should throw in case object or descirptors are undefined', () => {
+        const state = getState();
+        const obj = state.Power_Station;
+        const result = () => assumpVisitChecker(undefined, obj);
+        expect(result).toThrow()
+    })
+    it('Should throw in case type is city and owner is undefined', () => {
+        const state = getState();
+        const obj = state.Power_Station;
+        obj.owner = undefined;
+        const result = () => assumpVisitChecker(undefined, obj);
+        expect(result).toThrow()
     })
 })
