@@ -3,6 +3,8 @@ import {throwDices} from '../functions/throwDices.js'
 
 const getNrOfCitiesPlayerHas = (descriptors, player, country) => {
     // From a single country | player === color
+    if (player === undefined) throw new Error('boardField: getNotPlegdedNrOfCIties: Player undefined');
+    if (country === undefined) throw new Error('boardField: getNotPlegdedNrOfCIties: Country undefined');
     const result = Object.values(descriptors).reduce((acc,item) => {
         if ((item.country === country) && (item.owner === player)) acc.owns += 1;
         if (item.country === country) acc.outOf += 1;
@@ -12,6 +14,8 @@ const getNrOfCitiesPlayerHas = (descriptors, player, country) => {
 }
 
 const getNotPlegdedNrOfCitiesPlayerHas = (descriptors, player, country) => {
+    if (player === undefined) throw new Error('boardField: getNotPlegdedNrOfCIties: Player undefined');
+    if (country === undefined) throw new Error('boardField: getNotPlegdedNrOfCIties: Country undefined');
     const result = Object.values(descriptors).reduce((acc,item) => {
         if ((item.country === country) && (item.owner === player) && (!item.isPlegded)) acc.owns += 1;
         if (item.country === country) acc.outOf += 1;
@@ -21,6 +25,8 @@ const getNotPlegdedNrOfCitiesPlayerHas = (descriptors, player, country) => {
 }
 
 const countWaterPlantVisitFee = async (descriptors, object) => {
+    if (object === undefined) throw new Error('boardField: countWaterPlantVisitFee: object given as arg is undefined')
+    if (descriptors === undefined) throw new Error('boardField: countWaterPlantVisitFee: state (descriptors) not passed')
     if (object.isPlegded) return 0;
     if (object.owner === 'bank') return 0;
     const { owns, outOf } = getNrOfCitiesPlayerHas(descriptors, object.owner, object.country);
@@ -31,6 +37,8 @@ const countWaterPlantVisitFee = async (descriptors, object) => {
 const countTaxFee = () => 200;
 
 const assumpWaterPlantVisitFee = (descriptors, object) => {
+    if (object === undefined) throw new Error('boardField: countWaterPlantVisitFee: object given as arg is undefined')
+    if (descriptors === undefined) throw new Error('boardField: countWaterPlantVisitFee: state (descriptors) not passed')
     if (object.isPlegded) return 0;
     if (object.owner === 'bank') return 0;
     const { owns, outOf } = getNrOfCitiesPlayerHas(descriptors, object.owner, object.country);
@@ -41,6 +49,8 @@ const assumpWaterPlantVisitFee = (descriptors, object) => {
 const counntParkingFee = () => 400;
 
 const countCityVisitFee = (descriptors, object) => {
+    if (object === undefined) throw new Error('boardField: countWaterPlantVisitFee: object given as arg is undefined')
+    if (descriptors === undefined) throw new Error('boardField: countWaterPlantVisitFee: state (descriptors) not passed')
     const {owns: ownsErrorCheck, outOf: outOfErrorCheck} = getNotPlegdedNrOfCitiesPlayerHas(descriptors, object.owner, object.country);
     if ((ownsErrorCheck != outOfErrorCheck) && object.nrOfHouses > 0) throw new Error('In countCityVisitFee in boardFields: one city is plegded but there are houses');
     const {owns, outOf} = getNrOfCitiesPlayerHas(descriptors, object.owner, object.country);
@@ -57,7 +67,6 @@ const countRailwayVisitFee = (descriptors, object) => {
     return object.visit[owns - 1];
 }
 const countExectVisitFeeChecker = async (descriptors, object) => {
-    console.log('DUPAAA', object)
     switch (object.type) {
         case 'city': return countCityVisitFee(descriptors, object);
         case 'railway': return countRailwayVisitFee(descriptors, object);
@@ -65,7 +74,7 @@ const countExectVisitFeeChecker = async (descriptors, object) => {
         case 'tax': return countTaxFee();
         case 'waterPlant': return await countWaterPlantVisitFee(descriptors, object);
         case 'powerStation': return await countWaterPlantVisitFee(descriptors, object);
-        default: throw new Error('boardField: countExectVisitFeeChecker: type not recognized');
+        default: throw new Error('boardField: countExectVisitFeeChecker: type not recognized')
     }
 }
 
