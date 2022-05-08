@@ -30,7 +30,7 @@ const countWaterPlantVisitFee = async (descriptors, object) => {
 }
 const countTaxFee = () => 200;
 
-const asumpWaterPlantVisitFee = (descriptors, object) => {
+const assumpWaterPlantVisitFee = (descriptors, object) => {
     if (object.isPlegded) return 0;
     if (object.owner === 'bank') return 0;
     const { owns, outOf } = getNrOfCitiesPlayerHas(descriptors, object.owner, object.country);
@@ -56,28 +56,29 @@ const countRailwayVisitFee = (descriptors, object) => {
     const { owns, outOf } = getNrOfCitiesPlayerHas(descriptors, object.owner, object.country);
     return object.visit[owns - 1];
 }
-const countExectVisitFeeChecker = async (object) => {
-    console.log(descriptors)
+const countExectVisitFeeChecker = async (descriptors, object) => {
+    console.log('DUPAAA', object)
     switch (object.type) {
         case 'city': return countCityVisitFee(descriptors, object);
         case 'railway': return countRailwayVisitFee(descriptors, object);
-        case 'parking': return counntParkingFee();
+        case 'guardedPark': return counntParkingFee();
         case 'tax': return countTaxFee();
         case 'waterPlant': return await countWaterPlantVisitFee(descriptors, object);
         case 'powerStation': return await countWaterPlantVisitFee(descriptors, object);
-        default: return 1234;
+        default: throw new Error('boardField: countExectVisitFeeChecker: type not recognized');
     }
 }
 
 const assumpVisitFeeChecker = (object) => {
+    
     switch (object.type) {
         case 'city': return countCityVisitFee(descriptors, object);
         case 'railway': return countRailwayVisitFee(descriptors, object);
-        case 'parking': return counntParkingFee();
+        case 'guardedPark': return counntParkingFee();
         case 'tax': return countTaxFee();
-        case 'waterPlant': return asumpWaterPlantVisitFee(descriptors, object);
-        case 'powerStation': return asumpWaterPlantVisitFee(descriptors, object);
-        default: return 1234;
+        case 'waterPlant': return assumpWaterPlantVisitFee(descriptors, object);
+        case 'powerStation': return assumpWaterPlantVisitFee(descriptors, object);
+        default: throw new Error('boardField: assumpExectVisitFeeChecker: type not recognized');
     }
 }
 
@@ -538,7 +539,7 @@ export {
     descriptors,
     getNrOfCitiesPlayerHas, 
     assumpVisitFeeChecker,
-    asumpWaterPlantVisitFee,
+    assumpWaterPlantVisitFee,
     countExectVisitFeeChecker,
     countWaterPlantVisitFee,
     countCityVisitFee,

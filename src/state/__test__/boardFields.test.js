@@ -5,7 +5,7 @@ import testState from './stateForTests.js'
 import { 
     getNrOfCitiesPlayerHas,
     countWaterPlantVisitFee,
-    asumpWaterPlantVisitFee,
+    assumpWaterPlantVisitFee,
     countCityVisitFee,
     countRailwayVisitFee,
     countExectVisitFeeChecker,
@@ -97,12 +97,12 @@ describe('boardFields: countWaterPlantVisitFee', () => {
     })
 })
 
-describe('boardField: asumpWaterPlantVisitFee ', () => {
+describe('boardField: assumpWaterPlantVisitFee ', () => {
     it('Should return 0 in case both power station and water plant are owned by the bank', () => {
         const state = cp(testState)
         const powerStation = getPowerStation(state);
         const waterPlant = getWaterPlant(state);
-        const result = asumpWaterPlantVisitFee(state, waterPlant);
+        const result = assumpWaterPlantVisitFee(state, waterPlant);
         const expected = 0;
         expect(result).toBe(expected);
     });
@@ -112,7 +112,7 @@ describe('boardField: asumpWaterPlantVisitFee ', () => {
         const waterPlant = getWaterPlant(state);
         powerStation.owner = 'Bolek';
         powerStation.isPlegded = true;
-        const result = asumpWaterPlantVisitFee(state, powerStation);
+        const result = assumpWaterPlantVisitFee(state, powerStation);
         const expected = 0;
         expect(result).toBe(expected);
     });
@@ -122,7 +122,7 @@ describe('boardField: asumpWaterPlantVisitFee ', () => {
         const waterPlant = getWaterPlant(state);
         waterPlant.owner = 'Lolek'
         powerStation.owner = 'Bolek';
-        const result = asumpWaterPlantVisitFee(state, powerStation);
+        const result = assumpWaterPlantVisitFee(state, powerStation);
         const expected = '10 x dice throw result';
         expect(result).toBe(expected);
     });
@@ -133,7 +133,7 @@ describe('boardField: asumpWaterPlantVisitFee ', () => {
         waterPlant.owner = 'Lolek'
         powerStation.owner = 'Lolek';
         waterPlant.isPlegded = true;
-        const result = asumpWaterPlantVisitFee(state, powerStation);
+        const result = assumpWaterPlantVisitFee(state, powerStation);
         const expected = '20 x dice throw result';
         expect(result).toBe(expected);
     });
@@ -143,7 +143,7 @@ describe('boardField: asumpWaterPlantVisitFee ', () => {
         const waterPlant = getWaterPlant(state);
         waterPlant.owner = 'Lolek'
         powerStation.owner = 'Lolek';
-        const result = asumpWaterPlantVisitFee(state, powerStation);
+        const result = assumpWaterPlantVisitFee(state, powerStation);
         const expected = '20 x dice throw result';
         expect(result).toBe(expected);        
     })
@@ -322,5 +322,60 @@ describe('boardFields: countRailwayVisitFee', () => {
         const result = countRailwayVisitFee(state, nRailway);
         const expected = 400;
         expect(result).toBe(expected);
+    })
+})
+
+describe('boardField: countExectVisitFeeChecker', () => {
+    const getState = () => cp(testState);
+    const setAllTheSameProp = (state, estates, prop, val) => {
+        estates.forEach(estate => state[estate][prop] = val);
+    }
+    it('Should return 400 if 2 houses in Liverpool', async () => {
+        const state = getState();
+        setAllTheSameProp(state, ['Liverpool', 'London', 'Glasgow'], 'owner', 'Bolek');
+        setAllTheSameProp(state, ['Liverpool', 'London', 'Glasgow'], 'nrOfHouses', '2');
+        const result = await countExectVisitFeeChecker(state, state.Liverpool);
+        const expected = 400;
+        expect(result).toBe(expected);
+    });
+    it('Should return 200 if 3 railways belong to the same player', async () => {
+        const state = getState();
+        state.North_Railways.owner = state.South_Railways.owner = state.West_Railways.owner = 'Bolek'
+        const result = await countExectVisitFeeChecker(state, state.North_Railways);
+        const expected = 200;
+        expect(result).toBe(expected);
+    });
+    it('Should return 400 if parking', async () => {
+        const state = getState();
+        const result = await countExectVisitFeeChecker(state, state.Guarded_Parking)
+        const expected = 400;
+        expect(result).toBe(expected);
+    });
+    it('Should return 200 if tax', async () => {
+        const state = getState();
+        const result = await countExectVisitFeeChecker(state, state.Tax)
+        const expected = 200;
+        expect(result).toBe(expected);
+    });
+    it('Should return 100 if power and water plant belong to the same player, water plant is target estate and dice result is 5', async () => {
+        const state = getState();
+        state.Power_Station.owner = state.Water_Plant.owner = 'Bolek';
+        const expected = 100;
+        const throwDices = jest.spyOn(throwDice, 'throwDices').mockImplementation(async () => 5)
+        const result = await bf.countWaterPlantVisitFee(state, state.Power_Station);
+        expect(result).toBe(expected);
+    })
+    it('Should return 50 if only power station beolng to the player and power is target estate', async () => {
+        const state = getState();
+        state.Power_Station.owner = 'Bolek';
+        const expected = 50;
+        const throwDices = jest.spyOn(throwDice, 'throwDices').mockImplementation(async () => 5)
+        const result = await bf.countWaterPlantVisitFee(state, state.Power_Station);
+        expect(result).toBe(expected);
+    })
+    it('Should throw if type not recognized', async () => {
+        const state = getState();
+        const result = async () => await countExectVisitFeeChecker(state, {type:'NotImplemented'});
+        expect(result).toBe(3);
     })
 })

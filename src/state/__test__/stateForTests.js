@@ -131,6 +131,17 @@ const testState = {
         visit: [ '10 x thrown dice result', '20 x thrown dice result'],
         isPlegded: false,
     },
+    Guarded_Parking: {
+        type: 'guardedPark',
+        boardFieldNumber: 5,
+        visit: [400],
+        info: 'You pay $400 for staying one extra trun here. This is mandatory,',
+    },
+    Tax: {
+        type: 'tax',
+        visit: [200],
+        info: 'You pay $200, nothing more happens here.',
+    },
 
 }
 
