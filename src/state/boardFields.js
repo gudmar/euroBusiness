@@ -1,5 +1,6 @@
 // import { descriptorReducer } from "../components/ManagementPanel/managementPanelDescriptors";
-import {throwDices} from '../functions/throwDices.js'
+import {throwDices} from '../functions/throwDices.js';
+import {countries, notCountryTypes} from '../functions/countryTypes.js'
 
 const getNrOfCitiesPlayerHas = (descriptors, player, country) => {
     // From a single country | player === color
@@ -61,6 +62,8 @@ const countCityVisitFee = (descriptors, object) => {
     return feeToPay;
 }
 const countRailwayVisitFee = (descriptors, object) => {
+    if (object === undefined) throw new Error('boardField: countWaterPlantVisitFee: object given as arg is undefined')
+    if (descriptors === undefined) throw new Error('boardField: countWaterPlantVisitFee: state (descriptors) not passed')
     if (object.owner === 'bank') return 0;
     if (object.isPlegded) return 0;
     const { owns, outOf } = getNrOfCitiesPlayerHas(descriptors, object.owner, object.country);
@@ -101,7 +104,7 @@ const descriptors = {
     },
     Ateny: {
         type: 'city',
-        country: 'Greece',
+        country: countries.greece,
         price: 120,
         mortage: 60,
         housePrice: 100,
@@ -110,6 +113,8 @@ const descriptors = {
         owner: 'bank',
         nrOfHouses: 0, // 5 houses === hotel
         nrInSet: 2, // 2 cities in the country
+        nrOfHousesToPurchase: 0,
+        nrOfHousesToSell: 0,
         boardFieldNumber: 2,
         isPlegded: false, // zastawiony
     },
@@ -146,12 +151,14 @@ const descriptors = {
         info: 'Draw a red chance card',
     },
     Saloniki: {
-        country: 'Greece',
+        country: countries.greece,
         type: 'city',
         price: 120,
         mortage: 60,
         housePrice: 100,
         hotelPrice: 100,
+        nrOfHousesToPurchase: 0,
+        nrOfHousesToSell: 0,
         visit: [ 10, 40, 120, 360, 640, 900 ], // 0 houses, 1 house, 2 houses...
         owner: 'bank',
         nrOfHouses: 0, // 5 houses === hotel
@@ -184,7 +191,7 @@ const descriptors = {
         info: 'You go to field 11, jail and spend 2 extra turns there.'
     },
     South_Railways: {
-        country: 'Railways',
+        country: notCountryTypes.railways,
         type: 'railway',
         price: 400,
         mortage: 200,
@@ -195,12 +202,14 @@ const descriptors = {
         isPlegded: false,
     },
     Neapol: {
-        country: 'Italy',
+        country: countries.italy,
         type: 'city',
         price: 200,
         mortage: 100,
         housePrice: 100,
         hotelPrice: 100,
+        nrOfHousesToPurchase: 0,
+        nrOfHousesToSell: 0,
         visit: [ 15, 60, 150, 540, 800, 1100 ], // 0 houses, 1 house, 2 houses...
         owner: 'bank',
         nrOfHouses: 0, // 5 houses === hotel
@@ -209,12 +218,14 @@ const descriptors = {
         isPlegded: false,
     },
     Mediolan: {
-        country: 'Italy',
+        country: countries.italy,
         type: 'city',
         price: 200,
         mortage: 100,
         housePrice: 100,
-        hotelPrice: 100,
+        hotelPrice: 100,        
+        nrOfHousesToPurchase: 0,
+        nrOfHousesToSell: 0,
         visit: [ 15, 60, 150, 540, 800, 1100 ], // 0 houses, 1 house, 2 houses...
         owner: 'bank',
         nrOfHouses: 0, // 5 houses === hotel
@@ -223,12 +234,14 @@ const descriptors = {
         isPlegded: false,
     },
     Rome: {
-        country: 'Italy',
+        country: countries.italy,
         type: 'city',
         price: 240,
         mortage: 120,
         housePrice: 100,
         hotelPrice: 100,
+        nrOfHousesToPurchase: 0,
+        nrOfHousesToSell: 0,
         visit: [ 20, 80, 200, 600, 900, 1200 ], // 0 houses, 1 house, 2 houses...
         owner: 'bank',
         nrOfHouses: 0, // 5 houses === hotel
@@ -237,12 +250,14 @@ const descriptors = {
         isPlegded: false,
     },
     Barcelona: {
-        country: 'Spain',
+        country: countries.spain,
         type: 'city',
         price: 280,
         mortage: 140,
         housePrice: 200,
         hotelPrice: 200,
+        nrOfHousesToPurchase: 0,
+        nrOfHousesToSell: 0,
         visit: [ 20, 100, 300, 900, 1250, 1500 ], // 0 houses, 1 house, 2 houses...
         owner: 'bank',
         nrOfHouses: 0, // 5 houses === hotel
@@ -251,7 +266,7 @@ const descriptors = {
         isPlegded: false,
     },
     Power_Station: {
-        country: 'Plant',
+        country: notCountryTypes.plant,
         type: 'powerStation',
         price: 300,
         mortage: 150,
@@ -262,12 +277,14 @@ const descriptors = {
         isPlegded: false,
     },
     Sewilla: {
-        country: 'Spain',
+        country: countries.spain,
         type: 'city',
         price: 280,
         mortage: 140,
         housePrice: 200,
         hotelPrice: 200,
+        nrOfHousesToPurchase: 0,
+        nrOfHousesToSell: 0,
         visit: [ 20, 100, 300, 900, 1250, 1500 ], // 0 houses, 1 house, 2 houses...
         owner: 'bank',
         nrOfHouses: 0, // 5 houses === hotel
@@ -276,12 +293,14 @@ const descriptors = {
         isPlegded: false,
     },
     Madrit: {
-        country: 'Spain',
+        country: countries.spain,
         type: 'city',
         price: 320,
         mortage: 160,
         housePrice: 200,
         hotelPrice: 200,
+        nrOfHousesToPurchase: 0,
+        nrOfHousesToSell: 0,
         visit: [ 25, 120, 360, 1000, 1400, 1800 ], // 0 houses, 1 house, 2 houses...
         owner: 'bank',
         nrOfHouses: 0, // 5 houses === hotel
@@ -290,7 +309,7 @@ const descriptors = {
         isPlegded: false,
     },
     West_Railways: {
-        country: 'Railways',
+        country: notCountryTypes.railways,
         type: 'railway',
         price: 400,
         mortage: 200,
@@ -301,12 +320,14 @@ const descriptors = {
         isPlegded: false,
     },
     Liverpool: {
-        country: 'UK',
+        country: countries.uk,
         type: 'city',
         price: 360,
         mortage: 180,
         housePrice: 200,
         hotelPrice: 200,
+        nrOfHousesToPurchase: 0,
+        nrOfHousesToSell: 0,
         visit: [ 30, 140, 400, 1100, 1500, 1900 ], // 0 houses, 1 house, 2 houses...
         owner: 'bank',
         nrOfHouses: 0, // 5 houses === hotel
@@ -315,12 +336,14 @@ const descriptors = {
         isPlegded: false,
     },
     Glasgow: {
-        country: 'UK',
+        country: countries.uk,
         type: 'city',
         price: 360,
         mortage: 180,
         housePrice: 200,
         hotelPrice: 200,
+        nrOfHousesToPurchase: 0,
+        nrOfHousesToSell: 0,
         visit: [ 30, 140, 400, 1100, 1500, 1900 ], // 0 houses, 1 house, 2 houses...
         owner: 'bank',
         nrOfHouses: 0, // 5 houses === hotel
@@ -329,12 +352,14 @@ const descriptors = {
         isPlegded: false,
     },
     London: {
-        country: 'UK',
+        country: countries.uk,
         type: 'city',
         price: 400,
         mortage: 200,
         housePrice: 200,
         hotelPrice: 200,
+        nrOfHousesToPurchase: 0,
+        nrOfHousesToSell: 0,
         visit: [ 35, 160, 440, 1200, 1600, 2000 ], // 0 houses, 1 house, 2 houses...
         owner: 'bank',
         nrOfHouses: 0, // 5 houses === hotel
@@ -343,12 +368,14 @@ const descriptors = {
         isPlegded: false,
     },
     Rotterdam: {
-        country: 'Benelux',
+        country: countries.benelux,
         type: 'city',
         price: 440,
         mortage: 220,
         housePrice: 300,
         hotelPrice: 300,
+        nrOfHousesToPurchase: 0,
+        nrOfHousesToSell: 0,
         visit: [ 35, 180, 500, 1400, 1750, 2100 ], // 0 houses, 1 house, 2 houses...
         owner: 'bank',
         nrOfHouses: 0, // 5 houses === hotel
@@ -357,12 +384,14 @@ const descriptors = {
         isPlegded: false,
     },
     Bruksela: {
-        country: 'Benelux',
+        country: countries.benelux,
         type: 'city',
         price: 440,
         mortage: 220,
         housePrice: 300,
         hotelPrice: 300,
+        nrOfHousesToPurchase: 0,
+        nrOfHousesToSell: 0,
         visit: [ 35, 180, 500, 1400, 1750, 2100 ], // 0 houses, 1 house, 2 houses...
         owner: 'bank',
         nrOfHouses: 0, // 5 houses === hotel
@@ -371,12 +400,14 @@ const descriptors = {
         isPlegded: false,
     },
     Amsterdam: {
-        country: 'Benelux',
+        country: countries.benelux,
         type: 'city',
         price: 480,
         mortage: 240,
         housePrice: 300,
         hotelPrice: 300,
+        nrOfHousesToPurchase: 0,
+        nrOfHousesToSell: 0,
         visit: [ 40, 200, 600, 1500, 1850, 2200 ], // 0 houses, 1 house, 2 houses...
         owner: 'bank',
         nrOfHouses: 0, // 5 houses === hotel
@@ -385,7 +416,7 @@ const descriptors = {
         isPlegded: false,
     },
     North_Railways: {
-        country: 'Railways',
+        country: notCountryTypes.railways,
         type: 'railway',
         price: 400,
         mortage: 200,
@@ -396,12 +427,14 @@ const descriptors = {
         isPlegded: false,
     },
     Malmo: {
-        country: 'Sweeden',
+        country: countries.sweeden,
         type: 'city',
         price: 520,
         mortage: 260,
         housePrice: 300,
         hotelPrice: 300,
+        nrOfHousesToPurchase: 0,
+        nrOfHousesToSell: 0,
         visit: [ 45, 220, 600, 1600, 1950, 2300 ], // 0 houses, 1 house, 2 houses...
         owner: 'bank',
         nrOfHouses: 0, // 5 houses === hotel
@@ -410,12 +443,14 @@ const descriptors = {
         isPlegded: false,
     },
     Goteborg: {
-        country: 'Sweeden',
+        country: countries.sweeden,
         type: 'city',
         price: 520,
         mortage: 260,
         housePrice: 300,
         hotelPrice: 300,
+        nrOfHousesToPurchase: 0,
+        nrOfHousesToSell: 0,
         visit: [ 45, 220, 600, 1600, 1950, 2300 ], // 0 houses, 1 house, 2 houses...
         owner: 'bank',
         nrOfHouses: 0, // 5 houses === hotel
@@ -424,7 +459,7 @@ const descriptors = {
         isPlegded: false,
     },
     Water_Plant: {
-        country: 'Plant',
+        country: notCountryTypes.plant,
         type: 'waterPlant',
         price: 300,
         mortage: 150,
@@ -435,12 +470,14 @@ const descriptors = {
         isPlegded: false,
     },
     Sztokholm: {
-        country: 'Sweeden',
+        country: countries.sweeden,
         type: 'city',
         price: 560,
         mortage: 280,
         housePrice: 300,
         hotelPrice: 300,
+        nrOfHousesToPurchase: 0,
+        nrOfHousesToSell: 0,
         visit: [ 50, 240, 720, 1700, 2050, 2400 ], // 0 houses, 1 house, 2 houses...
         owner: 'bank',
         nrOfHouses: 0, // 5 houses === hotel
@@ -449,12 +486,14 @@ const descriptors = {
         boardFieldNumber: 30,
     },
     Frankfurt: {
-        country: 'RFN',
+        country: countries.rfn,
         type: 'city',
         price: 600,
         mortage: 300,
         housePrice: 400,
         hotelPrice: 400,
+        nrOfHousesToPurchase: 0,
+        nrOfHousesToSell: 0,
         visit: [ 55, 260, 780, 1900, 2200, 2550 ], // 0 houses, 1 house, 2 houses...
         owner: 'bank',
         nrOfHouses: 0, // 5 houses === hotel
@@ -463,12 +502,14 @@ const descriptors = {
         isPlegded: false,
     },
     Kolonia: {
-        country: 'RFN',
+        country: countries.rfn,
         type: 'city',
         price: 600,
         mortage: 300,
         housePrice: 400,
         hotelPrice: 400,
+        nrOfHousesToPurchase: 0,
+        nrOfHousesToSell: 0,
         visit: [ 55, 260, 780, 1900, 2200, 2550 ], // 0 houses, 1 house, 2 houses...
         owner: 'bank',
         nrOfHouses: 0, // 5 houses === hotel
@@ -477,12 +518,14 @@ const descriptors = {
         isPlegded: false,
     },
     Bonn: {
-        country: 'RFN',
+        country: countries.rfn,
         type: 'city',
         price: 640,
         mortage: 320,
         housePrice: 400,
         hotelPrice: 400,
+        nrOfHousesToPurchase: 0,
+        nrOfHousesToSell: 0,
         visit: [ 50, 300, 900, 2000, 2400, 2800 ], // 0 houses, 1 house, 2 houses...
         owner: 'bank',
         nrOfHouses: 0, // 5 houses === hotel
@@ -491,7 +534,7 @@ const descriptors = {
         isPlegded: false,
     },
     East_Railways: {
-        country: 'Railways',
+        country: notCountryTypes.railways,
         type: 'railway',
         price: 400,
         mortage: 200,
@@ -502,12 +545,14 @@ const descriptors = {
         isPlegded: false,
     },
     Insbruk: {
-        country: 'Austria',
+        country: countries.austria,
         type: 'city',
         price: 700,
         mortage: 350,
         housePrice: 400,
         hotelPrice: 400,
+        nrOfHousesToPurchase: 0,
+        nrOfHousesToSell: 0,
         visit: [ 70, 350, 1000, 2200, 2600, 3000 ], // 0 houses, 1 house, 2 houses...
         owner: 'bank',
         nrOfHouses: 0, // 5 houses === hotel
@@ -521,12 +566,14 @@ const descriptors = {
         info: 'You pay $200, nothing more happens here.',
     },
     Wieden: {
-        country: 'Austria',
+        country: countries.austria,
         type: 'city',
         price: 700,
         mortage: 350,
         housePrice: 400,
         hotelPrice: 400,
+        nrOfHousesToPurchase: 0,
+        nrOfHousesToSell: 0,
         visit: [ 70, 350, 1000, 2200, 2600, 3000 ], // 0 houses, 1 house, 2 houses...
         owner: 'bank',
         nrOfHouses: 0, // 5 houses === hotel
