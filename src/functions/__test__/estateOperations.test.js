@@ -1,12 +1,12 @@
-import {recalculateNrOfHousesToBuySell, hasMandatoryKeys,} from '../estateOperations.js'
+import {recalculateNrOfHousesToBuySell, hasMandatoryKeys, getCities, getMinMaxNrOfHouses} from '../estateOperations.js'
 import testState from '../../state/__test__/stateForTests';
 const cp = obj => JSON.parse(JSON.stringify(obj))
-const getStateArray = () => {
+const getStateArray = (state) => {
     return Object.keys(testState).map(
     (key) => {
         const output = {};
         output.id = key;
-        return Object.assign(output, testState[key])
+        return Object.assign(output, state[key])
     }
 )}
 describe('setateOperations: hasMandatoryKeys', () => {
@@ -43,6 +43,33 @@ describe('setateOperations: hasMandatoryKeys', () => {
     })
 })
 
+describe('estateOperations: getMinMaxNrOfHouses', () => {
+    it('Should return min 3 Frankfurt max 5 Berlin', () => {
+        const stateTemplate = cp(testState);
+        stateTemplate.Berlin.nrOfHouses = 5;
+        stateTemplate.Frankfurt.nrOfHouses = 3;
+        const descriptorsArr = getStateArray(stateTemplate);
+        const result = getMinMaxNrOfHouses(descriptorsArr);
+        console.log('RESULT', stateTemplate)
+        expect(result.min).toEqual({min: 3, val: 'Frankfurt'});
+        expect(result.max).toEqual({min: 5, val: 'Berlin'});
+    })
+})
+
+describe('estateOperations: getCities', () => {
+    it('Should return only cities from desired country', () => {
+        const state = getStateArray(testState);
+        const result = getCities(state, 'Germany');
+        const nrOfCountryCities = (descriptor, country) => descriptor.reduce((acc, city) => {
+            if(city.country === country) acc = acc + 1;
+            return acc;
+        }, 0)
+        const nrOfGermanCities = nrOfCountryCities(state, 'Germany');
+        const nrOfGermanCitiesResult = nrOfCountryCities(result, 'Germany');
+        expect(nrOfGermanCitiesResult).toBe(nrOfGermanCities)
+    })
+})
+
 describe('estateOperations: recalculateNrOfHouses', () => {
     it('Should Throw and error in case fieldDescriptors is undefined, null or not convertable to array', () => {
         const resultUndef = () => recalculateNrOfHousesToBuySell(undefined, 'Germany');
@@ -53,9 +80,17 @@ describe('estateOperations: recalculateNrOfHouses', () => {
         expect(resultPrimitive).toThrow();
     });
     it('Should return the same object in case not a country is passed as a second arg', () => {
-        console.log('TEST Stte', getStateArray())
-        const result = recalculateNrOfHousesToBuySell(cp(getStateArray()), 'Railway');
-        expect(result).toEqual(getStateArray());
+        const result = recalculateNrOfHousesToBuySell(cp(getStateArray(testState)), 'Railway');
+        expect(result).toEqual(getStateArray(testState));
+    })
+    it('Should throw an error in case there is a difference in max nr of houses and min nr of houses in the same country of more then 1', () => {
+        const stateTemplate = cp(testState);
+        stateTemplate.Berlin.nrOfHouses = 5;
+        stateTemplate.Frankfurt.nrOfHouses = 3;
+        const state = getStateArray(stateTemplate);
+        const result = () => recalculateNrOfHousesToBuySell(state);
+        console.log('RESULT', stateTemplate)
+        expect(result).toThrow();
     })
     
 })

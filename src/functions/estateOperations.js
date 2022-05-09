@@ -1,4 +1,4 @@
-import {countries} from './countryTypes.js'
+// import {countries} from './countryTypes.js'
 
 const isACountry = (country) => Object.values(countries).find(val => val === country);
 
@@ -17,6 +17,32 @@ const mandatoryKeys = [
     'isPlegded'
 ]
 
+const countries = {
+    'Greece': '', 'Spain': '', 'Germany':'', 'UK':'',
+}
+
+const getMinMaxNrOfHouses = citiesArray => {
+    if (!Array.isArray(citiesArray)) throw new Error('estateOperations, getMinMaxNrOfHouses: arg is not an array');
+    const min = {val: 0, city: citiesArray[0]};
+    const max = {val: 0, city: citiesArray[1]};
+    citiesArray.forEach(city => {
+        if (city.nrOfHouses > max.val) {
+            max.city = city.id;
+            max.val = city.nrOfHouses;
+        }
+        if (city.nrOfHouses < min.val) {
+            min.city = city.id;
+            min.val = city.nrOfHouses;
+        }
+    })
+    console.log('MIN MAX', min, max)
+    return { min, max }
+}
+const isNrOfHousesDifferenceTooBig = citiesArray => {
+    const { min, max } = getMinMaxNrOfHouses(citiesArray);
+    return max - min > 1
+}
+
 const hasMandatoryKeys = obj => mandatoryKeys.every(key => Object.keys(obj).find(item => item === key));
 
 const recalculateNrOfHousesToBuySell = (fieldDescriptors, country) => {
@@ -29,6 +55,10 @@ const recalculateNrOfHousesToBuySell = (fieldDescriptors, country) => {
     for(let estate of allEstates) {
         if (!hasMandatoryKeys(estate)) throw new Error(`${nameForError}: at leas one of cities has not all mandatory keys`)
     }
+    const citiesArray = getCities(fieldDescriptors, country);
+    if (isNrOfHousesDifferenceTooBig(citiesArray)) throw new Error(`${nameForError} too big difference between the nr of houses in ${country}`);
+
+    
 
 
     
@@ -36,5 +66,7 @@ const recalculateNrOfHousesToBuySell = (fieldDescriptors, country) => {
 
 export {
     hasMandatoryKeys,
-    recalculateNrOfHousesToBuySell
+    recalculateNrOfHousesToBuySell,
+    getCities,
+    getMinMaxNrOfHouses,
 }
