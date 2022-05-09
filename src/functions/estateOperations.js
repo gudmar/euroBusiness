@@ -23,9 +23,11 @@ const countries = {
 
 const getMinMaxNrOfHouses = citiesArray => {
     if (!Array.isArray(citiesArray)) throw new Error('estateOperations, getMinMaxNrOfHouses: arg is not an array');
-    const min = {val: 0, city: citiesArray[0]};
-    const max = {val: 0, city: citiesArray[1]};
+    if (citiesArray.length === 0) throw new Error('estateOperations, getMinMaxNrOfHouses: arg is empty');
+    const min = {val: 99, city: citiesArray[0].id};
+    const max = {val: 0, city: citiesArray[0].id};
     citiesArray.forEach(city => {
+        if (city.nrOfHouses === undefined || city.id === undefined) throw new Error('estateOperations, getMinMaxNrOfHouses: array element does not have id or nrOfHouses')
         if (city.nrOfHouses > max.val) {
             max.city = city.id;
             max.val = city.nrOfHouses;
@@ -36,7 +38,7 @@ const getMinMaxNrOfHouses = citiesArray => {
         }
     })
     console.log('MIN MAX', min, max)
-    return { min, max }
+    return { min:min, max:max }
 }
 const isNrOfHousesDifferenceTooBig = citiesArray => {
     const { min, max } = getMinMaxNrOfHouses(citiesArray);
