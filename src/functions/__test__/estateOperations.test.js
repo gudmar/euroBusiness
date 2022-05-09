@@ -2,7 +2,7 @@ import {recalculateNrOfHousesToBuySell, hasMandatoryKeys, getCities, getMinMaxNr
 import testState from '../../state/__test__/stateForTests';
 const cp = obj => JSON.parse(JSON.stringify(obj))
 const getStateArray = (state) => {
-    return Object.keys(testState).map(
+    return Object.keys(state).map(
     (key) => {
         const output = {};
         output.id = key;
@@ -48,11 +48,35 @@ describe('estateOperations: getMinMaxNrOfHouses', () => {
         const stateTemplate = cp(testState);
         stateTemplate.Berlin.nrOfHouses = 5;
         stateTemplate.Frankfurt.nrOfHouses = 3;
-        const descriptorsArr = getStateArray(stateTemplate);
-        const result = getMinMaxNrOfHouses(descriptorsArr);
-        console.log('RESULT', stateTemplate)
-        expect(result.min).toEqual({min: 3, val: 'Frankfurt'});
-        expect(result.max).toEqual({min: 5, val: 'Berlin'});
+        stateTemplate.Munich.nrOfHouses = 3;
+        const germanCities = [
+            {id: 'Berlin', ...stateTemplate.Berlin},
+            {id: 'Frankfurt', ...stateTemplate.Frankfurt}, 
+            {id: 'Munich', ...stateTemplate.Munich}
+        ]
+        const result = getMinMaxNrOfHouses(germanCities);
+        expect(result.min).toEqual({val: 3, city: 'Frankfurt'});
+        expect(result.max).toEqual({val: 5, city: 'Berlin'});
+    }),
+    it('Should return min 3 Kalisz, max 3 Kalisz in case only one city passed', () => {
+        const oneCity = [
+            {id: 'Kalisz', nrOfHouses: 3}
+        ]
+        const result = getMinMaxNrOfHouses(oneCity);
+        expect(result.max).toEqual({val: 3, city: 'Kalisz'});
+        expect(result.min).toEqual({val: 3, city: 'Kalisz'});
+    })
+    it('Should throw an error in case an empty array is passed', () => {
+        const result = () => getMinMaxNrOfHouses([]);
+        expect(result).toThrow('estateOperations, getMinMaxNrOfHouses: arg is empty');
+    })
+    it('Should throw an error in case not an array is passed', () => {
+        const result = () => getMinMaxNrOfHouses();
+        expect(result).toThrow('estateOperations, getMinMaxNrOfHouses: arg is not an array');
+    })
+    it('Should throw an error in case passed array has no nrOfHouses or id props', () => {
+        const result = () => getMinMaxNrOfHouses(['','']);
+        expect(result).toThrow('estateOperations, getMinMaxNrOfHouses: array element does not have id or nrOfHouses');
     })
 })
 
@@ -62,7 +86,7 @@ describe('estateOperations: getCities', () => {
         const result = getCities(state, 'Germany');
         const nrOfCountryCities = (descriptor, country) => descriptor.reduce((acc, city) => {
             if(city.country === country) acc = acc + 1;
-            return acc;
+            return acc;4
         }, 0)
         const nrOfGermanCities = nrOfCountryCities(state, 'Germany');
         const nrOfGermanCitiesResult = nrOfCountryCities(result, 'Germany');
@@ -83,14 +107,14 @@ describe('estateOperations: recalculateNrOfHouses', () => {
         const result = recalculateNrOfHousesToBuySell(cp(getStateArray(testState)), 'Railway');
         expect(result).toEqual(getStateArray(testState));
     })
-    it('Should throw an error in case there is a difference in max nr of houses and min nr of houses in the same country of more then 1', () => {
-        const stateTemplate = cp(testState);
-        stateTemplate.Berlin.nrOfHouses = 5;
-        stateTemplate.Frankfurt.nrOfHouses = 3;
-        const state = getStateArray(stateTemplate);
-        const result = () => recalculateNrOfHousesToBuySell(state);
-        console.log('RESULT', stateTemplate)
-        expect(result).toThrow();
-    })
+    // it('Should throw an error in case there is a difference in max nr of houses and min nr of houses in the same country of more then 1', () => {
+    //     const stateTemplate = cp(testState);
+    //     stateTemplate.Berlin.nrOfHouses = 5;
+    //     stateTemplate.Frankfurt.nrOfHouses = 3;
+    //     const state = getStateArray(stateTemplate);
+    //     const result = () => recalculateNrOfHousesToBuySell(state);
+    //     console.log('RESULT', stateTemplate)
+    //     expect(result).toThrow();
+    // })
     
 })
