@@ -1,5 +1,7 @@
 import {recalculateNrOfHousesToBuySell, hasMandatoryKeys, getCities, getMinMaxNrOfHouses} from '../estateOperations.js'
 import testState from '../../state/__test__/stateForTests';
+const _countries = require('../countryTypes.js');
+
 const cp = obj => JSON.parse(JSON.stringify(obj))
 const getStateArray = (state) => {
     return Object.keys(state).map(
@@ -9,6 +11,15 @@ const getStateArray = (state) => {
         return Object.assign(output, state[key])
     }
 )}
+
+const isACountry_local = (country) => {
+    const countries = {
+        greece:'Greece', spain: 'Spain', germany: 'Germany', uk: 'UK',
+    }    
+    return Object.values(countries).find(val => val === country);
+}
+const isACountry = jest.spyOn(_countries, 'isACountry').mockImplementation(isACountry_local)
+
 describe('setateOperations: hasMandatoryKeys', () => {
     const testObject = {
         type: 'city', country: 'UK', mortage: false,
@@ -95,26 +106,57 @@ describe('estateOperations: getCities', () => {
 })
 
 describe('estateOperations: recalculateNrOfHouses', () => {
+    let stateTemplate = undefined;
+    let germanCities = undefined;
+    const setGermanCities = () => {
+        stateTemplate = cp(testState);
+        germanCities = [
+            {id: 'Berlin', ...stateTemplate.Berlin},
+            {id: 'Frankfurt', ...stateTemplate.Frankfurt}, 
+            {id: 'Munich', ...stateTemplate.Munich}
+        ]    
+    }
+    const getNrOfEstateOperations = citiesArr => citiesArr.map(
+        city => ({id: city.id, nrOfHousesToPurchase: city.nrOfHousesToPurchase, nrOfHousesToSell: city.nrOfHousessToSell})
+    )
+
     it('Should Throw and error in case fieldDescriptors is undefined, null or not convertable to array', () => {
         const resultUndef = () => recalculateNrOfHousesToBuySell(undefined, 'Germany');
         const resultNull = () => recalculateNrOfHousesToBuySell(null, 'Germany');
         const resultPrimitive = () => recalculateNrOfHousesToBuySell(undefined, 'Germany');
-        expect(resultUndef).toThrow();
-        expect(resultNull).toThrow();
-        expect(resultPrimitive).toThrow();
+        const resultObject = () => recalculateNrOfHousesToBuySell({}, 'Germany');
+        const expectedErrorMsg = 'estateOperations.recalculateNrOfHouses: fieldDescriptor is null, undefined, or cannot be converted to array of values';
+        expect(resultUndef).toThrow(expectedErrorMsg);
+        expect(resultNull).toThrow(expectedErrorMsg);
+        expect(resultPrimitive).toThrow(expectedErrorMsg);
+        expect(resultObject).toThrow(expectedErrorMsg);
     });
     it('Should return the same object in case not a country is passed as a second arg', () => {
         const result = recalculateNrOfHousesToBuySell(cp(getStateArray(testState)), 'Railway');
         expect(result).toEqual(getStateArray(testState));
     })
-    // it('Should throw an error in case there is a difference in max nr of houses and min nr of houses in the same country of more then 1', () => {
-    //     const stateTemplate = cp(testState);
-    //     stateTemplate.Berlin.nrOfHouses = 5;
-    //     stateTemplate.Frankfurt.nrOfHouses = 3;
-    //     const state = getStateArray(stateTemplate);
-    //     const result = () => recalculateNrOfHousesToBuySell(state);
-    //     console.log('RESULT', stateTemplate)
-    //     expect(result).toThrow();
-    // })
+    it('Should throw an error in case there is a difference in max nr of houses and min nr of houses in the same country of more then 1', () => {
+        stateTemplate = cp(testState);
+        stateTemplate.Berlin.nrOfHouses = 5;
+        stateTemplate.Frankfurt.nrOfHouses = 3;
+        stateTemplate.Munich.nrOfHouses = 3;
+        germanCities = [
+            {id: 'Berlin', ...stateTemplate.Berlin},
+            {id: 'Frankfurt', ...stateTemplate.Frankfurt}, 
+            {id: 'Munich', ...stateTemplate.Munich}
+        ] 
+        const result = () => recalculateNrOfHousesToBuySell(germanCities, 'Germany');
+        expect(result).toThrow();
+    })
+    it('Should set nrOfHousesToPurchase and nrOfHousesToSell to 0 in case of different owners', () => {
+        setGermanCities();
+        const result = recalculateNrOfHousesToBuySell(germanCities, 'Germany');
+        const filteredResult = getNrOfEstateOperations(result);
+        const expected = [
+            {id: 'Berlin', nrOfHousesToSell: 0, nrOfHousesToPurchase: 0},
+            {id: 'Frankfurt', nrOfHousesToSell: 0, nrOfHousesToPurchase: 0},
+            {id: 'Munich', nrOfHousesToSell: 0, nrOfHousesToPurchase: 0},
+        ]
+    })
     
 })

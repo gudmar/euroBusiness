@@ -13,4 +13,6 @@ const notCountryTypes = {
     plant: 'Plant',
 }
 
-export {countries, notCountryTypes};
+const isACountry = (country) => Object.values(countries).find(val => val === country);
+
+export {countries, notCountryTypes, isACountry};
