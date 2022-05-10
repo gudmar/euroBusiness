@@ -46,8 +46,11 @@ const isNrOfHousesDifferenceTooBig = citiesArray => {
 const hasMandatoryKeys = obj => mandatoryKeys.every(key => Object.keys(obj).find(item => item === key));
 
 const recalculateNrOfHousesToBuySell = (fieldDescriptors, country) => {
+    const MAX_NR_HOUSES = 5; // for hotel
+    const MIN_NR_HOUSES = 0;
     const nameForError = 'estateOperations.recalculateNrOfHouses';
-    const eachCondition = condition => fieldDescriptors.every(item => condition(item))
+    const eachCondition = condition => fieldDescriptors.every(item => condition(item));
+    const someCondition = condition => fieldDescriptors.some(item => condition(item));
     if (fieldDescriptors === undefined || fieldDescriptors === null || !Array.isArray(fieldDescriptors)) {
         throw new Error(`${nameForError}: fieldDescriptor is null, undefined, or cannot be converted to array of values`);
     }
@@ -66,11 +69,55 @@ const recalculateNrOfHousesToBuySell = (fieldDescriptors, country) => {
         })
         return fieldDescriptors;
     }
+    if (someCondition(item => item.owner === 'bank')){
+        fieldDescriptors.forEach(item => {
+            item.nrOfHousesToSell = 0;
+            item.nrOfHousesToPurchase = 0;
+        })
+        return fieldDescriptors;        
+    }
 
+    if (eachCondition(item => item.owner === fieldDescriptors[0].owner)){
+        if (eachCondition(
+            item => (
+                item.nrOfHouses === fieldDescriptors[0].nrOfHouses && 
+                item.nrOfHouses > MIN_NR_HOUSES && 
+                item.nrOfHouses < MAX_NR_HOUSES 
+            ) 
+        )) {
+            fieldDescriptors.forEach(item => {
+                item.nrOfHousesToSell = 1;
+                item.nrOfHousesToPurchase = 1;
+            })
+            return fieldDescriptors; 
+        }
 
-    
+        if (eachCondition(
+            item => (
+                item.nrOfHouses === fieldDescriptors[0].nrOfHouses && 
+                item.nrOfHouses === MAX_NR_HOUSES
+            ) 
+        )) {
+            fieldDescriptors.forEach(item => {
+                item.nrOfHousesToSell = 1;
+                item.nrOfHousesToPurchase = 0;
+            })
+            return fieldDescriptors; 
+        }
 
-
+        if (eachCondition(
+            item => (
+                item.nrOfHouses === fieldDescriptors[0].nrOfHouses && 
+                item.nrOfHouses === MIN_NR_HOUSES
+            ) 
+        )) {
+            fieldDescriptors.forEach(item => {
+                item.nrOfHousesToSell = 0;
+                item.nrOfHousesToPurchase = 1;
+            })
+            return fieldDescriptors; 
+        }
+    }
     
 }
 
