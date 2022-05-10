@@ -7,9 +7,9 @@ const testState = {
         housePrice: 100,
         hotelPrice: 100,
         nrOfHouses: 0,
-        nrOfHousesToPurchace: 0,
+        nrOfHousesToPurchase: 0,
         nrOfHousesToSell: 0,
-        isPlagded: false,
+        isPlegded: false,
 
     },
     Saloniki: {
@@ -20,9 +20,9 @@ const testState = {
         housePrice: 100,
         hotelPrice: 100,
         nrOfHouses: 0,
-        nrOfHousesToPurchace: 0,
+        nrOfHousesToPurchase: 0,
         nrOfHousesToSell: 0,
-        isPlagded: false,
+        isPlegded: false,
 
     },
     Antarktyda: {
@@ -51,9 +51,9 @@ const testState = {
         housePrice: 100,
         hotelPrice: 100,
         nrOfHouses: 0,
-        nrOfHousesToPurchace: 0,
+        nrOfHousesToPurchase: 0,
         nrOfHousesToSell: 0,
-        isPlagded: false,
+        isPlegded: false,
 
     },
     Barcelona: {
@@ -64,9 +64,9 @@ const testState = {
         housePrice: 100,
         hotelPrice: 100,
         nrOfHouses: 0,
-        nrOfHousesToPurchace: 0,
+        nrOfHousesToPurchase: 0,
         nrOfHousesToSell: 0,
-        isPlagded: false,
+        isPlegded: false,
 
     },
     Berlin: {
@@ -77,9 +77,9 @@ const testState = {
         housePrice: 100,
         hotelPrice: 100,
         nrOfHouses: 0,
-        nrOfHousesToPurchace: 0,
+        nrOfHousesToPurchase: 0,
         nrOfHousesToSell: 0,
-        isPlagded: false,
+        isPlegded: false,
 
     },
     Frankfurt: {
@@ -90,9 +90,9 @@ const testState = {
         housePrice: 100,
         hotelPrice: 100,
         nrOfHouses: 0,
-        nrOfHousesToPurchace: 0,
+        nrOfHousesToPurchase: 0,
         nrOfHousesToSell: 0,
-        isPlagded: false,
+        isPlegded: false,
 
     },
     Munich: {
@@ -103,9 +103,9 @@ const testState = {
         housePrice: 100,
         hotelPrice: 100,
         nrOfHouses: 0,
-        nrOfHousesToPurchace: 0,
+        nrOfHousesToPurchase: 0,
         nrOfHousesToSell: 0,
-        isPlagded: false,
+        isPlegded: false,
 
     },
     London: {
@@ -136,7 +136,7 @@ const testState = {
         price: 400,
         mortage: 200,
         owner:'bank',
-        isPlagded: false,
+        isPlegded: false,
         nrInSet: 4,
     },
     North_Railways: {
@@ -145,7 +145,7 @@ const testState = {
         price: 400,
         mortage: 200,
         owner:'bank',
-        isPlagded: false,
+        isPlegded: false,
         nrInSet: 4,
         visit: [50, 100, 200, 400]
     },
@@ -155,7 +155,7 @@ const testState = {
         price: 400,
         mortage: 200,
         owner:'bank',
-        isPlagded: false,
+        isPlegded: false,
         nrInSet: 4,
     },
     East_Railways: {
@@ -164,7 +164,7 @@ const testState = {
         price: 400,
         mortage: 200,
         owner:'bank',
-        isPlagded: false,
+        isPlegded: false,
         nrInSet: 4,
     },
     Water_Plant: {
