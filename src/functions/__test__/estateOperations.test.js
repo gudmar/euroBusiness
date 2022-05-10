@@ -98,6 +98,49 @@ describe('testing arrayContainsObjectsContaining matcher', () => {
             ],
             msg: 'Should return false if arrays with order switched and one value changed',
             expected: false 
+        },
+        {
+            template: [
+                {a: 1, b: 2, c: 3, d: 4, e: 5},
+                {a: 1, b: 2, c: 3, d: 4, e: 5, f: 6}
+            ],
+            objectToTest: [
+                {a: 1, b: 2, c: 3, d: 4, e: 5},
+                {a: 1, b: 2, c: 3, d: 4, e: 5, g: 6}
+            ],
+            msg: 'Should return false if a key is missing in the result',
+            expected: false 
+        },
+        {
+            template: [
+                {a: 1, b: 2, c: 3, d: 4, e: 5},
+                {a: 1, b: 2, c: 3, d: 4, e: 5, f: 6},
+                {e: 1, f: 2, g: 3, h: 4, i: 5},
+                {t: 1, y: 2, u: 3, i: 4, o: 5},
+            ],
+            objectToTest: [
+                {a: 1, b: 2, c: 3, d: 4, e: 5},
+                {a: 1, b: 2, c: 3, d: 4, e: 5, f: 6},
+                {t: 1, y: 2, u: 3, i: 4, o: 5},
+            ],
+            msg: 'Should return false index is missing in the result',
+            expected: false 
+        },
+        {
+            template: [
+                {a: 1, b: 2, c: 3, d: 4, e: 5},
+                {a: 1, b: 2, c: 3, d: 4, e: 5, f: 6},
+                {e: 1, f: 2, g: 3, h: 4, i: 5},
+                {t: 1, y: 2, u: 3, i: 4, o: 5},
+            ],
+            objectToTest: [
+                {a: 1, b: 2, c: 3, d: 4, f: 6, e: 5},
+                {e: 1, g: 3, h: 4, f: 2, i: 5},
+                {a: 1, b: 2, c: 3, d: 4, e: 5},
+                {t: 1, y: 2, u: 3, i: 4, o: 5},
+            ],
+            msg: 'Should return true if keys and rows have switched order',
+            expected: true
         }
     ]
     testCases.forEach( testCase => {
@@ -205,10 +248,10 @@ describe('estateOperations: recalculateNrOfHouses', () => {
             {id: 'Munich', ...stateTemplate.Munich}
         ]    
     }
-    const setGermanCitiesWithOwners = (nrOfHousesEach) => {
+    const setGermanCitiesWithOwners = (nrOfHousesEach, owner) => {
         stateTemplate = cp(testState);
         Object.values(stateTemplate).forEach(city => {
-            city.owner = 'Bolek';
+            city.owner = owner;
             city.nrOfHouses = nrOfHousesEach;
         });
         germanCities = [
@@ -259,17 +302,47 @@ describe('estateOperations: recalculateNrOfHouses', () => {
             {id: 'Frankfurt', nrOfHousesToSell: 0, nrOfHousesToPurchase: 0},
             {id: 'Munich', nrOfHousesToSell: 0, nrOfHousesToPurchase: 0},
         ]
-        
+        expect(result).arrayContainsObjectsContaining(expected);
+    });
+    it('Should return 0 to sell and 0 to purchase if owner of each city is bank', () => {
+        setGermanCitiesWithOwners(0, 'bank');
+        const result = recalculateNrOfHousesToBuySell(germanCities, 'Germany');
+        const expected = [
+            {id: 'Berlin', nrOfHousesToSell: 0, nrOfHousesToPurchase: 0},
+            {id: 'Frankfurt', nrOfHousesToSell: 0, nrOfHousesToPurchase: 0},
+            {id: 'Munich', nrOfHousesToSell: 0, nrOfHousesToPurchase: 0}, 
+        ]
+        expect(result).arrayContainsObjectsContaining(expected);
     })
     it(`In case of same owner, equal nr of houses === 2 should set nrOfHousesToSell to 1, nrOfHousesToPurchase to 1`, () => {
-        setGermanCitiesWithOwners(2);
+        setGermanCitiesWithOwners(2, 'Bolek');
         const result = recalculateNrOfHousesToBuySell(germanCities, 'Germany');
         const expected = [
             {id: 'Berlin', nrOfHousesToSell: 1, nrOfHousesToPurchase: 1},
             {id: 'Frankfurt', nrOfHousesToSell: 1, nrOfHousesToPurchase: 1},
             {id: 'Munich', nrOfHousesToSell: 1, nrOfHousesToPurchase: 1},            
         ]
-        // expect(result).objectContaining(expected);
+        expect(result).arrayContainsObjectsContaining(expected);
+    });
+    it(`In case of same owner, equal nr of houses === 5 should set nrOfHousesToSell to 1, nrOfHousesToPurchase to 0`, () => {
+        setGermanCitiesWithOwners(5, 'Bolek');
+        const result = recalculateNrOfHousesToBuySell(germanCities, 'Germany');
+        const expected = [
+            {id: 'Berlin', nrOfHousesToSell: 1, nrOfHousesToPurchase: 0},
+            {id: 'Frankfurt', nrOfHousesToSell: 1, nrOfHousesToPurchase: 0},
+            {id: 'Munich', nrOfHousesToSell: 1, nrOfHousesToPurchase: 0},            
+        ]
+        expect(result).arrayContainsObjectsContaining(expected);
+    })
+    it(`In case of same owner, equal nr of houses === 0 should set nrOfHousesToSell to 0, nrOfHousesToPurchase to 1`, () => {
+        setGermanCitiesWithOwners(0, 'Lolek');
+        const result = recalculateNrOfHousesToBuySell(germanCities, 'Germany');
+        const expected = [
+            {id: 'Berlin', nrOfHousesToSell: 0, nrOfHousesToPurchase: 1},
+            {id: 'Frankfurt', nrOfHousesToSell: 0, nrOfHousesToPurchase: 1},
+            {id: 'Munich', nrOfHousesToSell: 0, nrOfHousesToPurchase: 1},            
+        ]
+        expect(result).arrayContainsObjectsContaining(expected);
     })
     
 })
