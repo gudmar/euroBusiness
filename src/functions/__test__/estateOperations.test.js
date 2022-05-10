@@ -20,6 +20,95 @@ const isACountry_local = (country) => {
 }
 const isACountry = jest.spyOn(_countries, 'isACountry').mockImplementation(isACountry_local)
 
+expect.extend({
+    arrayContainsObjectsContaining(received, objectWithKeys) {
+        let indexOfDifference = -1;
+        let keyOfDifference = '';
+        let valueOfDifference = '';
+        const singleMatch = (toCompare, template) => {
+            const templateKeys = Object.keys(template);
+            const toCompareKeys = Object.keys(toCompare);
+            return templateKeys.reduce((acc, key) => {
+                if (!acc) return false;
+                if (toCompareKeys.find(item => key === item) === undefined) {
+                    keyOfDifference = key;
+                    acc = false; return false;
+                }
+                if (toCompare[key] !== template[key]) {
+                    keyOfDifference = key;
+                    valueOfDifference = template[key]
+                    acc = false; return false;
+                }
+                return true;
+            }, true) 
+        }
+        const result = objectWithKeys.reduce((acc, item) => {
+            const isFound = received.find((receivedItem, index) => {
+                indexOfDifference = index;
+                return singleMatch(receivedItem, item)
+            });
+            if (!isFound) {
+                acc = false; return false;
+            };
+            return acc;
+        }, true)
+        return {
+            pass: result,
+            message: () => {
+                if (result) return 'Passed';
+                return `Difference at ${indexOfDifference}, ${keyOfDifference} ${valueOfDifference ? ' ' + valueOfDifference : ''}`;
+            }
+        }
+    }
+})
+describe('testing arrayContainsObjectsContaining matcher', () => {
+    const testCases = [
+        {
+            template: [
+                {a: 1, b: 2, c: 3, d: 4, e: 5},
+                {a: 1, b: 2, c: 3, d: 4, e: 5, f: 6}
+            ],
+            objectToTest: [
+                {a: 1, b: 2, c: 3, d: 4, e: 5},
+                {a: 1, b: 2, c: 3, d: 4, e: 5, f: 6}
+            ],
+            msg: 'Should return true if identical objects passed',
+            expected: true
+        },
+        {
+            template:[
+                {a: 1, b: 2, c: 3},
+                {a: 1, b: 2}
+            ],
+            objectToTest: [
+                {a: 1, b: 2},
+                {a: 1, b: 2, c: 3},
+            ],
+            msg: 'Should return true in case identical arrays with order changed',
+            expected: true
+        },
+        {
+            template:[
+                {a: 1, b: 2, c: 3},
+                {a: 1, b: 3}
+            ],
+            objectToTest: [
+                {a: 1, b: 2},
+                {a: 1, b: 2, c: 3},
+            ],
+            msg: 'Should return false if arrays with order switched and one value changed',
+            expected: false 
+        }
+    ]
+    testCases.forEach( testCase => {
+        it(testCase.msg, () => {
+            testCase.expected ?
+            expect(testCase.objectToTest).arrayContainsObjectsContaining(testCase.template) :
+            expect(testCase.objectToTest).not.arrayContainsObjectsContaining(testCase.template)
+        })
+    })
+})
+
 describe('setateOperations: hasMandatoryKeys', () => {
     const testObject = {
         type: 'city', country: 'UK', mortage: false,
@@ -116,6 +205,19 @@ describe('estateOperations: recalculateNrOfHouses', () => {
             {id: 'Munich', ...stateTemplate.Munich}
         ]    
     }
+    const setGermanCitiesWithOwners = (nrOfHousesEach) => {
+        stateTemplate = cp(testState);
+        Object.values(stateTemplate).forEach(city => {
+            city.owner = 'Bolek';
+            city.nrOfHouses = nrOfHousesEach;
+        });
+        germanCities = [
+            {id: 'Berlin', ...stateTemplate.Berlin},
+            {id: 'Frankfurt', ...stateTemplate.Frankfurt}, 
+            {id: 'Munich', ...stateTemplate.Munich}
+        ]            
+    };
+
     const getNrOfEstateOperations = citiesArr => citiesArr.map(
         city => ({id: city.id, nrOfHousesToPurchase: city.nrOfHousesToPurchase, nrOfHousesToSell: city.nrOfHousessToSell})
     )
@@ -157,6 +259,17 @@ describe('estateOperations: recalculateNrOfHouses', () => {
             {id: 'Frankfurt', nrOfHousesToSell: 0, nrOfHousesToPurchase: 0},
             {id: 'Munich', nrOfHousesToSell: 0, nrOfHousesToPurchase: 0},
         ]
+        
+    })
+    it(`In case of same owner, equal nr of houses === 2 should set nrOfHousesToSell to 1, nrOfHousesToPurchase to 1`, () => {
+        setGermanCitiesWithOwners(2);
+        const result = recalculateNrOfHousesToBuySell(germanCities, 'Germany');
+        const expected = [
+            {id: 'Berlin', nrOfHousesToSell: 1, nrOfHousesToPurchase: 1},
+            {id: 'Frankfurt', nrOfHousesToSell: 1, nrOfHousesToPurchase: 1},
+            {id: 'Munich', nrOfHousesToSell: 1, nrOfHousesToPurchase: 1},            
+        ]
+        // expect(result).objectContaining(expected);
     })
     
 })
