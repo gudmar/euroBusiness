@@ -78,45 +78,64 @@ const recalculateNrOfHousesToBuySell = (fieldDescriptors, country) => {
     }
 
     if (eachCondition(item => item.owner === fieldDescriptors[0].owner)){
-        if (eachCondition(
-            item => (
-                item.nrOfHouses === fieldDescriptors[0].nrOfHouses && 
-                item.nrOfHouses > MIN_NR_HOUSES && 
-                item.nrOfHouses < MAX_NR_HOUSES 
-            ) 
-        )) {
-            fieldDescriptors.forEach(item => {
-                item.nrOfHousesToSell = 1;
-                item.nrOfHousesToPurchase = 1;
-            })
-            return fieldDescriptors; 
-        }
+        // if (eachCondition(
+        //     item => (
+        //         item.nrOfHouses === fieldDescriptors[0].nrOfHouses && 
+        //         item.nrOfHouses > MIN_NR_HOUSES && 
+        //         item.nrOfHouses < MAX_NR_HOUSES 
+        //     ) 
+        // )) {
+        //     fieldDescriptors.forEach(item => {
+        //         item.nrOfHousesToSell = 1;
+        //         item.nrOfHousesToPurchase = 1;
+        //     })
+        //     return fieldDescriptors; 
+        // }
 
-        if (eachCondition(
-            item => (
-                item.nrOfHouses === fieldDescriptors[0].nrOfHouses && 
-                item.nrOfHouses === MAX_NR_HOUSES
-            ) 
-        )) {
-            fieldDescriptors.forEach(item => {
-                item.nrOfHousesToSell = 1;
-                item.nrOfHousesToPurchase = 0;
-            })
-            return fieldDescriptors; 
-        }
+        // if (eachCondition(
+        //     item => (
+        //         item.nrOfHouses === fieldDescriptors[0].nrOfHouses && 
+        //         item.nrOfHouses === MAX_NR_HOUSES
+        //     ) 
+        // )) {
+        //     fieldDescriptors.forEach(item => {
+        //         item.nrOfHousesToSell = 1;
+        //         item.nrOfHousesToPurchase = 0;
+        //     })
+        //     return fieldDescriptors; 
+        // }
 
-        if (eachCondition(
-            item => (
-                item.nrOfHouses === fieldDescriptors[0].nrOfHouses && 
-                item.nrOfHouses === MIN_NR_HOUSES
-            ) 
-        )) {
-            fieldDescriptors.forEach(item => {
-                item.nrOfHousesToSell = 0;
-                item.nrOfHousesToPurchase = 1;
-            })
-            return fieldDescriptors; 
+        // if (eachCondition(
+        //     item => (
+        //         item.nrOfHouses === fieldDescriptors[0].nrOfHouses && 
+        //         item.nrOfHouses === MIN_NR_HOUSES
+        //     ) 
+        // )) {
+        //     fieldDescriptors.forEach(item => {
+        //         item.nrOfHousesToSell = 0;
+        //         item.nrOfHousesToPurchase = 1;
+        //     })
+        //     return fieldDescriptors; 
+        // }
+
+        const minNrHouses = Math.min(...fieldDescriptors.map(city => city.nrOfHouses));
+        const maxNrHouses = Math.max(...fieldDescriptors.map(city => city.nrOfHouses));
+        const getNrOfHouses = (currentNrHouses) => {
+            
+            if (currentNrHouses === MAX_NR_HOUSES) return {sell: 1, buy: 0}
+            if (currentNrHouses === MIN_NR_HOUSES) return {sell: 0, buy: 1}
+            if (currentNrHouses === maxNrHouses && maxNrHouses === minNrHouses) return {sell: 1, buy: 1}
+            if (currentNrHouses === maxNrHouses) return {sell: 1, buy: 0}
+            return {sell: 0, buy: 1}
         }
+        fieldDescriptors.forEach(item => {
+            const allowedShopping = getNrOfHouses(item.nrOfHouses);
+            item.nrOfHousesToPurchase = allowedShopping.buy;
+            item.nrOfHousesToSell = allowedShopping.sell;
+        })
+        return fieldDescriptors;
+
+
     }
     
 }
