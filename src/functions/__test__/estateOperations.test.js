@@ -37,6 +37,7 @@ expect.extend({
                 if (toCompare[key] !== template[key]) {
                     keyOfDifference = key;
                     valueOfDifference = template[key]
+                    console.log('DIFF: key', toCompare[key], template[key], key)
                     acc = false; return false;
                 }
                 return true;
@@ -141,7 +142,76 @@ describe('testing arrayContainsObjectsContaining matcher', () => {
             ],
             msg: 'Should return true if keys and rows have switched order',
             expected: true
+        },
+        {
+            template: [
+                {a: 9, b: 8, c: 7, d: 4, e: 5},
+                {a: 1, b: 2, c: 3, d: 4, e: 5, f: 6},
+                {e: 1, f: 2, g: 3, h: 4, i: 5},
+                
+            ],
+            objectToTest: [
+                {a: 1, b: 2, c: 3, d: 4, f: 6, e: 5},
+                {e: 1, g: 3, h: 4, f: 2, i: 5},
+                {a: 9, b: 8, c: 7, d: 4, e: 5},
+                {t: 1, y: 2, u: 3, i: 4, o: 5},
+            ],
+            msg: 'Should return true in case of template matching result but keys having different values ',
+            expected: true
+        },
+        {
+            template: [
+                    {id: 'Berlin', nrOfHousesToSell: 1, nrOfHousesToPurchase: 0},
+                    {id: 'Frankfurt', nrOfHousesToSell: 0, nrOfHousesToPurchase: 1},
+                    {id: 'Munich', nrOfHousesToSell: 0, nrOfHousesToPurchase: 1},            
+            ],
+            objectToTest: [
+
+                    {
+                        id: 'Berlin',
+                        country: 'Germany',
+                        owner: 'Tytus',
+                        type: 'city',
+                        mortage: false,
+                        housePrice: 100,
+                        hotelPrice: 100,
+                        nrOfHouses: 3,
+                        nrOfHousesToPurchase: 0,
+                        nrOfHousesToSell: 1,
+                        isPlegded: false
+                    },
+                    {
+                        id: 'Frankfurt',
+                        country: 'Germany',
+                        owner: 'Tytus',
+                        type: 'city',
+                        mortage: false,
+                        housePrice: 100,
+                        hotelPrice: 100,
+                        nrOfHouses: 2,
+                        nrOfHousesToPurchase: 1,
+                        nrOfHousesToSell: 0,
+                        isPlegded: false
+                    },
+                    {
+                        id: 'Munich',
+                        country: 'Germany',
+                        owner: 'Tytus',
+                        type: 'city',
+                        mortage: false,
+                        housePrice: 100,
+                        hotelPrice: 100,
+                        nrOfHouses: 2,
+                        nrOfHousesToPurchase: 1,
+                        nrOfHousesToSell: 0,
+                        isPlegded: false
+                    }
+                ],
+                msg: 'Should return true: real life example',
+                expected: true
+    
         }
+ 
     ]
     testCases.forEach( testCase => {
         it(testCase.msg, () => {
@@ -260,6 +330,22 @@ describe('estateOperations: recalculateNrOfHouses', () => {
             {id: 'Munich', ...stateTemplate.Munich}
         ]            
     };
+    const setGermanCitiesDifferentHouseNrs = ({berlin, munich, frankfurt}) => {
+        stateTemplate = cp(testState);
+        
+        Object.keys(stateTemplate).forEach(key => {
+            stateTemplate[key].owner = 'Tytus';
+            if (key === 'Berlin') stateTemplate[key].nrOfHouses = berlin;
+            if (key === 'Frankfurt') stateTemplate[key].nrOfHouses = frankfurt;
+            if (key === 'Munich') stateTemplate[key].nrOfHouses = munich;
+        });
+        console.log('StateTemplatge', stateTemplate)
+        germanCities = [
+            {id: 'Berlin', ...stateTemplate.Berlin},
+            {id: 'Frankfurt', ...stateTemplate.Frankfurt}, 
+            {id: 'Munich', ...stateTemplate.Munich}
+        ]  
+    }
 
     const getNrOfEstateOperations = citiesArr => citiesArr.map(
         city => ({id: city.id, nrOfHousesToPurchase: city.nrOfHousesToPurchase, nrOfHousesToSell: city.nrOfHousessToSell})
@@ -341,6 +427,66 @@ describe('estateOperations: recalculateNrOfHouses', () => {
             {id: 'Berlin', nrOfHousesToSell: 0, nrOfHousesToPurchase: 1},
             {id: 'Frankfurt', nrOfHousesToSell: 0, nrOfHousesToPurchase: 1},
             {id: 'Munich', nrOfHousesToSell: 0, nrOfHousesToPurchase: 1},            
+        ]
+        expect(result).arrayContainsObjectsContaining(expected);
+    })
+    it('Should return housesToSell 1 and housesToPurchase 0 in case of city having more houses than the others in the country', () => {
+        setGermanCitiesDifferentHouseNrs({
+            berlin: 3, munich: 2,frankfurt: 2,
+        })
+        const result = recalculateNrOfHousesToBuySell(germanCities, 'Germany');
+        const expected = [
+            {id: 'Berlin', nrOfHousesToSell: 1, nrOfHousesToPurchase: 0},
+            {id: 'Frankfurt', nrOfHousesToSell: 0, nrOfHousesToPurchase: 1},
+            {id: 'Munich', nrOfHousesToSell: 0, nrOfHousesToPurchase: 1},            
+        ]
+        expect(result).arrayContainsObjectsContaining(expected);
+    })
+    it('Should return housesToSell 1 and housesToPurchase 0 in case of city having more houses than the others in the country, other instance', () => {
+        setGermanCitiesDifferentHouseNrs({
+            berlin: 3, munich: 4,frankfurt: 3,
+        })
+        const result = recalculateNrOfHousesToBuySell(germanCities, 'Germany');
+        const expected = [
+            {id: 'Berlin', nrOfHousesToSell: 0, nrOfHousesToPurchase: 1},
+            {id: 'Frankfurt', nrOfHousesToSell: 0, nrOfHousesToPurchase: 1},
+            {id: 'Munich', nrOfHousesToSell: 1, nrOfHousesToPurchase: 0},            
+        ]
+        expect(result).arrayContainsObjectsContaining(expected);
+    })
+    it('Should return housesToSell 1 and housesToPurchase 0 in case of city having more houses than the others in the country, boundry case', () => {
+        setGermanCitiesDifferentHouseNrs({
+            berlin: 4, munich: 4,frankfurt: 5,
+        })
+        const result = recalculateNrOfHousesToBuySell(germanCities, 'Germany');
+        const expected = [
+            {id: 'Berlin', nrOfHousesToSell: 0, nrOfHousesToPurchase: 1},
+            {id: 'Frankfurt', nrOfHousesToSell: 1, nrOfHousesToPurchase: 0},
+            {id: 'Munich', nrOfHousesToSell: 0, nrOfHousesToPurchase: 1},            
+        ]
+        expect(result).arrayContainsObjectsContaining(expected);
+    })
+    it('Should return housesToSell 0 and housesToPurchase 1 in case of city having less houses than the others in the country', () => {
+        setGermanCitiesDifferentHouseNrs({
+            berlin: 1, munich: 2,frankfurt: 2,
+        })
+        const result = recalculateNrOfHousesToBuySell(germanCities, 'Germany');
+        const expected = [
+            {id: 'Berlin', nrOfHousesToSell: 0, nrOfHousesToPurchase: 1},
+            {id: 'Frankfurt', nrOfHousesToSell: 1, nrOfHousesToPurchase: 0},
+            {id: 'Munich', nrOfHousesToSell: 1, nrOfHousesToPurchase: 0},            
+        ]
+        expect(result).arrayContainsObjectsContaining(expected);
+    })
+    it('Should return housesToSell 0 and housesToPurchase 1 in case of city having less houses than the others in the country - boundry case', () => {
+        setGermanCitiesDifferentHouseNrs({
+            berlin: 0, munich: 1,frankfurt: 1,
+        })
+        const result = recalculateNrOfHousesToBuySell(germanCities, 'Germany');
+        const expected = [
+            {id: 'Berlin', nrOfHousesToSell: 0, nrOfHousesToPurchase: 1},
+            {id: 'Frankfurt', nrOfHousesToSell: 1, nrOfHousesToPurchase: 0},
+            {id: 'Munich', nrOfHousesToSell: 1, nrOfHousesToPurchase: 0},            
         ]
         expect(result).arrayContainsObjectsContaining(expected);
     })
