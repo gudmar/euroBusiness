@@ -1,4 +1,15 @@
-
+import {
+    setDiceResult,
+    throwDice,
+    disactivateDice,
+    move,
+    moveOneField,
+    pay,
+    sleep,
+    addExtraCard,
+    useExtraCard,
+    nextPlayer,
+} from "../state/playerSlice.js"
 
         const getOptionsCity = (data) => {
             const {
@@ -15,9 +26,22 @@
         }
         const getOptionsStart = (data) => {
             const {info} = data;
-            return {
-
-            }
+            return [
+                {
+                    type: 'information',
+                    title: 'You pass start:',
+                    text: info,
+                    options: [
+                        {
+                            type: 'button',
+                            label: 'OK',
+                            function: pay,
+                            action: {payload: 400},
+                            tooltip: 'Accept'
+                        }
+                    ]
+                }
+            ]
         }
         const getOptionsChanceBlue = (data) => {
 
