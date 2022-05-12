@@ -24,6 +24,7 @@ const boardSlice = createSlice({
         }
     }
 })
+
 const { actions, reducer } = boardSlice;
 export const { addField, print, updatePosition } = actions;
 // export const { exampleSlice } = exampleSlice.actions;
