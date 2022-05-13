@@ -37,7 +37,6 @@ expect.extend({
                 if (toCompare[key] !== template[key]) {
                     keyOfDifference = key;
                     valueOfDifference = template[key]
-                    console.log('DIFF: key', toCompare[key], template[key], key)
                     acc = false; return false;
                 }
                 return true;
@@ -339,7 +338,6 @@ describe('estateOperations: recalculateNrOfHouses', () => {
             if (key === 'Frankfurt') stateTemplate[key].nrOfHouses = frankfurt;
             if (key === 'Munich') stateTemplate[key].nrOfHouses = munich;
         });
-        console.log('StateTemplatge', stateTemplate)
         germanCities = [
             {id: 'Berlin', ...stateTemplate.Berlin},
             {id: 'Frankfurt', ...stateTemplate.Frankfurt}, 

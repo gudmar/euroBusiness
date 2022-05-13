@@ -24,7 +24,6 @@ const DicesRollerTest = props => {
     const dispatch = useDispatch();
     const rollDices = (a, b) => () => dispatch(throwDice([a, b]));
     const diceResult = useSelector(state => state.playerSlice.diceResult);
-    console.log('DicerRollersTest')
     return (
     <Box component = "div">
         <Typography variant="h3">

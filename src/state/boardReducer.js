@@ -1,20 +1,24 @@
-
+const boardActionTypes = {
+    ADD_FIELD: 'ADD_FIELD',
+    PRINT: 'PRINT',
+    UPDATE_POSITION: 'UPDATE_POSITION',
+}
 const boardReducer = (state, {type, payload}) => {
+    const id = payload.index;
     switch(type) {
-        case 'ADD_FIELD': 
-            state.fieldDescriptors[payload.index] = payload
+        case boardActionTypes.ADD_FIELD: 
+            state.boardSlice[payload.index] = payload
             return {...state}
-        case 'PRINT':
-            console.log(state);
+        case boardActionTypes.PRINT:
             return state;
-        case 'UPDATE_POSITION':
-            const id = action.payload.index;
-            state.fieldDescriptors[id].left = payload.left;
-            state.fieldDescriptors[id].right = payload.right;
-            state.fieldDescriptors[id].top = payload.top;
-            state.fieldDescriptors[id].bottom = payload.bottom;
+        case boardActionTypes.UPDATE_POSITION:
+            state.boardSlice[id].left = payload.left;
+            state.boardSlice[id].right = payload.right;
+            state.boardSlice[id].top = payload.top;
+            state.boardSlice[id].bottom = payload.bottom;
             return {...state}
+        default: return state;
     }
 }
 
-export default boardReducer;
+export { boardReducer, boardActionTypes };

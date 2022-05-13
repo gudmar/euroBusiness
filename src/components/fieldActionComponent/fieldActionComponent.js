@@ -11,7 +11,8 @@ import styles from './fieldActionComponentStyle.js';
 
 const FieldActionComponent = props => {
     const isOpen = props.isOpen;
-
+    const store = useStore();
+    console.log(store.getState())
     const currentPlayer = useSelector(store => store.playerSlice.currentPlayer);
     const getPlayerData = (store, dataName) => store.playerSlice[currentPlayer][dataName];
     const playerName = useSelector(store => getPlayerData(store, 'name'));

@@ -162,7 +162,6 @@ const BuyableFieldInformationComponent = props => {
         const singleRow = item => (
             <TableCell>{item}</TableCell>
         )
-        console.log(tableDescriptor)
         return (
             <TableContainer>
                 <Table>

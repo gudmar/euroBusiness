@@ -22,15 +22,13 @@ const stateModifier = (state) => {
 
 const getInitialState = (stateModifier = state => state) => {
     const stateBase = {
-        boardSlice:{
-            fieldDescriptors: getFields(),
-        },
+        boardSlice: getFields(),
         playerSlice: cp(initialState.playerSlice),
     }
     return stateModifier(stateBase);
 }
 
-const getFieldIndex = name => getInitialState().boardSlice.fieldDescriptors.findIndex(field => {return field.id === name;});
+const getFieldIndex = name => getInitialState().boardSlice.findIndex(field => {return field.id === name;});
 
 const action = (type, payload) => ({type: type, payload: payload});
 
@@ -38,14 +36,14 @@ const action = (type, payload) => ({type: type, payload: payload});
 describe('transactionsReducer: PURCHASE should work as expected', () => {
     const blueBoughtSalonikiModifier = (state) => {
         const salonikiIndex = getFieldIndex('Saloniki');
-        const saloniki = state.boardSlice.fieldDescriptors[salonikiIndex];
+        const saloniki = state.boardSlice[salonikiIndex];
         saloniki.owner = 'blue';
         state.playerSlice.blue.cash -= 120;
         return state;
     }
     const blueBoughtAtenyModifier = state => {
         const atenyIndex = getFieldIndex('Ateny');
-        const ateny = state.boardSlice.fieldDescriptors[atenyIndex];
+        const ateny = state.boardSlice[atenyIndex];
         ateny.owner = 'blue';
         state.playerSlice.blue.cash -= 60;
         state.playerSlice.red.cash += 60;
@@ -67,18 +65,18 @@ describe('transactionsReducer: PURCHASE should work as expected', () => {
 describe('transactionsReducer: MORTAGE should work as expected', () => {
     const neapolIndex = getFieldIndex('Neapol');
     const giveNeapolToGreenModifier = (state) => {
-        const neapol = state.boardSlice.fieldDescriptors[neapolIndex];
+        const neapol = state.boardSlice[neapolIndex];
         neapol.owner = 'green';
         return state;
     }
     const giveNeapolToGreenAndBuidAHouseModifier = (state) => {
-        const neapol = state.boardSlice.fieldDescriptors[neapolIndex];
+        const neapol = state.boardSlice[neapolIndex];
         neapol.owner = 'green';
         neapol.nrOfHouses = 1;
         return state;
     }
     const mortageNeapolModifier = state => {
-        const neapol = state.boardSlice.fieldDescriptors[neapolIndex];
+        const neapol = state.boardSlice[neapolIndex];
         neapol.isPlegded = true;
         state.playerSlice.green.cash += 100;
         return state;
@@ -100,13 +98,13 @@ describe('transactionsReducer: PAY_MORTAGE tests', () => {
     const sewillaIndex = getFieldIndex('Sewilla');
     const setSewillaToPlagdedModifier = (state) => {
         state = cp(state);
-        const sewilla = state.boardSlice.fieldDescriptors[sewillaIndex];
+        const sewilla = state.boardSlice[sewillaIndex];
         sewilla.owner = 'blue';
         sewilla.isPlegded = true;
         return state;
     }
     const setSewillasUnplagdedModifier = state => {
-        const sewilla = state.boardSlice.fieldDescriptors[sewillaIndex];
+        const sewilla = state.boardSlice[sewillaIndex];
         sewilla.owner = 'blue';
         sewilla.isPlegded = false;
         state.playerSlice.blue.cash -= Math.floor(140 * 1.1);
@@ -114,7 +112,7 @@ describe('transactionsReducer: PAY_MORTAGE tests', () => {
     }
     const setBlueSewillaNotEnoughCash = state => {
         state = cp(state);
-        const sewilla = state.boardSlice.fieldDescriptors[sewillaIndex];
+        const sewilla = state.boardSlice[sewillaIndex];
         sewilla.owner = 'blue';
         sewilla.isPlegded = true;
         state.playerSlice.blue.cash = 139;
@@ -122,7 +120,7 @@ describe('transactionsReducer: PAY_MORTAGE tests', () => {
     }
     const notPlegdedStartStateModifier = state => {
         state = cp(state);
-        const sewilla = state.boardSlice.fieldDescriptors[sewillaIndex];
+        const sewilla = state.boardSlice[sewillaIndex];
         sewilla.owner = 'blue';
         return state;        
     }
@@ -150,15 +148,15 @@ describe('transactionsReducer: SELL_ONE_HOUSE', () => {
     const barcelonaIndex = getFieldIndex('Barcelona');
     const blueInBarcelonaModifier = state => {
         state = cp(state);
-        const barcelona = state.boardSlice.fieldDescriptors[barcelonaIndex];
+        const barcelona = state.boardSlice[barcelonaIndex];
         barcelona.owner = 'blue';
         barcelona.nrOfHouses = 3;
         return state;
     };
     const expectedBlueInBarcelonaModifier = nrOfHousesToSell => state => {
         state = cp(state);
-        const barcelona = state.boardSlice.fieldDescriptors[barcelonaIndex];
-        const singleHousePrice = state.boardSlice.fieldDescriptors[barcelonaIndex].housePrice;
+        const barcelona = state.boardSlice[barcelonaIndex];
+        const singleHousePrice = state.boardSlice[barcelonaIndex].housePrice;
         barcelona.owner = 'blue';
         barcelona.nrOfHouses = 3 - nrOfHousesToSell;
         state.playerSlice.blue.cash += nrOfHousesToSell * singleHousePrice * 0.5;
@@ -166,23 +164,23 @@ describe('transactionsReducer: SELL_ONE_HOUSE', () => {
     };
     const blueInBarcelonaNoHousesModifier = state => {
         state = cp(state);
-        const barcelona = state.boardSlice.fieldDescriptors[barcelonaIndex];
+        const barcelona = state.boardSlice[barcelonaIndex];
         barcelona.owner = 'blue';
         barcelona.nrOfHouses = 0;
         return state;        
     }
     const blueHasHotelInBarcelonaModifier = state => {
         state = cp(state);
-        const barcelona = state.boardSlice.fieldDescriptors[barcelonaIndex];
+        const barcelona = state.boardSlice[barcelonaIndex];
         barcelona.owner = 'blue';
         barcelona.nrOfHouses = 5;
         return state;                
     }
     const blueSellsHotelInBarcelonaModifier = state => {
         state = cp(state);
-        const barcelona = state.boardSlice.fieldDescriptors[barcelonaIndex];
-        const singleHousePrice = state.boardSlice.fieldDescriptors[barcelonaIndex].housePrice;
-        const singleHotelPrice = state.boardSlice.fieldDescriptors[barcelonaIndex].hotelPrice;
+        const barcelona = state.boardSlice[barcelonaIndex];
+        const singleHousePrice = state.boardSlice[barcelonaIndex].housePrice;
+        const singleHotelPrice = state.boardSlice[barcelonaIndex].hotelPrice;
         barcelona.owner = 'blue';
         barcelona.nrOfHouses = 0;
         state.playerSlice.blue.cash += 2 * singleHousePrice + 0.5 * singleHotelPrice;
@@ -204,6 +202,7 @@ describe('transactionsReducer: SELL_ONE_HOUSE', () => {
     it ('Should return sell a hotel if there is one: reduce houses number from 5 to 0, increase users account by half of its value and by value of 2 houses,', () => {
         const startState = getInitialState(blueHasHotelInBarcelonaModifier);
         const expectedState = getInitialState(blueSellsHotelInBarcelonaModifier);
+        console.log(transactionsReducer(startState, action('SELL_ONE_HOUSE', {estate: 'Barcelona', howMany: 1})))
         const result = transactionsReducer(startState, action('SELL_ONE_HOUSE', {estate: 'Barcelona', howMany: 1}))
         expect(result).toEqual(expectedState);
     });

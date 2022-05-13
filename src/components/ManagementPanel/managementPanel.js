@@ -20,7 +20,7 @@ import useStyles from './managementPanelStyles.js';
 const ManagementPanel = props => {
     // const { open, setOpen } = useState(props.open);
     const {open, setOpen} = props;
-    const boardDescriptors = useSelector(store => store.boardSlice.fieldDescriptors);
+    const boardDescriptors = useSelector(store => store.boardSlice);
     const playerDescriptors = useSelector(store => store.playerSlice);
     const headerDescriptors = getHeaderDescriptors(headerOrder);
     const bodyDescriptors = getBody(boardDescriptors, headerOrder);

@@ -22,7 +22,6 @@ const Pawns = props => {
 const OpenManagementPanelButton = props => {
     const {open, setOpen} = props;
     const openPanel = () => setOpen(true);
-    console.log('OpenManagementPalneButton')
     return (
         <Button
             onClick={openPanel}
@@ -38,7 +37,6 @@ const Game = props => {
     const [fieldInformationOpen, setFieldInformationOpen] = useState(false);
     const [currentlyViewedField, setCurrentlyViewedField] = useState(0);
     const [openManagement, setOpenManagement] = useState(false);
-    useEffect(() => {console.log(store.getState())})
 
     return (
         <div className={`${styles.game}`}>
