@@ -17,11 +17,10 @@ const Pawn = props => {
     const dispatch = useDispatch();
     const getMiddleCords = (fieldNr) => {
         try {
-            const { left, right, top, bottom } = board.fieldDescriptors[fieldNr];
+            const { left, right, top, bottom } = board[fieldNr];
             const average = (a, b) => (a + b) / 2;
             const x = average(left, right);
             const y = average(top, bottom)
-            // if (player.color === 'blue') console.log(fieldNr, left, right, top ,bottom, x, y)
             return {x: average(left, right), y: average(top, bottom)}
         }
         catch(e){

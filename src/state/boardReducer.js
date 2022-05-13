@@ -10,7 +10,6 @@ const boardReducer = (state, {type, payload}) => {
             state.boardSlice[payload.index] = payload
             return {...state}
         case boardActionTypes.PRINT:
-            console.log(state);
             return state;
         case boardActionTypes.UPDATE_POSITION:
             state.boardSlice[id].left = payload.left;

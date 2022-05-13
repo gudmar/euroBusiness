@@ -13,13 +13,17 @@ import {
     playerReducer,
     playerActionTypes
   } from './playerReducer.js'
-
+import {
+  transactionsReducer, transactionActionTypes
+} from './transactionsReducer.js'
 const rootReducer = (state, {type, payload}) => {
   if (state === undefined) return defaultState;
   const playerTypes = Object.values(playerActionTypes);
   const boardTypes = Object.values(boardActionTypes);
+  const transactionTypes = Object.values(transactionActionTypes)
   if (playerTypes.find(t => t === type)) return playerReducer(state, {type, payload});
   if (boardTypes.find(t => t === type)) return boardReducer(state, {type, payload});
+  if (transactionTypes.find(t => t === type)) return transactionsReducer(state, {type, payload});
   return state;
 }
 

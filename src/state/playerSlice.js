@@ -33,7 +33,6 @@ const playerSlice = createSlice({
             const player = action.payload;
             const diceResult = state.diceResult;
             if (diceResult > 0){
-                console.log(state[player].fieldNumber)
                 if (state[player].fieldNumber > 38) {
                     state[player].fieldNumber = 0;
                 } else {
@@ -62,7 +61,6 @@ const playerSlice = createSlice({
             const players = ['blue', 'red', 'orange', 'green'];
             const currentIndex = players.findIndex(item => item === state.currentPlayer);
             const nextState = (currentIndex + 1) % players.length;
-            console.log(nextState);
             state['currentPlayer'] = players[nextState];
         }
     }

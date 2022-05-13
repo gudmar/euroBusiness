@@ -16,14 +16,9 @@ const Board = (props) => {
     const leftSliceDescriptor = boardDescriptors.slice(10, 20).reverse();
     const topSliceDescriptor = boardDescriptors.slice(20, 30);
     const rightSliceDescriptor = boardDescriptors.slice(30, 40)
-    const gridCords = useSelector(state => state.fieldDescriptors);
+    const gridCords = useSelector(state => state.boardSlice);
     const state = useStore();
 
-    useEffect(() => {console.log(state.getState())})
-    // useEffect((gridCords) => {
-    //     console.dir(gridCords)
-    // }, [gridCords])
-    // console.log(bottomSliceDescriptor)
     return(
         <div className={styles.board}>
             <BoardSide direction="Bottom" descriptors = {bottomSliceDescriptor} fieldHandlers={props.fieldHandlers}></BoardSide>

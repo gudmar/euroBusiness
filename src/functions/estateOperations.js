@@ -39,7 +39,6 @@ const getMinMaxNrOfHouses = citiesArray => {
 }
 const isNrOfHousesDifferenceTooBig = citiesArray => {
     const { min, max } = getMinMaxNrOfHouses(citiesArray);
-    console.log('IS NOT too big', max.val - min.val)
     return max.val - min.val > 1
 }
 
