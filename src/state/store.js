@@ -18,8 +18,8 @@ const rootReducer = (state, {type, payload}) => {
   if (state === undefined) return defaultState;
   const playerTypes = Object.values(playerActionTypes);
   const boardTypes = Object.values(boardActionTypes);
-  if (playerTypes.find(type)) return playerReducer;
-  if (boardTypes.find(type)) return boardTypes;
+  if (playerTypes.find(t => t === type)) return playerReducer(state, {type, payload});
+  if (boardTypes.find(t => t === type)) return boardReducer(state, {type, payload});
   return state;
 }
 

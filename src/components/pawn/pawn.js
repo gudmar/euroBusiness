@@ -89,12 +89,10 @@ const Pawn = props => {
     }, [diceThrown]);
 
     useEffect(() => {
-        if (board.fieldDescriptors.length > 0) {
+        if (board.length > 0) {
             setCords(getMiddleCords(fieldNumber))
         }
     }, [fieldNumber]);
-
-    console.log('Pawn')
 
     return (
         <div 

@@ -7,16 +7,16 @@ const boardReducer = (state, {type, payload}) => {
     const id = payload.index;
     switch(type) {
         case boardActionTypes.ADD_FIELD: 
-            state.fieldDescriptors[payload.index] = payload
+            state.boardSlice[payload.index] = payload
             return {...state}
         case boardActionTypes.PRINT:
             console.log(state);
             return state;
         case boardActionTypes.UPDATE_POSITION:
-            state.fieldDescriptors[id].left = payload.left;
-            state.fieldDescriptors[id].right = payload.right;
-            state.fieldDescriptors[id].top = payload.top;
-            state.fieldDescriptors[id].bottom = payload.bottom;
+            state.boardSlice[id].left = payload.left;
+            state.boardSlice[id].right = payload.right;
+            state.boardSlice[id].top = payload.top;
+            state.boardSlice[id].bottom = payload.bottom;
             return {...state}
         default: return state;
     }

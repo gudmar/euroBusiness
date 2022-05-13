@@ -6,7 +6,8 @@ import { Typography } from '@material-ui/core';
 
 import Power from '@material-ui/icons/esm/Power';
 import { useDispatch, useSelector, useStore } from 'react-redux';
-import { addField, print, updatePosition } from '../../../state/boardSlice.js'
+// import { addField, print, updatePosition } from '../../../state/boardSlice.js'
+import { addField, print, updatePosition } from '../../../state/boardActions.js';
 
 let  theme = createTheme({
     typography: {
@@ -165,9 +166,6 @@ const chanceTypes = ['chanceBlue', 'chanceRed']
 const girdTypeSelect = (descriptor, openInfoHandler, index, ref) => {
     const variant = direction2variant(descriptor.direction);
     const type = descriptor.type;
-    console.log('descriptor', descriptor)
-    console.log('openInfoHandler', openInfoHandler)
-    console.log('index', index)
     if (bigIconTypes.includes(type)) return gridIconField(descriptor, openInfoHandler, variant, index, ref);
     if (bigFieldTypes.includes(type)) return hugeField(descriptor, openInfoHandler, variant, index, ref);
     if (cityTypes.includes(type)) return cityField(descriptor, openInfoHandler, variant, index, ref);

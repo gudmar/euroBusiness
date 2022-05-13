@@ -10,7 +10,6 @@ const defaultPlayer = (color, name) => ({
 });
 
 const defaultPlayerStateConstructor = () => {
-    console.log('In defaultPlayerStateConsturtor')
     return {
         player: 'human', // human, cpuStrat1, cpuStrat2, cpuStrat3
         currentPlayer: 'blue',

@@ -18,11 +18,7 @@ const Board = (props) => {
     const rightSliceDescriptor = boardDescriptors.slice(30, 40)
     const gridCords = useSelector(state => state.fieldDescriptors);
     const state = useStore();
-    console.log(
-        leftSliceDescriptor,
-        topSliceDescriptor
-    )
-    console.log('Board')
+
     useEffect(() => {console.log(state.getState())})
     // useEffect((gridCords) => {
     //     console.dir(gridCords)

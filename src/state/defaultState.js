@@ -2,9 +2,7 @@ import { boardDescriptorCreator } from './defaultBoardState.js';
 import { defaultPlayerStateConstructor } from './defaultPlayerState.js';
 
 const defaultState = {
-    playerSlice: {
-
-    },
+    playerSlice: defaultPlayerStateConstructor(),
     boardSlice: boardDescriptorCreator()
 }
 

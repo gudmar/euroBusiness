@@ -24,18 +24,6 @@ const BoardSide = (props) => {
     const boardSide = direction => (
         <div className={ `${styles.fieldBar} ${styles[directionClass]}` }>
             {descriptors.map((descriptor, index) => {
-                // if (direction === "Top") debugger;
-            console.log(
-                    <Grid 
-                descriptor = {descriptor} 
-                key = {descriptor.id} 
-                index = {index}
-                openInformationHandler = {openInformationHandler(calculateFieldNumber(index))}
-                fieldNumber = {calculateFieldNumber(index)}   
-                
-                direction = {direction } // DEBUGGING
-            />
-                )
             return <Grid 
                 descriptor = {descriptor} 
                 key = {descriptor.id} 
