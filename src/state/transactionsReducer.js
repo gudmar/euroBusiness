@@ -17,8 +17,6 @@ const transactionActionTypes = {
 }
 
 const transactionsReducer = (state, {type, payload}) => {
-    console.log('TYPE', type, payload)
-    // if (state === undefined || state === null) return initialState;
     const cpState = state => JSON.parse(JSON.stringify(state));
     const sellHouse = payload => {
         const estate = payload.estate;

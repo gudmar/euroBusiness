@@ -5,7 +5,7 @@ import styles from './dicesRoller.module.css';
 import { Typography, ButtonGroup, Button, Box } from '@material-ui/core';
 import { useDispatch, useSelector, useStore } from 'react-redux';
 import Dice from '../dices/dices.js'
-import { setDiceResult, throwDice } from '../../state/playerSlice.js'
+import { setDiceResult, throwDice } from '../../state/playerActions.js'
 
 // let themeDices = createTheme({
 //     typography: {
