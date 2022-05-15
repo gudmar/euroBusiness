@@ -2,7 +2,8 @@ import styles from './pawn.module.css';
 import { useDispatch, useSelector, useStore } from 'react-redux';
 import PropTypes from 'prop-types';
 import { useEffect, useState, useRef } from 'react';
-import { move, setDiceResult, moveOneField, disactivateDice } from '../../state/playerSlice';
+// import { move, setDiceResult, moveOneField, disactivateDice } from '../../state/playerSlice';
+import { move, setDiceResult, moveOneField, disactivateDice } from '../../state/playerActions';
 
 const Pawn = props => {
     const player = useSelector(state => state.playerSlice[props.color]);
@@ -66,24 +67,40 @@ const Pawn = props => {
 
     }
 
-    const movePawn = delay => {
+    // const movePawn = delay => {
+    //     return new Promise(resolve => {
+    //         const t = setTimeout(() => {
+    //             clearTimeout(t);
+    //             dispatch(moveOneField(currentPlayer));
+    //             resolve(true);
+    //         }, delay)
+    //     })
+    // }
+    const doAfterDelay = (actionCallack, args) => delay => {
         return new Promise(resolve => {
             const t = setTimeout(() => {
                 clearTimeout(t);
-                dispatch(moveOneField(currentPlayer));
+                actionCallack(args)
                 resolve(true);
             }, delay)
         })
     }
 
+    const movePawn = delay => doAfterDelay(()=>{dispatch(moveOneField(currentPlayer))}, undefined)(delay)
+    const wait = delay => doAfterDelay(() => {},)(delay)
+
     const [cords, setCords] = useState();
     useEffect(async () => {
         if (diceThrown && currentPlayer === props.color) {
             dispatch(disactivateDice());
-            for (let diceLeft = diceResult; diceLeft>0; diceLeft--){
-                await movePawn(500);
+            for (let diceLeft = diceResult; diceLeft>=0; diceLeft--){
+                if (diceLeft > 0) await movePawn(500);
+                if(diceLeft === 0) {
+                    await wait(500)
+                    props.openFieldActionHandler(true);
+                }
             }
-            props.openFieldActionHandler(true);
+            // props.openFieldActionHandler(true);
         }
     }, [diceThrown]);
 

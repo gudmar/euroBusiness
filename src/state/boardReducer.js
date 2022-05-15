@@ -1,3 +1,5 @@
+import { moveOneField, disactivateDice, setDiceResult } from "./playerSlice";
+
 const boardActionTypes = {
     ADD_FIELD: 'ADD_FIELD',
     PRINT: 'PRINT',
@@ -17,7 +19,10 @@ const boardReducer = (state, {type, payload}) => {
             state.boardSlice[id].top = payload.top;
             state.boardSlice[id].bottom = payload.bottom;
             return {...state}
-        default: return state;
+        default: {
+            console.error(`Board reducer: no action matched (to match: ${type}`)
+            return state
+        };
     }
 }
 

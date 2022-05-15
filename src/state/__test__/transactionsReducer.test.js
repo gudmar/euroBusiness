@@ -4,7 +4,7 @@ import {
     boardInOrder,
 } from '../boardFields.js'
 
-import transactionsReducer from '../transactionsReducer.js'    ;
+import { transactionsReducer } from '../transactionsReducer.js'    ;
     //blue red green orange
 
 const cp = jsObject => JSON.parse(JSON.stringify(jsObject));
@@ -202,7 +202,6 @@ describe('transactionsReducer: SELL_ONE_HOUSE', () => {
     it ('Should return sell a hotel if there is one: reduce houses number from 5 to 0, increase users account by half of its value and by value of 2 houses,', () => {
         const startState = getInitialState(blueHasHotelInBarcelonaModifier);
         const expectedState = getInitialState(blueSellsHotelInBarcelonaModifier);
-        console.log(transactionsReducer(startState, action('SELL_ONE_HOUSE', {estate: 'Barcelona', howMany: 1})))
         const result = transactionsReducer(startState, action('SELL_ONE_HOUSE', {estate: 'Barcelona', howMany: 1}))
         expect(result).toEqual(expectedState);
     });
