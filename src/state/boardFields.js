@@ -2,10 +2,16 @@
 import {throwDices} from '../functions/throwDices.js';
 import {countries, notCountryTypes} from '../functions/countryTypes.js'
 
+const arrayStateToObjectState = arrayState => arrayState.reduce((acc, item) => {
+    acc[item.id] = item;
+    return acc;
+}, {})
+
 const getNrOfCitiesPlayerHas = (descriptors, player, country) => {
     // From a single country | player === color
     if (player === undefined) throw new Error('boardField: getNotPlegdedNrOfCIties: Player undefined');
     if (country === undefined) throw new Error('boardField: getNotPlegdedNrOfCIties: Country undefined');
+    if (Array.isArray(descriptors)) descriptors = arrayStateToObjectState(descriptors);
     const result = Object.values(descriptors).reduce((acc,item) => {
         if ((item.country === country) && (item.owner === player)) acc.owns += 1;
         if (item.country === country) acc.outOf += 1;
@@ -17,6 +23,7 @@ const getNrOfCitiesPlayerHas = (descriptors, player, country) => {
 const getNotPlegdedNrOfCitiesPlayerHas = (descriptors, player, country) => {
     if (player === undefined) throw new Error('boardField: getNotPlegdedNrOfCIties: Player undefined');
     if (country === undefined) throw new Error('boardField: getNotPlegdedNrOfCIties: Country undefined');
+    if (Array.isArray(descriptors)) descriptors = arrayStateToObjectState(descriptors);
     const result = Object.values(descriptors).reduce((acc,item) => {
         if ((item.country === country) && (item.owner === player) && (!item.isPlegded)) acc.owns += 1;
         if (item.country === country) acc.outOf += 1;

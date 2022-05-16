@@ -61,6 +61,44 @@ describe('boardFields: getNrOfCitiesPlayerHas', () => {
     })
 })
 
+describe('boardFields: getNrOfCiteisPlayerHas should work with array-like descriptors', () => {
+    const arrFromDescriptors = descriptors => Object.keys(descriptors).map((key) => {
+        const newItem = descriptors[key];
+        newItem.id = key;
+        return newItem;
+    })
+    it('Should return 2/2 in case of Greece and Bolek', () => {
+        let state = cp(testState);
+        state = arrFromDescriptors(state);
+        const result = getNrOfCitiesPlayerHas(testState, 'Bolek', 'Greece');
+        const expected = {owns: 2, outOf: 2};
+        expect(result).toEqual(expected);
+    });
+    it('Should return 2/3 in case of Lolek and Spain', () => {
+        let state = cp(testState);
+        state = arrFromDescriptors(state);
+        const result = getNrOfCitiesPlayerHas(testState, 'Lolek', 'Spain');
+        const expected = {owns: 2, outOf: 3};
+        expect(result).toEqual(expected);        
+    });
+    it('Should return 4/4 in case of bank and railway', () => {
+        let state = cp(testState);
+        state = arrFromDescriptors(state);
+        const result = getNrOfCitiesPlayerHas(testState, 'bank', 'Railways');
+        const expected = {owns: 4, outOf: 4};
+        expect(result).toEqual(expected);
+    })
+    it('Should throw an error in case player or country are undefined', () => {
+        let state = cp(testState);
+        state = arrFromDescriptors(state);
+        const playerUndef = () => getNrOfCitiesPlayerHas(state, undefined, 'Railways');
+        const countryUndef = () => getNrOfCitiesPlayerHas(state, 'bank', undefined);
+        expect(playerUndef).toThrow();
+        expect(countryUndef).toThrow();
+    })
+
+})
+
 describe('boardFields: countWaterPlantVisitFee', () => {
     it('Should return 0 if bank is the owner of waterPlant', async () => {
         const state = cp(testState);
