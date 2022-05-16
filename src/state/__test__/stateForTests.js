@@ -279,7 +279,15 @@ const stateForFieldOptionsTests = [
     // and can not mortage anymore, should return one button:
     // Ok
 
-    //
+
+    // === The same player :
+
+    // If player stops in Ateny, and he owns it, should display text: 
+    // You step in 'Ateny' city. Its owned by you. You may visit estate manager for 
+    // more options.
+
+    // If player stops in Ateny, and he owns it, should display button:
+    // 'Estate Manager'
 
 
 
@@ -437,7 +445,14 @@ const stateForFieldOptionsTests = [
 
     
 
+    // === The same player :
 
+    // If player stops in South Railways, and he owns it, should display text: 
+    // You step in 'South Railway' . Its owned by you. You may visit estate manager for 
+    // more options.
+
+    // If player stops in South Railway, and he owns it, should display button:
+    // 'Estate Manager'
 
 
 
@@ -524,6 +539,15 @@ const stateForFieldOptionsTests = [
     // no fee for stopping by.
 
 
+
+        // === The same player :
+
+    // If player stops in Water Plant, and he owns it, should display text: 
+    // You step in 'Water Plant'. Its owned by you. You may visit estate manager for 
+    // more options.
+
+    // If player stops in Water Plant, and he owns it, should display button:
+    // 'Estate Manager'
 
     {
         id: 'Power Station',
