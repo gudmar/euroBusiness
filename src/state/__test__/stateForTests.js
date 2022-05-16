@@ -219,9 +219,72 @@ const stateForFieldOptionsTests = [
     // You stop in 'Ateny' city. Its onwed by bank. You don't have to pay for 
     // staying here. You may purchase this city. If You don't it will be auctioned
 
-    // If player has enough cash, Should return 2 buttons: for purchase and for auction
+    // If another player owns this city, and only this city in greece, and player has enough cash to pay for stay should return text:
+    // You stop in 'Ateny' city. Its ownde by 'player2'. 'Player2' owns 1 estate in Greece, 
+    // so  you have to pay  $10.
 
-    // If player has not enough cash should return 1 button: auction
+    // If another player owns this city, that another player owns also 'Saloniki', and player that stood has enough cash to pay for stay should return text:
+    // You stop in 'Ateny' city. Its ownde by 'player2'. 'Player2' owns 2 estateS in Greece, 
+    // so  you have to pay  $20.
+
+    // If another player owns this city, and has one house here, and player that stepped has enough cash to pay for the visit should return text:
+    // You step in 'Ateny' city. Its owned by 'player2'. Player2' has 1 house in 'Ateny'.
+    // You should pay: $40
+
+    // If another player owns this city, and has 2 houses here, and player that stepped has enough cash to pay for the visit should return text:
+    // You step in 'Ateny' city. Its owned by 'player2'. Player2' has 2 houseS in 'Ateny'.
+    // You should pay: $120
+
+    // If another player owns this city, and has 3 houses here, and player that stepped has enough cash to pay for the visit should return text:
+    // You step in 'Ateny' city. Its owned by 'player2'. Player2' has 3 houseS in 'Ateny'.
+    // You should pay: $360
+
+    // If another player owns this city, and has 4 houses here, and player that stepped has enough cash to pay for the visit should return text:
+    // You step in 'Ateny' city. Its owned by 'player2'. Player2' has 4 houseS in 'Ateny'.
+    // You should pay: 640
+
+    // If another player owns this city, and has 5 houses here, and player that stepped has enough cash to pay for the visit should return text:
+    // You step in 'Ateny' city. Its owned by 'player2'. Player2' has 1 hotel in 'Ateny'.
+    // You should pay: $900
+
+    // If another player owns this city, and has 2 houses here, and player that stepped 
+    // has NOT enough cash to pay for the visit, but still can mortage, should return text:
+    // You step in 'Ateny' city. Its owned by 'player2'. Player2' has 2 houseS in 'Ateny'.
+    // You should pay: $120
+
+
+    // If another player owns this city, and has 2 houses here, and player that stepped 
+    // has NOT enough cash to pay for the visit, should return text:
+    // You step in 'Ateny' city. Its owned by 'player2'. Player2' has 2 houseS in 'Ateny'.
+    // You should pay: $120, but you are too poor. No matter 
+    // how hard you try, you will not be able to pay your debt. You loose the game.'
+
+    // In case another player has a 'Ateny' but it is mortaged, should return text:
+    // You step in 'Ateny' city. Its owned by 'player2'. 'Ateny' is mortaged, so 
+    // no fee for stopping by.
+
+    // BUTTONS -----
+    
+    // If the bank owns Ateny, and player stands and has enough cash should return 
+    // buttons 'Buy', 'Auction'
+
+    // If the bank owns Ateny, and player stands and has not enough cash, but can mortage
+    // should return 2 buttons: 'Auction', 'Estate manager'
+
+    // If player stands on 'Ateny', and another player owns it, and only it and player that
+    // stood on Atheny has not enough cash, but can mortage, should return 2 buttons:
+    // 'Auction', 'Estate Manager'
+
+    // If player stands on 'Ateny', and another player owns it, and player that stood has not cash
+    // and can not mortage anymore, should return one button:
+    // Ok
+
+    //
+
+
+
+
+
 
     {
         id: 'Ateny',
@@ -378,7 +441,8 @@ const stateForFieldOptionsTests = [
 
 
 
-    South_Railways: {
+    {
+        id: 'South Railways',
         country: notCountryTypes.railways,
         type: 'railway',
         price: 400,
@@ -389,7 +453,8 @@ const stateForFieldOptionsTests = [
         boardFieldNumber: 6,
         isPlegded: false,
     },
-    West_Railways: {
+    {
+        id: 'West Railways',
         country: notCountryTypes.railways,
         type: 'railway',
         price: 400,
@@ -400,7 +465,8 @@ const stateForFieldOptionsTests = [
         boardFieldNumber: 16,
         isPlegded: false,
     },
-    North_Railways: {
+    {
+        id: 'North Railways',
         country: notCountryTypes.railways,
         type: 'railway',
         price: 400,
@@ -411,7 +477,8 @@ const stateForFieldOptionsTests = [
         boardFieldNumber: 26,
         isPlegded: false,
     },
-    East_Railways: {
+    {
+        id: 'East Railways',
         country: notCountryTypes.railways,
         type: 'railway',
         price: 400,
@@ -422,6 +489,35 @@ const stateForFieldOptionsTests = [
         boardFieldNumber: 36,
         isPlegded: false,
     },
+
+
+    {
+        id: 'Power Station',
+        country: notCountryTypes.plant,
+        type: 'powerStation',
+        price: 300,
+        mortage: 150,
+        owner: 'bank',
+        nrInSet: 2,
+        boardFieldNumber: 13,
+        visit: [ '10 x thrown dice result', '20 x thrown dice result'],
+        isPlegded: false,
+    },
+
+    {   id: 'Water Plant',
+        country: notCountryTypes.plant,
+        type: 'waterPlant',
+        price: 300,
+        mortage: 150,
+        owner: 'bank',
+        nrInSet: 2,
+        boardFieldNumber: 29,
+        visit: [ '10 x thrown dice result', '20 x thrown dice result'],
+        isPlegded: false,
+    },
+
+
+
 
 
 
