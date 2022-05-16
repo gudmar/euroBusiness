@@ -490,6 +490,40 @@ const stateForFieldOptionsTests = [
         isPlegded: false,
     },
 
+    // If player stops on Power Station and its owned by the bank, should return text:
+    // You stop in Power Station. Its owned by the bank. You don't have to pay for 
+    // staying here. You may purchase this estate. If You don't it will be auctioned.
+
+    // If player stops on Power Station and it is owned by another player, and 
+    // its the only estate of this type that player has, and player that
+    // stepped has enough money to pay,  should return text:
+    // You stop in Power Stateion. Its ownded by 'Player 2'. You should pay 
+    // 10 x thrown dice result, and that is ${mockedDiceResult}.
+
+    // If player stops on Power Station and it is owned by another player, and 
+    // its the only estate of this type that player has, and player that
+    // stepped DOES NOT have enough money to pay, but can mortage,  should return text:
+    // You stop in Power Stateion. Its ownded by 'Player 2'. You should pay 
+    // 10 x thrown dice result, and that is ${mockedDiceResult}.
+
+    // If player stops on Power Station and it is owned by another player, and 
+    // its the only estate of this type that player has, and player that
+    // stepped DOES NOT have enough money to pay, and CANNOT mortage,  should return text:
+    // You stop in Power Stateion. Its ownded by 'Player 2'. You should pay 
+    // 10 x thrown dice result, and that is ${10 x mockedDiceResult}, but you are too poor. No matter 
+    // how hard you try, you will not be able to pay your debt. You loose the game.
+
+    // If player stops on Power Stateion and it is owned by another player, and 
+    // that player has also Water Planant, but player that stopped has enough cash to pay for it should return text:
+    // You stop in Power Stateion. Its owned by 'Player 2'. You should pay 
+    // 20 x throw dice result, and that is ${20 x mockedDiceResult}
+
+    // If player stops on WaterPlant and it is owned by another player, and that player
+    // has WaterPlant mortaged, should return text:
+    // You stop on Water Plant. Its owned by 'Player 2'. 'Water Plant' is mortaged, so 
+    // no fee for stopping by.
+
+
 
     {
         id: 'Power Station',
@@ -514,6 +548,26 @@ const stateForFieldOptionsTests = [
         boardFieldNumber: 29,
         visit: [ '10 x thrown dice result', '20 x thrown dice result'],
         isPlegded: false,
+    },
+
+    // If player stops on Tax, and player has enought cash should return text:
+    // You stop on 'Tax'. You have to pay $200.
+
+    // If player stops on Tax, and player has NOT enought cash but can mortage should return text:
+    // You stop on 'Tax'. You have to pay $200.
+
+    // If player stops on Tax, and player has NOT enought cash should return text:
+    // You stop on 'Tax'. You have to pay $200, but you are too poor. No matter 
+    // how hard you try, you will not be able to pay your debt. You loose the game.
+
+
+
+
+    {
+        id: 'Tax',
+        type: 'tax',
+        visit: [200],
+        info: 'You pay $200, nothing more happens here.',
     },
 
 
