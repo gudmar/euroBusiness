@@ -1,3 +1,5 @@
+import {countries, notCountryTypes} from '../../functions/countryTypes.js'
+
 const testState = {
     Ateny: {
         country: 'Greece',
@@ -206,12 +208,14 @@ const testState = {
 const stateForFieldOptionsTests = [
     // Should return a message: You stop on the 'start' field, that means You get 
     // $400. Notihing to do here.
+
+    // Should retorn a single OK button
     {
         id: 'Start',
         type: 'start',
         boardFieldNumber: 1,
         visit: [-400],
-        info: 'Does nothing, a player gets $400 after passing this field.'
+        info: "You stop on the 'start' field, that means You get $400. Notihing to do here."
     },
     // Should give an option to buy a city if bank owns it,
 
@@ -367,7 +371,7 @@ const stateForFieldOptionsTests = [
     },
     // Should return text: You spend one extra turn here. The only good news is, there is no fee for staying here'
     // Should return an OK button
-    Free_Parking: {
+    {
         id: 'Free_Parking',
         type: 'freePark',
         boardFieldNumber: 11,
@@ -594,13 +598,6 @@ const stateForFieldOptionsTests = [
         info: 'You pay $200, nothing more happens here.',
     },
 
-
-
-
-
-
-
-
 ]
-
+export {stateForFieldOptionsTests}
 export default testState;
