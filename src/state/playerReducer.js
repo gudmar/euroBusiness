@@ -6,6 +6,7 @@ const playerActionTypes = {
     MOVE: 'MOVE',
     MOVE_ONE_FIELD: 'MOVE_ONE_FIELD',
     NEXT_PLAYER: 'NEXT_PLAYER',
+    PAY_PLAYER: 'PAY_PLAYER',
 }
 
 const playerReducer = (state, {type, payload}) => {
@@ -53,6 +54,9 @@ const playerReducer = (state, {type, payload}) => {
             const currentIndex = players.findIndex(item => item === state.playerSlice.currentPlayer);
             const nextIndex = (currentIndex + 1) % players.length;
             state.playerSlice['currentPlayer'] = players[nextIndex];
+            return {...state}
+        case playerActionTypes.PAY_PLAYER:
+            state.playerSlice[state.playerSlice.currentPlayer].cash += payload;
             return {...state}
 
         default: {

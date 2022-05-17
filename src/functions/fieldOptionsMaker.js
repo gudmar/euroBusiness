@@ -10,6 +10,9 @@ import {
     useExtraCard,
     nextPlayer,
 } from "../state/playerSlice.js"
+import { boardActionTypes } from '../state/boardReducer.js';
+import { playerActionTypes } from '../state/playerReducer.js';
+import { controlActionTypes } from '../state/controlReducer.js';
 
         const getOptionsCity = (data) => {
             const {
@@ -36,7 +39,10 @@ import {
                             type: 'button',
                             label: 'OK',
                             function: pay,
-                            action: {payload: 400},
+                            actions: [
+                                {payload: 400, type: playerActionTypes.PAY_PLAYER},
+                                {type: controlActionTypes.SHUT_FIELD_WINDOW}
+                            ],
                             tooltip: 'Accept'
                         }
                     ]
