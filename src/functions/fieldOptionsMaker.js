@@ -30,7 +30,7 @@ import {
                 {
                     type: 'information',
                     title: 'You pass start:',
-                    text: info,
+                    info: info,
                     options: [
                         {
                             type: 'button',
@@ -77,7 +77,6 @@ import {
 const fieldOptionsMaker = (data) => {
     const {
         type,
-        boardFieldNumber,
         visit,
         info,
         country,
@@ -96,10 +95,11 @@ const fieldOptionsMaker = (data) => {
     } = data;
 
     // default (at any time) options: build a house, sell a house, build a hotel, mortage estate, buy from mortage,
+    console.log('data', data)
 
     switch(type) {
         case 'city': return getOptionsCity;
-        case 'start': return getOptionsStart;
+        case 'start': return getOptionsStart(data);
         case 'chanceBlue': return getOptionsChanceBlue;
         case 'chanceRed': return getOptionsChanceRed;
         case 'guardedPark': return getOptionsGuardedPark;
@@ -110,7 +110,7 @@ const fieldOptionsMaker = (data) => {
         case 'powerStation': return getOptionsPowerStation;
         case 'waterPlant': return getOptionsWaterPlant;
         case 'tax': return getOptionsTax;
-        default: throw new Error('fieldOptionsMaker: type did not match one of field types.')
+        default: throw new Error(`fieldOptionsMaker: type did not match one of field types: ${type}`)
     }
  }
 

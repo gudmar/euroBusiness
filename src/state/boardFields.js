@@ -80,6 +80,7 @@ const countExectVisitFeeChecker = async (descriptors, object) => {
     switch (object.type) {
         case 'city': return countCityVisitFee(descriptors, object);
         case 'railway': return countRailwayVisitFee(descriptors, object);
+        case 'freePark': return 0;
         case 'guardedPark': return counntParkingFee();
         case 'tax': return countTaxFee();
         case 'waterPlant': return await countWaterPlantVisitFee(descriptors, object);
@@ -107,7 +108,7 @@ const descriptors = {
         type: 'start',
         boardFieldNumber: 1,
         visit: [-400],
-        info: 'Does nothing, a player gets $400 after passing this field.'
+        info: `You stop on the 'start' field, that means You get  $400. Notihing to do here.`,
     },
     Ateny: {
         type: 'city',
