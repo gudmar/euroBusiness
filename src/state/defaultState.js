@@ -3,7 +3,10 @@ import { defaultPlayerStateConstructor } from './defaultPlayerState.js';
 
 const defaultState = {
     playerSlice: defaultPlayerStateConstructor(),
-    boardSlice: boardDescriptorCreator()
+    boardSlice: boardDescriptorCreator(),
+    control: {
+        openFieldWindow: false,
+    }
 }
 
 export default defaultState;

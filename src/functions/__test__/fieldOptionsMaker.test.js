@@ -2,6 +2,7 @@ import { stateForFieldOptionsTests } from '../../state/__test__/stateForTests.js
 import {
     fieldOptionsMaker
 } from '../../functions/fieldOptionsMaker.js'
+import { playerActionTypes } from '../../state/playerReducer.js';
 
 
 expect.extend({
@@ -39,10 +40,14 @@ expect.extend({
 
 const getInfo = (arr, index) => arr[index].info
 const getButtons = (arr, index) => arr[index].options
-const getButtonNames = (arr, index) => getButtons.map(button => label);
+const getButtonNames = (arr, index) => getButtons(arr, index).map(button => button.label);
 const getButtonLabels = value =>  value.buttons.map(button => button[label])
 const cp = obj => JSON.parse(JSON.stringify(obj));
 const getEstate = (stateArray, estateId) => stateArray.find(item => item.id === estateId);
+const getButtonActionTypes = (arrOfResults, indexSection, indexButton) => {
+    const button = arrOfResults[indexSection].options[indexButton];
+    return button.actions.map(action => action.type)
+}
 
 describe('Testing arrayToContainTheSameValues matcher', () => {
     it('Should pass when arrays have same elements in different order', () => {
@@ -68,7 +73,6 @@ describe('Testing Start field', () => {
         Should return a message: You stop on the 'start' field, that means 
         You get $400. Notihing to do here.`, () => {
             const estateDescriptor = getEstate(stateForFieldOptionsTests, 'Start');
-            console.log(estateDescriptor)
             const resultArr = fieldOptionsMaker(estateDescriptor);
             const result = getInfo(resultArr, 0);
             expect(Array.isArray(resultArr)).toBe(true);
@@ -77,7 +81,13 @@ describe('Testing Start field', () => {
             expect(result).toBe(expected);
         }
     );
-    it('Should return a single OK button', () => {
-
+    it('Should return a single OK button having actions PAY_PLAYER and SHUT_WINDOW', () => {
+        const estateDescriptor = getEstate(stateForFieldOptionsTests, 'Start');
+        const resultArr = fieldOptionsMaker(estateDescriptor);
+        const resultButtonNames = getButtonNames(resultArr, 0);
+        const resultButtonActionTypes = getButtonActionTypes(resultArr, 0, 0)
+        const expectedButtonNames = ['OK'];
+        const expectedActionTypes = [playerActionTypes.PAY_PLAYER, playerActionTypes.SHUT_FIELD_WINDOW]
+        expect(resultButtonNames).arrayToContainTheSameValues(expectedButtonNames);
     })
 })
