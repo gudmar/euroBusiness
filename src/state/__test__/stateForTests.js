@@ -214,6 +214,20 @@ const currentPlayerData = {
     turnToStale: 0,
 };
 
+const playerSlice = {
+    currentPlayer: 'blue',
+    diceResult: 0,
+    dublet: 0,
+    diceThrown: false,
+    gublet: 0,
+    player: 'human',
+    black: {
+        name: 'Player_2', color: 'black', fieldNumber: 0,
+        cash: 3000, extraCartd:[], player: 'computer',
+    },
+    blue: currentPlayerData,
+}
+
 const stateForFieldOptionsTests = [
     // +  Should return a message: You stop on the 'start' field, that means You get 
     // +  $400. Notihing to do here.
@@ -228,9 +242,9 @@ const stateForFieldOptionsTests = [
     },
     // Should give an option to buy a city if bank owns it,
 
-    // If player has enough cash and bank owns the city, it should return text:
-    // You stop in 'Ateny' city. Its onwed by bank. You don't have to pay for 
-    // staying here. You may purchase this city. If You don't it will be auctioned
+    // + If player has enough cash and bank owns the city, it should return text:
+    // + You stop in 'Ateny' city. Its onwed by bank. You don't have to pay for 
+    // + staying here. You may purchase this city. If You don't it will be auctioned
 
     // If another player owns this city, and only this city in greece, and player has enough cash to pay for stay should return text:
     // You stop in 'Ateny' city. Its ownde by 'player2'. 'Player2' owns 1 estate in Greece, 
@@ -608,5 +622,5 @@ const stateForFieldOptionsTests = [
     },
 
 ]
-export { stateForFieldOptionsTests, currentPlayerData }
+export { stateForFieldOptionsTests, currentPlayerData, playerSlice }
 export default testState;

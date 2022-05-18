@@ -23,4 +23,21 @@ const defaultPlayerStateConstructor = () => {
     }
 }
 
-export { defaultPlayerStateConstructor }
+const getPlayerNameByColor = (state, color) => {
+    // const col = [];
+    // col.push(state.color);
+    // col.push(state?.playerSlice?.color)
+    // const colorValue = col.find(c => c !== undefined);
+    // if (colorValue === undefined) return undefined;
+    if (color === 'bank') return 'bank'
+    const name = [];
+    name.push(state?.color?.name);
+    name.push(state.playerSlice?.color?.name)
+    const nameValue = name.find(name => name !== undefined);
+    console.log('Player name', name, state)
+    return nameValue;
+    // color === 'bank' ? 'bank' : state?.playerSlice?.[color]?.name;
+}
+
+
+export { defaultPlayerStateConstructor, getPlayerNameByColor }

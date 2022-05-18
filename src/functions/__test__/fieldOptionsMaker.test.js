@@ -1,9 +1,9 @@
-import { stateForFieldOptionsTests, currentPlayerData } from '../../state/__test__/stateForTests.js';
+import { stateForFieldOptionsTests, currentPlayerData, playerSlice } from '../../state/__test__/stateForTests.js';
 import {
     fieldOptionsMaker
 } from '../../functions/fieldOptionsMaker.js'
 import { playerActionTypes } from '../../state/playerReducer.js';
-
+import { getPlayerNameByColor } from '../../state/defaultPlayerState.js'
 
 expect.extend({
     arrayToContainTheSameValues(received, arrayWithTheSameValues) {
@@ -71,9 +71,9 @@ describe('Testing arrayToContainTheSameValues matcher', () => {
 describe('Testing Start field', () => {
     it(`
         Should return a message: You stop on the 'start' field, that means 
-        You get $400. Notihing to do here.`, () => {
+        You get $400. Notihing to do here.`, async () => {
             const estateDescriptor = getEstate(stateForFieldOptionsTests, 'Start');
-            const resultArr = fieldOptionsMaker(estateDescriptor, currentPlayerData);
+            const resultArr = await fieldOptionsMaker(stateForFieldOptionsTests, estateDescriptor, playerSlice);
             const result = getInfo(resultArr, 0);
             expect(Array.isArray(resultArr)).toBe(true);
             expect(resultArr.length).toBe(1);
@@ -81,9 +81,9 @@ describe('Testing Start field', () => {
             expect(result).toBe(expected);
         }
     );
-    it('Should return a single OK button having actions PAY_PLAYER and SHUT_WINDOW', () => {
+    it('Should return a single OK button having actions PAY_PLAYER and SHUT_WINDOW', async () => {
         const estateDescriptor = getEstate(stateForFieldOptionsTests, 'Start');
-        const resultArr = fieldOptionsMaker(estateDescriptor, currentPlayerData);
+        const resultArr = await fieldOptionsMaker(stateForFieldOptionsTests, estateDescriptor, playerSlice);
         const resultButtonNames = getButtonNames(resultArr, 0);
         const resultButtonActionTypes = getButtonActionTypes(resultArr, 0, 0)
         const expectedButtonNames = ['OK'];
@@ -94,16 +94,29 @@ describe('Testing Start field', () => {
 
 describe('Testing a city field', () => {
     it(`If player has enough cash and bank owns the city, it should return text:
-    You stop in 'Ateny' city. Its onwed by bank. You don't have to pay for 
-    staying here. You may purchase this city. If You don't it will be auctioned`, () => {
+    You stop in 'Ateny' city. Its onwed by the bank. You don't have to pay for 
+    staying here. You may purchase this city. If You don't it will be auctioned`, async () => {
         const playerData = currentPlayerData;
         const estateDescriptor = getEstate(stateForFieldOptionsTests, 'Ateny');
-        const resultArr = fieldOptionsMaker(estateDescriptor, playerData);
-        console.log(resultArr)
+        const resultArr = await fieldOptionsMaker(stateForFieldOptionsTests, estateDescriptor, playerSlice);
         const resultInfo = getInfo(resultArr, 0);
         expect(Array.isArray(resultArr)).toBe(true);
         expect(resultArr.length).toBe(1);
-        const expected = `You stop in 'Ateny' city. Its onwed by bank. You don't have to pay for staying here. You may purchase this city. If You don't it will be auctioned`;
+        const expected = `You stop in Ateny city. Its owned by the bank. You don't have to pay for staying here. You may purchase this city. If You don't it will be auctioned`;
         expect(resultInfo).toBe(expected);
-    })
+    });
+    it(`If another player owns this city, and only this city in greece, and player has enough cash to pay for stay should return text:
+     You stop in 'Ateny' city. Its owned by 'player2'. 'Player2' owns 1 estate out of 2 in Greece, 
+     so  you have to pay  $10.`, async () => {
+         const playerData = cp(currentPlayerData);
+         const stateBoardSlice = cp(stateForFieldOptionsTests);
+         const atenyEstate = getEstate(stateBoardSlice, 'Ateny');
+         atenyEstate.owner = 'black';
+         const resultArr = await fieldOptionsMaker(stateBoardSlice, atenyEstate, playerSlice)
+         const resultInfo = getInfo(resultArr, 0);
+         const expectedText = `You stop in Ateny city. Its owned by 'player2'. 'Player2' owns 1 estate in Greece, 
+         so  you have to pay  $10.`
+     })
+
+
 })
