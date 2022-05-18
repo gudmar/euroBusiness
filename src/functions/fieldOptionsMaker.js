@@ -14,8 +14,9 @@ import { boardActionTypes } from '../state/boardReducer.js';
 import { playerActionTypes } from '../state/playerReducer.js';
 import { controlActionTypes } from '../state/controlReducer.js';
 
-        const getOptionsCity = (data) => {
+        const getOptionsCity = (estateData, currentPlayerData) => {
             const {
+                id,
                 country,
                 visit,
                 info,
@@ -25,7 +26,25 @@ import { controlActionTypes } from '../state/controlReducer.js';
                 hotelPrice,
                 owner,
                 isPlegded,
-            } = data
+            } = estateData;
+            const {
+                cash,
+                color,
+                extraCards,
+                fieldNumber,
+                name,
+                turnToStale
+            } = currentPlayerData;
+            return [
+                {
+                    type: 'information',
+                    title: `Stopped in ${id} in ${country}`,
+                    info: `You stop in 'Ateny' city. Its onwed by bank. You don't have to pay for staying here. You may purchase this city. If You don't it will be auctioned`,
+                    options: [
+
+                    ]
+                }
+            ]
         }
         const getOptionsStart = (data) => {
             const {info} = data;
@@ -80,7 +99,7 @@ import { controlActionTypes } from '../state/controlReducer.js';
 
         }
 
-const fieldOptionsMaker = (data) => {
+const fieldOptionsMaker = (fieldData, currentPlayerData) => {
     const {
         type,
         visit,
@@ -98,14 +117,21 @@ const fieldOptionsMaker = (data) => {
         boardFieldNumber,
         isPlegded,
         wait,  
-    } = data;
+    } = fieldData;
+    const {
+        cash,
+        color,
+        extraCards,
+        fieldNumber,
+        name,
+        turnToStale
+    } = currentPlayerData;
 
-    // default (at any time) options: build a house, sell a house, build a hotel, mortage estate, buy from mortage,
-    console.log('data', data)
+// default (at any time) options: build a house, sell a house, build a hotel, mortage estate, buy from mortage,
 
     switch(type) {
-        case 'city': return getOptionsCity;
-        case 'start': return getOptionsStart(data);
+        case 'city': return getOptionsCity(fieldData, currentPlayerData);
+        case 'start': return getOptionsStart(fieldData);
         case 'chanceBlue': return getOptionsChanceBlue;
         case 'chanceRed': return getOptionsChanceRed;
         case 'guardedPark': return getOptionsGuardedPark;
