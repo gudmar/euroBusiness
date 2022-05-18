@@ -1,4 +1,4 @@
-import { stateForFieldOptionsTests } from '../../state/__test__/stateForTests.js';
+import { stateForFieldOptionsTests, currentPlayerData } from '../../state/__test__/stateForTests.js';
 import {
     fieldOptionsMaker
 } from '../../functions/fieldOptionsMaker.js'
@@ -73,7 +73,7 @@ describe('Testing Start field', () => {
         Should return a message: You stop on the 'start' field, that means 
         You get $400. Notihing to do here.`, () => {
             const estateDescriptor = getEstate(stateForFieldOptionsTests, 'Start');
-            const resultArr = fieldOptionsMaker(estateDescriptor);
+            const resultArr = fieldOptionsMaker(estateDescriptor, currentPlayerData);
             const result = getInfo(resultArr, 0);
             expect(Array.isArray(resultArr)).toBe(true);
             expect(resultArr.length).toBe(1);
@@ -83,11 +83,27 @@ describe('Testing Start field', () => {
     );
     it('Should return a single OK button having actions PAY_PLAYER and SHUT_WINDOW', () => {
         const estateDescriptor = getEstate(stateForFieldOptionsTests, 'Start');
-        const resultArr = fieldOptionsMaker(estateDescriptor);
+        const resultArr = fieldOptionsMaker(estateDescriptor, currentPlayerData);
         const resultButtonNames = getButtonNames(resultArr, 0);
         const resultButtonActionTypes = getButtonActionTypes(resultArr, 0, 0)
         const expectedButtonNames = ['OK'];
         const expectedActionTypes = [playerActionTypes.PAY_PLAYER, playerActionTypes.SHUT_FIELD_WINDOW]
         expect(resultButtonNames).arrayToContainTheSameValues(expectedButtonNames);
+    })
+})
+
+describe('Testing a city field', () => {
+    it(`If player has enough cash and bank owns the city, it should return text:
+    You stop in 'Ateny' city. Its onwed by bank. You don't have to pay for 
+    staying here. You may purchase this city. If You don't it will be auctioned`, () => {
+        const playerData = currentPlayerData;
+        const estateDescriptor = getEstate(stateForFieldOptionsTests, 'Ateny');
+        const resultArr = fieldOptionsMaker(estateDescriptor, playerData);
+        console.log(resultArr)
+        const resultInfo = getInfo(resultArr, 0);
+        expect(Array.isArray(resultArr)).toBe(true);
+        expect(resultArr.length).toBe(1);
+        const expected = `You stop in 'Ateny' city. Its onwed by bank. You don't have to pay for staying here. You may purchase this city. If You don't it will be auctioned`;
+        expect(resultInfo).toBe(expected);
     })
 })

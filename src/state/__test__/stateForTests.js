@@ -205,11 +205,20 @@ const testState = {
 
 };
 
-const stateForFieldOptionsTests = [
-    // Should return a message: You stop on the 'start' field, that means You get 
-    // $400. Notihing to do here.
+const currentPlayerData = {
+    cash: 3000,
+    color: 'blue',
+    extraCards: [],
+    fieldNumber: 9,
+    name: 'Player_1',
+    turnToStale: 0,
+};
 
-    // Should retorn a single OK button
+const stateForFieldOptionsTests = [
+    // +  Should return a message: You stop on the 'start' field, that means You get 
+    // +  $400. Notihing to do here.
+
+    // +  Should retorn a single OK button
     {
         id: 'Start',
         type: 'start',
@@ -599,5 +608,5 @@ const stateForFieldOptionsTests = [
     },
 
 ]
-export {stateForFieldOptionsTests}
+export { stateForFieldOptionsTests, currentPlayerData }
 export default testState;
