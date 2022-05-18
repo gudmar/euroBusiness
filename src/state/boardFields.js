@@ -54,7 +54,7 @@ const assumpWaterPlantVisitFee = (descriptors, object) => {
     return `${factor} x dice throw result`
 }
 
-const counntParkingFee = () => 400;
+const countParkingFee = () => 400;
 
 const countCityVisitFee = (descriptors, object) => {
     if (object === undefined) throw new Error('boardField: countWaterPlantVisitFee: object given as arg is undefined')
@@ -81,7 +81,7 @@ const countExectVisitFeeChecker = async (descriptors, object) => {
         case 'city': return countCityVisitFee(descriptors, object);
         case 'railway': return countRailwayVisitFee(descriptors, object);
         case 'freePark': return 0;
-        case 'guardedPark': return counntParkingFee();
+        case 'guardedPark': return countParkingFee();
         case 'tax': return countTaxFee();
         case 'waterPlant': return await countWaterPlantVisitFee(descriptors, object);
         case 'powerStation': return await countWaterPlantVisitFee(descriptors, object);
@@ -94,7 +94,7 @@ const assumpVisitFeeChecker = (object) => {
     switch (object.type) {
         case 'city': return countCityVisitFee(descriptors, object);
         case 'railway': return countRailwayVisitFee(descriptors, object);
-        case 'guardedPark': return counntParkingFee();
+        case 'guardedPark': return countParkingFee();
         case 'tax': return countTaxFee();
         case 'waterPlant': return assumpWaterPlantVisitFee(descriptors, object);
         case 'powerStation': return assumpWaterPlantVisitFee(descriptors, object);
