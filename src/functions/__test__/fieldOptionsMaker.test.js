@@ -114,8 +114,22 @@ describe('Testing a city field', () => {
          atenyEstate.owner = 'black';
          const resultArr = await fieldOptionsMaker(stateBoardSlice, atenyEstate, playerSlice)
          const resultInfo = getInfo(resultArr, 0);
-         const expectedText = `You stop in Ateny city. Its owned by 'player2'. 'Player2' owns 1 estate in Greece, 
+         const expectedText = `You stop in Ateny city. Its owned by Player2. Player2 owns 1 estate in Greece, 
          so  you have to pay  $10.`
+     });
+     it(`If another player owns this city, that another player owns also Saloniki, and player that stood has enough cash to pay for stay should return text:
+     You stop in Ateny city. Its ownde by Player2. Player2 owns 2 estateS in Greece, 
+     so  you have to pay  $20.`, async () => {
+         const playerData = cp(currentPlayerData);
+         const stateBoardSlice = cp(stateForFieldOptionsTests);
+         const atenyEstate = getEstate(stateBoardSlice, 'Ateny');
+         const salonikiEstate = getEstate(stateBoardSlice, 'Saloniki');
+         atenyEstate.owner = 'black';
+         salonikiEstate.owner = 'black';
+         const resultArr = await fieldOptionsMaker(stateBoardSlice, atenyEstate, playerSlice)
+         const resultInfo = getInfo(resultArr, 0);
+         const expectedText = `You stop in Ateny city. Its ownde by Player2. Player2 owns 2 estates in Greece, 
+         so  you have to pay  $20.`
      })
 
 

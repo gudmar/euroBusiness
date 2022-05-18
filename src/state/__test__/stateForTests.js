@@ -246,9 +246,9 @@ const stateForFieldOptionsTests = [
     // + You stop in 'Ateny' city. Its onwed by bank. You don't have to pay for 
     // + staying here. You may purchase this city. If You don't it will be auctioned
 
-    // If another player owns this city, and only this city in greece, and player has enough cash to pay for stay should return text:
-    // You stop in 'Ateny' city. Its ownde by 'player2'. 'Player2' owns 1 estate in Greece, 
-    // so  you have to pay  $10.
+    // + If another player owns this city, and only this city in greece, and player has enough cash to pay for stay should return text:
+    // + You stop in 'Ateny' city. Its ownde by 'player2'. 'Player2' owns 1 estate in Greece, 
+    // + so  you have to pay  $10.
 
     // If another player owns this city, that another player owns also 'Saloniki', and player that stood has enough cash to pay for stay should return text:
     // You stop in 'Ateny' city. Its ownde by 'player2'. 'Player2' owns 2 estateS in Greece, 
