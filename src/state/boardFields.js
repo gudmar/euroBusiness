@@ -9,6 +9,7 @@ const arrayStateToObjectState = arrayState => arrayState.reduce((acc, item) => {
 
 const getNrOfCitiesPlayerHas = (descriptors, player, country) => {
     // From a single country | player === color
+
     if (player === undefined) throw new Error('boardField: getNotPlegdedNrOfCIties: Player undefined');
     if (country === undefined) throw new Error('boardField: getNotPlegdedNrOfCIties: Country undefined');
     if (Array.isArray(descriptors)) descriptors = arrayStateToObjectState(descriptors);

@@ -29,11 +29,13 @@ const getCityInfoText = ({
     if (ownerName === 'bank') {
         output.push(`You don't have to pay for staying here. You may purchase this city. If You don't it will be auctioned`)
     } else {
-        output.push(`${ownerNameWithThe} owns ${citiesOwnedByOwner.owned} out of ${citiesOwnedByOwner.outOf} in ${country} `)
+        output.push(`${ownerNameWithThe} owns ${citiesOwnedByOwner.owns} out of ${citiesOwnedByOwner.outOf} estates in ${country}, `)
     }
-    if (ownerName !== 'bank') output.push(`so you have to pay ${feeToPay}`);
+    if (ownerName !== 'bank') output.push(`so you have to pay $${feeToPay}.`);
     return output.join('');
 }
+
+
 
 const getOptionsCity = async (fieldsDescriptorsArray, estateData, playerSlice) => {
     const {
@@ -57,7 +59,8 @@ const getOptionsCity = async (fieldsDescriptorsArray, estateData, playerSlice) =
         turnToStale
     } = playerSlice?.[playerSlice?.['currentPlayer']];
     const ownerName = getPlayerNameByColor(playerSlice, owner);
-    const citiesOwnedByOwner = getNrOfCitiesPlayerHas(fieldsDescriptorsArray, playerSlice['currentPlayer'], country);
+    console.log('In Field Optins Manager', playerSlice, playerSlice[playerSlice['currentPlayer']], country)
+    const citiesOwnedByOwner = getNrOfCitiesPlayerHas(fieldsDescriptorsArray, playerSlice[playerSlice['currentPlayer']], country);
     const feeToPay = await countExectVisitFeeChecker(fieldsDescriptorsArray, estateData);
     const informationText = getCityInfoText({
         id, country, citiesOwnedByOwner, feeToPay, price, isPlegded, ownerName, name,
