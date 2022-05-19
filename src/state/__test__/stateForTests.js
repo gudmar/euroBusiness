@@ -254,17 +254,17 @@ const stateForFieldOptionsTests = [
     // +  You stop in 'Ateny' city. Its ownde by 'player2'. 'Player2' owns 2 estateS in Greece, 
     // +  so  you have to pay  $20.
 
-    // If another player owns this city, and has one house here, and player that stepped has enough cash to pay for the visit should return text:
-    // You step in 'Ateny' city. Its owned by 'player2'. Player2' has 1 house in 'Ateny'.
-    // You should pay: $40
+    // + If another player owns this city, and has one house here, and player that stepped has enough cash to pay for the visit should return text:
+    // + You step in 'Ateny' city. Its owned by 'player2'. Player2' has 1 house in 'Ateny'.
+    // + You should pay: $40
 
-    // If another player owns this city, and has 2 houses here, and player that stepped has enough cash to pay for the visit should return text:
-    // You step in 'Ateny' city. Its owned by 'player2'. Player2' has 2 houseS in 'Ateny'.
-    // You should pay: $120
+    // + If another player owns this city, and has 2 houses here, and player that stepped has enough cash to pay for the visit should return text:
+    // + You step in 'Ateny' city. Its owned by 'player2'. Player2' has 2 houseS in 'Ateny'.
+    // + You should pay: $120
 
-    // If another player owns this city, and has 3 houses here, and player that stepped has enough cash to pay for the visit should return text:
-    // You step in 'Ateny' city. Its owned by 'player2'. Player2' has 3 houseS in 'Ateny'.
-    // You should pay: $360
+    // + If another player owns this city, and has 3 houses here, and player that stepped has enough cash to pay for the visit should return text:
+    // + You step in 'Ateny' city. Its owned by 'player2'. Player2' has 3 houseS in 'Ateny'.
+    // + You should pay: $360
 
     // If another player owns this city, and has 4 houses here, and player that stepped has enough cash to pay for the visit should return text:
     // You step in 'Ateny' city. Its owned by 'player2'. Player2' has 4 houseS in 'Ateny'.

@@ -135,7 +135,7 @@ describe('Testing a city field', () => {
      })
 
      it(`If another player owns this city, and has one house here, and player that stepped has enough cash to pay for the visit should return text:
-     You step in 'Ateny' city. Its owned by 'player2'. Player2' has 1 house in 'Ateny'.
+     You stop in 'Ateny' city. Its owned by 'player2'. Player2' has 1 house in 'Ateny'.
      You should pay: $40`, async () => {
          const playerData = cp(currentPlayerData);
          const stateBoardSlice = cp(stateForFieldOptionsTests);
@@ -149,6 +149,56 @@ describe('Testing a city field', () => {
          const expectedText = `You stop in Ateny city. Its owned by Player_2. Player_2 has 1 house in Ateny, so you have to pay $40.`;
          expect(resultInfo).toBe(expectedText);
      })
+
+     it(`If another player owns this city, and has 2 houses here, and player that stepped has enough cash to pay for the visit should return text:
+      You stop in 'Ateny' city. Its owned by 'player2'. Player2' has 2 houseS in 'Ateny'.
+      You should pay: $120`, async () => {
+         const playerData = cp(currentPlayerData);
+         const stateBoardSlice = cp(stateForFieldOptionsTests);
+         const atenyEstate = getEstate(stateBoardSlice, 'Ateny');
+         const salonikiEstate = getEstate(stateBoardSlice, 'Saloniki');
+         atenyEstate.owner = 'black';
+         atenyEstate.nrOfHouses = 2;
+         salonikiEstate.owner = 'black';
+         const resultArr = await fieldOptionsMaker(stateBoardSlice, atenyEstate, playerSlice)
+         const resultInfo = getInfo(resultArr, 0);
+         const expectedText = `You stop in Ateny city. Its owned by Player_2. Player_2 has 2 houses in Ateny, so you have to pay $120.`;
+         expect(resultInfo).toBe(expectedText);
+     })
+
+     it(`If another player owns this city, and has 3 houses here, and player that stepped has enough cash to pay for the visit should return text:
+     You stop in 'Ateny' city. Its owned by 'player2'. Player2' has 3 houseS in 'Ateny'.
+     You should pay: $360`, async () => {
+         const playerData = cp(currentPlayerData);
+         const stateBoardSlice = cp(stateForFieldOptionsTests);
+         const atenyEstate = getEstate(stateBoardSlice, 'Ateny');
+         const salonikiEstate = getEstate(stateBoardSlice, 'Saloniki');
+         atenyEstate.owner = 'black';
+         atenyEstate.nrOfHouses = 3;
+         salonikiEstate.owner = 'black';
+         const resultArr = await fieldOptionsMaker(stateBoardSlice, atenyEstate, playerSlice)
+         const resultInfo = getInfo(resultArr, 0);
+         const expectedText = `You stop in Ateny city. Its owned by Player_2. Player_2 has 3 houses in Ateny, so you have to pay $360.`;
+         expect(resultInfo).toBe(expectedText);
+     })
+
+     it(`If another player owns this city, and has 4 houses here, and player that stepped has enough cash to pay for the visit should return text:
+     You stop in 'Ateny' city. Its owned by 'player2'. Player2' has 4 houseS in 'Ateny'.
+     You should pay: 640`, async () => {
+         const playerData = cp(currentPlayerData);
+         const stateBoardSlice = cp(stateForFieldOptionsTests);
+         const atenyEstate = getEstate(stateBoardSlice, 'Ateny');
+         const salonikiEstate = getEstate(stateBoardSlice, 'Saloniki');
+         atenyEstate.owner = 'black';
+         atenyEstate.nrOfHouses = 4;
+         salonikiEstate.owner = 'black';
+         const resultArr = await fieldOptionsMaker(stateBoardSlice, atenyEstate, playerSlice)
+         const resultInfo = getInfo(resultArr, 0);
+         const expectedText = `You stop in Ateny city. Its owned by Player_2. Player_2 has 4 houses in Ateny, so you have to pay $640.`;
+         expect(resultInfo).toBe(expectedText);
+     })
+
+
 
 
 })
