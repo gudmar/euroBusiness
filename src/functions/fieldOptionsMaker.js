@@ -21,17 +21,22 @@ import {
 
 
 const getCityInfoText = ({
-    id, country, citiesOwnedByOwner, feeToPay, price, isPlegded, ownerName, name,
+    id, country, citiesOwnedByOwner, feeToPay, price, isPlegded, ownerName, name, nrOfHouses
 }) => {
     const ownerNameWithThe = ownerName === 'bank' ? 'the bank' : ownerName;
     let output = [];
     output.push(`You stop in ${id} city. Its owned by ${ownerNameWithThe}. `);
     if (ownerName === 'bank') {
         output.push(`You don't have to pay for staying here. You may purchase this city. If You don't it will be auctioned`)
-    } else {
-        output.push(`${ownerNameWithThe} owns ${citiesOwnedByOwner.owns} out of ${citiesOwnedByOwner.outOf} estates in ${country}, `)
+    } 
+    if (ownerName !== 'bank' && nrOfHouses === 0) {
+        output.push(`${ownerNameWithThe} owns ${citiesOwnedByOwner.owns} out of ${citiesOwnedByOwner.outOf} estates in ${country},`)
     }
-    if (ownerName !== 'bank') output.push(`so you have to pay $${feeToPay}.`);
+    if (ownerName !== 'bank' && nrOfHouses > 0 && nrOfHouses < 5) {
+        output.push(`${ownerNameWithThe} has ${nrOfHouses} ${nrOfHouses > 1 ? 'houses' : 'house'} in ${id},`);
+    }
+    if (ownerName !== 'bank' && !isPlegded) output.push(` so you have to pay $${feeToPay}.`)
+    
     return output.join('');
 }
 
@@ -49,6 +54,7 @@ const getOptionsCity = async (fieldsDescriptorsArray, estateData, playerSlice) =
         hotelPrice,
         owner,
         isPlegded,
+        nrOfHouses,
     } = estateData;
     const {
         cash,
@@ -62,7 +68,7 @@ const getOptionsCity = async (fieldsDescriptorsArray, estateData, playerSlice) =
     const citiesOwnedByOwner = getNrOfCitiesPlayerHas(fieldsDescriptorsArray, estateData.owner, country);
     const feeToPay = await countExectVisitFeeChecker(fieldsDescriptorsArray, estateData);
     const informationText = getCityInfoText({
-        id, country, citiesOwnedByOwner, feeToPay, price, isPlegded, ownerName, name,
+        id, country, citiesOwnedByOwner, feeToPay, price, isPlegded, ownerName, name, nrOfHouses
     })
     return [
         {
