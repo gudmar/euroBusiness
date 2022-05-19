@@ -59,8 +59,7 @@ const getOptionsCity = async (fieldsDescriptorsArray, estateData, playerSlice) =
         turnToStale
     } = playerSlice?.[playerSlice?.['currentPlayer']];
     const ownerName = getPlayerNameByColor(playerSlice, owner);
-    console.log('In Field Optins Manager', playerSlice, playerSlice[playerSlice['currentPlayer']], country)
-    const citiesOwnedByOwner = getNrOfCitiesPlayerHas(fieldsDescriptorsArray, playerSlice[playerSlice['currentPlayer']], country);
+    const citiesOwnedByOwner = getNrOfCitiesPlayerHas(fieldsDescriptorsArray, estateData.owner, country);
     const feeToPay = await countExectVisitFeeChecker(fieldsDescriptorsArray, estateData);
     const informationText = getCityInfoText({
         id, country, citiesOwnedByOwner, feeToPay, price, isPlegded, ownerName, name,
