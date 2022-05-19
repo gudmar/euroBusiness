@@ -214,6 +214,32 @@ describe('Testing a city field', () => {
      })
 
 
+     it(`If another player owns this city, and has 2 houses here, and player that stepped 
+     has NOT enough cash to pay for the visit, but still can mortage, should return text:
+     You step in Ateny city. Its owned by Player_2. Player_2' has 2 houseS in Ateny, so you have to pay: $120`, async () => {
+         const playerData = cp(currentPlayerData);
+         const stateBoardSlice = cp(stateForFieldOptionsTests);
+         const atenyEstate = getEstate(stateBoardSlice, 'Ateny');
+         const salonikiEstate = getEstate(stateBoardSlice, 'Saloniki');
+         atenyEstate.owner = 'black';
+         atenyEstate.nrOfHouses = 5;
+         salonikiEstate.owner = 'black';
+         const resultArr = await fieldOptionsMaker(stateBoardSlice, atenyEstate, playerSlice)
+         const resultInfo = getInfo(resultArr, 0);
+         const expectedText = `You step in Ateny city. Its owned by Player_2. Player_2' has 2 houseS in Ateny, so you have to pay: $120`;
+        //  expect(resultInfo).toBe(expectedText);
+
+        // !!! NOT CALCULATING POTENTIAL CASH
+     })
+
+     // REVISE tests, as some are not according to rules!!!
+
+     // Player should be able to sell a property to another player, so 
+     // is player cannot get proper prices from a bank, he should get lets say 
+     // 10 oppportunities to offer something to the other players, and then after 
+     // 10 attempts, there should be a GAME LOST
+
+
 
 
 })

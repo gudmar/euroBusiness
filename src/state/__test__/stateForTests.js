@@ -266,13 +266,13 @@ const stateForFieldOptionsTests = [
     // + You step in 'Ateny' city. Its owned by 'player2'. Player2' has 3 houseS in 'Ateny'.
     // + You should pay: $360
 
-    // If another player owns this city, and has 4 houses here, and player that stepped has enough cash to pay for the visit should return text:
-    // You step in 'Ateny' city. Its owned by 'player2'. Player2' has 4 houseS in 'Ateny'.
-    // You should pay: 640
+    // + If another player owns this city, and has 4 houses here, and player that stepped has enough cash to pay for the visit should return text:
+    // + You step in 'Ateny' city. Its owned by 'player2'. Player2' has 4 houseS in 'Ateny'.
+    // + You should pay: 640
 
-    // If another player owns this city, and has 5 houses here, and player that stepped has enough cash to pay for the visit should return text:
-    // You step in 'Ateny' city. Its owned by 'player2'. Player2' has 1 hotel in 'Ateny'.
-    // You should pay: $900
+    // + If another player owns this city, and has 5 houses here, and player that stepped has enough cash to pay for the visit should return text:
+    // + You step in 'Ateny' city. Its owned by 'player2'. Player2' has 1 hotel in 'Ateny'.
+    // + You should pay: $900
 
     // If another player owns this city, and has 2 houses here, and player that stepped 
     // has NOT enough cash to pay for the visit, but still can mortage, should return text:

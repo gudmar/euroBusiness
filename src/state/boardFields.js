@@ -103,6 +103,21 @@ const assumpVisitFeeChecker = (object) => {
     }
 }
 
+const calculateCashForSingleEstateFromTheBank = (descriptor, playerColor) => {
+    if (descriptor.owner !== playerColor) return 0;
+    if (descriptor.isPlegded) return 0;
+    if (descriptor.nrOfHouses === 0 || descriptor.nrOfHouses === undefined) return descriptor.price / 2;
+    if (descriptor.nrOfHouses < 5) return descriptor.nrOfHouses * descriptor.housePrice / 2 + descriptor.price / 2;
+    return (descriptor.hotelPrice / 2) + (2 * descriptor.housePrice) + (descriptor.price / 2);
+}
+
+const calculateCashForAllEstatesFromTheBank = (descriptorsArray, playerColor) => {
+    return descriptorsArray.reduce((acc, estate) => {
+        acc += calculateCashForSingleEstateFromTheBank(estate, playerColor);
+        return acc;
+    }, 0)
+}
+
 
 const descriptors = {
     Start: {
@@ -610,4 +625,5 @@ export {
     countCityVisitFee,
     countRailwayVisitFee,
     throwDices,
+    calculateCashForAllEstatesFromTheBank
 }

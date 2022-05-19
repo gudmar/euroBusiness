@@ -14,6 +14,7 @@ import {
     countRailwayVisitFee,
     countExectVisitFeeChecker,
     assumpVisitChecker,
+    calculateCashForAllEstatesFromTheBank,
 } from '../boardFields.js'
 
 const throwDice = require('../../functions/throwDices.js');
@@ -482,4 +483,23 @@ describe('boardField, assumpVisitFeeChecker', () => {
         const result = () => assumpVisitChecker(undefined, obj);
         expect(result).toThrow()
     })
+})
+
+describe('boardFields, calculateCashForSingleEstateFromTheBank', () => {
+    const dataSet = [
+        {owner: 'yellow', nrOfHouses: 0, price: 100, housePrice: 200, hotelPrice: 300, isPlegded: false, info:'Should count as 50', result: 50},
+        {owner: 'white', nrOfHouses: 0,  price: 110, housePrice: 210, hotelPrice: 310, isPlegded: false, info: 'Should count as 0, as player is yellow', result: 0},
+        {owner: 'yellow', nrOfHouses: 0, price: 112, housePrice: 212, hotelPrice: 312, isPlegded: true, info: 'Should count as 0, as is morteged', result: 0},
+        {owner: 'yellow', nrOfHouses: 1, price: 120, housePrice: 220, hotelPrice: 320, isPlegded: false, info: 'Should count as 170, there is one house', result: 170},
+        {owner: 'yellow', nrOfHouses: 4, price: 130, housePrice: 230, hotelPrice: 330, isPlegded: false, info: `Should count as ${65+460}, 4 houses and player is yellow`, result: 525},
+        {owner: 'yellow', nrOfHouses: 5, price: 140, housePrice: 240, hotelPrice: 340, isPlegded: false, info: `Should count as ${170+480+70}, there is 1 hotel`, result: 720},
+    ]
+    dataSet.forEach(test => {
+        it(test.info, () => {
+            const result = calculateCashForAllEstatesFromTheBank([test], 'yellow');
+            const expected = test.result;
+            expect(result).toBe(expected);
+        })
+    })
+
 })
