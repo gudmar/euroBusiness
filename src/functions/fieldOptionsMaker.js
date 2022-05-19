@@ -35,6 +35,9 @@ const getCityInfoText = ({
     if (ownerName !== 'bank' && nrOfHouses > 0 && nrOfHouses < 5) {
         output.push(`${ownerNameWithThe} has ${nrOfHouses} ${nrOfHouses > 1 ? 'houses' : 'house'} in ${id},`);
     }
+    if (nrOfHouses === 5) {
+        output.push(`${ownerNameWithThe} has 1 hotel in ${id},`)
+    }
     if (ownerName !== 'bank' && !isPlegded) output.push(` so you have to pay $${feeToPay}.`)
     
     return output.join('');
