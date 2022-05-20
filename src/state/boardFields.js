@@ -138,6 +138,13 @@ const calculateCashForAllEstatesFromTheBank = (descriptorsArray, playerColor, ho
     }, {nrOfHotels:0, nrOfHouses:0, money:0})
 }
 
+const countAllPropertiesPlayerHas = (descriptorsArray, playerColor) => {
+    return descriptorsArray.reduce((acc, estate) => {
+        if (estate.owner === playerColor) acc++;
+        return acc;
+    }, 0)
+}
+
 
 const descriptors = {
     Start: {
@@ -645,5 +652,6 @@ export {
     countCityVisitFee,
     countRailwayVisitFee,
     throwDices,
-    calculateCashForAllEstatesFromTheBank
+    calculateCashForAllEstatesFromTheBank,
+    countAllPropertiesPlayerHas,
 }
