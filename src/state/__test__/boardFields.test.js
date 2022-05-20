@@ -15,6 +15,7 @@ import {
     countExectVisitFeeChecker,
     assumpVisitChecker,
     calculateCashForAllEstatesFromTheBank,
+    countAllPropertiesPlayerHas,
 } from '../boardFields.js'
 
 const throwDice = require('../../functions/throwDices.js');
@@ -503,6 +504,26 @@ describe('boardFields, calculateCashForSingleEstateFromTheBank', () => {
             const expected = test.result;
             expect(result).toEqual(expected);
         })
+    })
+
+})
+
+describe('boardFields, countAllPropertiesPlayerHas', () => {
+    const testSet = [
+        {owner: 'blue'}, {owner: 'white'}, {owner:'blue'}, {owner: 'blue'}, {owner: 'blue'},
+        {owner: 'white'}, {owner: 'black'}
+    ]
+    it('Should return 4 if blue is the player', () => {
+        const result = countAllPropertiesPlayerHas(testSet, 'blue');
+        expect(result).toBe(4);
+    });
+    it('Shoule return 2 if white is the player', () => {
+        const result = countAllPropertiesPlayerHas(testSet, 'white');
+        expect(result).toBe(2);        
+    })
+    it('Shoule return 0 if purple is the player', () => {
+        const result = countAllPropertiesPlayerHas(testSet, 'purple');
+        expect(result).toBe(0); 
     })
 
 })
