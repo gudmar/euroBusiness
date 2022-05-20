@@ -103,19 +103,39 @@ const assumpVisitFeeChecker = (object) => {
     }
 }
 
-const calculateCashForSingleEstateFromTheBank = (descriptor, playerColor) => {
-    if (descriptor.owner !== playerColor) return 0;
-    if (descriptor.isPlegded) return 0;
-    if (descriptor.nrOfHouses === 0 || descriptor.nrOfHouses === undefined) return descriptor.price / 2;
-    if (descriptor.nrOfHouses < 5) return descriptor.nrOfHouses * descriptor.housePrice / 2 + descriptor.price / 2;
-    return (descriptor.hotelPrice / 2) + (2 * descriptor.housePrice) + (descriptor.price / 2);
+const calculateCashForSingleEstateFromTheBank = (descriptor, playerColor, housesInPool) => {
+    let nrOfHouses = 0;
+    let nrOfHotels = 0;
+    let money = 0;
+    const maxNrOfHousesOnSingleEstate = 4;
+    const getOutput = () => ({nrOfHotels: nrOfHotels, nrOfHouses: nrOfHouses, money: money})
+    if (descriptor.owner !== playerColor) return getOutput();
+    if (descriptor.isPlegded) return getOutput();
+    if (descriptor.nrOfHouses === 0 || descriptor.nrOfHouses === undefined) {
+        money = descriptor.price / 2;
+        return getOutput();
+    }
+    if (descriptor.nrOfHouses < 5) {
+        nrOfHouses = descriptor.nrOfHouses; 
+        money = descriptor.nrOfHouses * descriptor.housePrice / 2 + descriptor.price / 2;
+        return getOutput();
+    }
+    const cashForHouses = Math.min(housesInPool, maxNrOfHousesOnSingleEstate) * descriptor.housePrice * 0.5;
+    return {
+        money: (descriptor.hotelPrice / 2) + (cashForHouses) + (descriptor.price / 2),
+        nrOfHotels: 1,
+        nrOfHouses: 0,
+    }
 }
 
-const calculateCashForAllEstatesFromTheBank = (descriptorsArray, playerColor) => {
+const calculateCashForAllEstatesFromTheBank = (descriptorsArray, playerColor, housesInPool) => {
     return descriptorsArray.reduce((acc, estate) => {
-        acc += calculateCashForSingleEstateFromTheBank(estate, playerColor);
+        const singleResult = calculateCashForSingleEstateFromTheBank(estate, playerColor, housesInPool);
+        acc.nrOfHotels += singleResult.nrOfHotels;
+        acc.nrOfHouses += singleResult.nrOfHouses;
+        acc.money += singleResult.money;
         return acc;
-    }, 0)
+    }, {nrOfHotels:0, nrOfHouses:0, money:0})
 }
 
 

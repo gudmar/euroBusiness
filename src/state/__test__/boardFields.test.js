@@ -487,18 +487,21 @@ describe('boardField, assumpVisitFeeChecker', () => {
 
 describe('boardFields, calculateCashForSingleEstateFromTheBank', () => {
     const dataSet = [
-        {owner: 'yellow', nrOfHouses: 0, price: 100, housePrice: 200, hotelPrice: 300, isPlegded: false, info:'Should count as 50', result: 50},
-        {owner: 'white', nrOfHouses: 0,  price: 110, housePrice: 210, hotelPrice: 310, isPlegded: false, info: 'Should count as 0, as player is yellow', result: 0},
-        {owner: 'yellow', nrOfHouses: 0, price: 112, housePrice: 212, hotelPrice: 312, isPlegded: true, info: 'Should count as 0, as is morteged', result: 0},
-        {owner: 'yellow', nrOfHouses: 1, price: 120, housePrice: 220, hotelPrice: 320, isPlegded: false, info: 'Should count as 170, there is one house', result: 170},
-        {owner: 'yellow', nrOfHouses: 4, price: 130, housePrice: 230, hotelPrice: 330, isPlegded: false, info: `Should count as ${65+460}, 4 houses and player is yellow`, result: 525},
-        {owner: 'yellow', nrOfHouses: 5, price: 140, housePrice: 240, hotelPrice: 340, isPlegded: false, info: `Should count as ${170+480+70}, there is 1 hotel`, result: 720},
+        {nrOfHousesLeft: 8, owner: 'yellow', nrOfHouses: 0, price: 100, housePrice: 200, hotelPrice: 300, isPlegded: false, info:'Should count as 50', result: {nrOfHouses:0, nrOfHotels:0, money:50}},
+        {nrOfHousesLeft: 8, owner: 'white', nrOfHouses: 0,  price: 110, housePrice: 210, hotelPrice: 310, isPlegded: false, info: 'Should count as 0, as player is yellow', result: {nrOfHouses:0, nrOfHotels:0, money:0}},
+        {nrOfHousesLeft: 8, owner: 'yellow', nrOfHouses: 0, price: 112, housePrice: 212, hotelPrice: 312, isPlegded: true, info: 'Should count as 0, as is morteged', result: {nrOfHouses:0, nrOfHotels:0, money:0}},
+        {nrOfHousesLeft: 8, owner: 'yellow', nrOfHouses: 1, price: 120, housePrice: 220, hotelPrice: 320, isPlegded: false, info: 'Should count as 170, there is one house', result: {nrOfHouses:1, nrOfHotels:0, money:170}},
+        {nrOfHousesLeft: 8, owner: 'yellow', nrOfHouses: 4, price: 130, housePrice: 230, hotelPrice: 330, isPlegded: false, info: `Should count as ${65+460}, 4 houses and player is yellow`, result: {nrOfHouses:4, nrOfHotels:0, money:525}},
+        {nrOfHousesLeft: 8, owner: 'yellow', nrOfHouses: 5, price: 140, housePrice: 240, hotelPrice: 340, isPlegded: false, info: `Should count as ${170+480+70}, there is 1 hotel`, result: {nrOfHouses:0, nrOfHotels:1, money:720}},
+        {nrOfHousesLeft: 3, owner: 'yellow', nrOfHouses: 5, price: 140, housePrice: 240, hotelPrice: 340, isPlegded: false, info: `Should count as ${170+360+70}, there is 1 hotel, but only 3 houses left in house pool`, result: {nrOfHouses:0, nrOfHotels:1, money:600}},
+        {nrOfHousesLeft: 2, owner: 'yellow', nrOfHouses: 5, price: 140, housePrice: 240, hotelPrice: 340, isPlegded: false, info: `Should count as ${170+240+70}, there is 1 hotel, but only 2 houses left in house pool`, result: {nrOfHouses:0, nrOfHotels:1, money:480}},
+        {nrOfHousesLeft: 1, owner: 'yellow', nrOfHouses: 5, price: 140, housePrice: 240, hotelPrice: 340, isPlegded: false, info: `Should count as ${170+120+70}, there is 1 hotel, but only 1 house left in house pool`, result: {nrOfHouses:0, nrOfHotels:1, money:360}},
     ]
     dataSet.forEach(test => {
         it(test.info, () => {
-            const result = calculateCashForAllEstatesFromTheBank([test], 'yellow');
+            const result = calculateCashForAllEstatesFromTheBank([test], 'yellow', test.nrOfHousesLeft);
             const expected = test.result;
-            expect(result).toBe(expected);
+            expect(result).toEqual(expected);
         })
     })
 

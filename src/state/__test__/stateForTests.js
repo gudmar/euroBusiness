@@ -274,10 +274,12 @@ const stateForFieldOptionsTests = [
     // + You step in 'Ateny' city. Its owned by 'player2'. Player2' has 1 hotel in 'Ateny'.
     // + You should pay: $900
 
+    // RETHINK the tests, as player may sell properties to other players, so some game los scenarios are not valid
+
     // If another player owns this city, and has 2 houses here, and player that stepped 
     // has NOT enough cash to pay for the visit, but still can mortage, should return text:
     // You step in 'Ateny' city. Its owned by 'player2'. Player2' has 2 houseS in 'Ateny'.
-    // You should pay: $120
+    // You should pay $120
 
 
     // If another player owns this city, and has 2 houses here, and player that stepped 
