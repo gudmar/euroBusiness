@@ -284,10 +284,20 @@ const stateForFieldOptionsTests = [
 
 
     // If another player owns this city, and has 2 houses here, and player that stepped 
-    // has NOT enough cash to pay for the visit, should return text:
+    // has NOT enough cash to pay for the visit, cannot get enough cash from the bank, but
+    // has any estate should return text:
     // You step in 'Ateny' city. Its owned by 'player2'. Player2' has 2 houseS in 'Ateny'.
-    // You should pay: $120, but you are too poor. No matter 
-    // how hard you try, you will not be able to pay your debt. You loose the game.'
+    // You should pay $120, but you are too poor. Even dealing with the bank will not help.
+    // The only rescue is to bargain with another players. You may give 10 offers for your 
+    // estates.
+
+    // If another player owns this city, and has 2 houses here, and player that stepped 
+    // has NOT enough cash to pay for the visit, cannot get enough cash from the bank, but
+    // has any estate should return text:
+    // You step in 'Ateny' city. Its owned by 'player2'. Player2' has 2 houseS in 'Ateny'.
+    // You should pay: $120, but you are too poor. If you had anything of a value perhaps 
+    // You could do anything to stay in the game a bit longer.
+
 
     // In case another player has a 'Ateny' but it is mortaged, should return text:
     // You step in 'Ateny' city. Its owned by 'player2'. 'Ateny' is mortaged, so 
@@ -306,7 +316,7 @@ const stateForFieldOptionsTests = [
     // 'Auction', 'Estate Manager'
 
     // If player stands on 'Ateny', and another player owns it, and player that stood has not cash
-    // and can not mortage anymore, should return one button:
+    // and can not mortage anymore, not owns estates should return one button:
     // Ok
 
 
@@ -465,13 +475,22 @@ const stateForFieldOptionsTests = [
     // In case Shouth Railways and North Railways is owned by another player, 
     // and player has NOT enough cash to pay for stay, but can sell/morgage should return text:
     // You stop in 'Shouth Railways'. Its owned by the 'playerName'. This player owns 
-    // 2 properties of this type, so you have to pay 100$.'
+    // 2 properties of this type, so you have to pay 100$. You don't have enough cash, but you still can get ${ammountOfMoneyFromBank} from the bank,
+    // or You may try to sell properties to another player.'
 
     // In case Shouth Railways and North Railways is owned by another player, 
-    // and player has NOT enough cash to pay for stay should return text:
+    // and player has NOT enough cash to pay for stay but still has any estate should return text:
     // You stop in 'Shouth Railways'. Its owned by the 'playerName'. This player owns 
-    // 2 properties of this type, so you have to pay 100$, but you are too poor. No matter 
-    // how hard you try, you will not be able to pay your debt. You loose the game.'
+    // 2 properties of this type, so you have to pay 100$, but you are too poor. Even dealing with the bank will not help.
+    // The only rescue is to bargain with another players. You may give 10 offers for your 
+    // estates.'
+
+
+    // In case Shouth Railways and North Railways is owned by another player, 
+    // and player has NOT enough cash to pay for stay and owns no estates should return text:
+    // You stop in 'Shouth Railways'. Its owned by the 'playerName'. This player owns 
+    // 2 properties of this type, so you have to pay 100$, but you are too poor. If you had anything of a value perhaps 
+    // You could do anything to stay in the game a bit longer.
 
     
 
@@ -549,14 +568,27 @@ const stateForFieldOptionsTests = [
     // its the only estate of this type that player has, and player that
     // stepped DOES NOT have enough money to pay, but can mortage,  should return text:
     // You stop in Power Stateion. Its ownded by 'Player 2'. You should pay 
-    // 10 x thrown dice result, and that is ${mockedDiceResult}.
+    // 10 x thrown dice result, and that is ${mockedDiceResult}.  You don't have enough cash, but you still can get ${ammountOfMoneyFromBank} from the bank,
+    // or You may try to sell properties to another player.
+
 
     // If player stops on Power Station and it is owned by another player, and 
     // its the only estate of this type that player has, and player that
-    // stepped DOES NOT have enough money to pay, and CANNOT mortage,  should return text:
+    // stepped DOES NOT have enough money to pay, and CANNOT mortage, but still
+    // has any property  should return text:
     // You stop in Power Stateion. Its ownded by 'Player 2'. You should pay 
-    // 10 x thrown dice result, and that is ${10 x mockedDiceResult}, but you are too poor. No matter 
-    // how hard you try, you will not be able to pay your debt. You loose the game.
+    // 10 x thrown dice result, and that is ${10 x mockedDiceResult}, but you are too poor. Even dealing with the bank will not help.
+    // The only rescue is to bargain with another players. You may give 10 offers for your 
+    // estates.
+
+    // If player stops on Power Station and it is owned by another player, and 
+    // its the only estate of this type that player has, and player that
+    // stepped DOES NOT have enough money to pay, and CANNOT mortage, and has no
+    // estate should return text:
+    // You stop in Power Stateion. Its ownded by 'Player 2'. You should pay 
+    // 10 x thrown dice result, and that is ${10 x mockedDiceResult}, but you are too poor. If you had anything of a value perhaps 
+    // You could do anything to stay in the game a bit longer.
+    
 
     // If player stops on Power Stateion and it is owned by another player, and 
     // that player has also Water Planant, but player that stopped has enough cash to pay for it should return text:

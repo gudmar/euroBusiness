@@ -517,11 +517,11 @@ describe('boardFields, countAllPropertiesPlayerHas', () => {
         const result = countAllPropertiesPlayerHas(testSet, 'blue');
         expect(result).toBe(4);
     });
-    it('Shoule return 2 if white is the player', () => {
+    it('Should return 2 if white is the player', () => {
         const result = countAllPropertiesPlayerHas(testSet, 'white');
         expect(result).toBe(2);        
     })
-    it('Shoule return 0 if purple is the player', () => {
+    it('Should return 0 if purple is the player', () => {
         const result = countAllPropertiesPlayerHas(testSet, 'purple');
         expect(result).toBe(0); 
     })
