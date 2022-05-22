@@ -9,8 +9,8 @@ import {
     addExtraCard,
     useExtraCard,
     nextPlayer,
-    calculateCashForAllEstatesFromTheBank,
 } from "../state/playerSlice.js"
+import { calculateCashForAllEstatesFromTheBank } from '../state/boardFields.js'
 import { boardActionTypes } from '../state/boardReducer.js';
 import { playerActionTypes } from '../state/playerReducer.js';
 import { controlActionTypes } from '../state/controlReducer.js';
@@ -42,8 +42,8 @@ const getCityInfoText = ({
     }
     if (ownerName !== 'bank' && !isPlegded) output.push(` so you have to pay $${feeToPay}.`)
     if (ownerName !== 'bank' && !isPlegded && feeToPay > cash) {
-        const ammountCanGetFromTheBank = calculateCashForAllEstatesFromTheBank(fieldsDescriptorsArray, color, globalNumberOfHouses)
-        output.push(`You don't have enough cash, but you still can get ${ammountCanGetFromTheBank} from the band, or you may try to sell properties to another player.`)
+        const ammountCanGetFromTheBank = calculateCashForAllEstatesFromTheBank(fieldsDescriptorsArray, color, globalNumberOfHouses).money
+        output.push(` You don't have enough cash, but you still can get $${ammountCanGetFromTheBank} from the bank, or you may try to sell properties to another player.`)
     }
 
 
@@ -184,7 +184,6 @@ const fieldOptionsMaker = async ({
     // } = currentPlayerData;
 
 // default (at any time) options: build a house, sell a house, build a hotel, mortage estate, buy from mortage,
-console.log('GAME:', game, fieldData, fieldsDescriptorsArray)
     
     switch(fieldData.type) {
         case 'city': return await getOptionsCity(fieldsDescriptorsArray, fieldData, playerStateSlice, game);

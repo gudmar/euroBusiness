@@ -109,16 +109,22 @@ describe('Testing Start field', () => {
     })
 })
 
-describe('Testing a city field', () => {
+const getCurrentPlayerColor = playerSlice => playerSlice?.currentPlayer;
+const getCurrentPlayerDescriptor = playerSlice => playerSlice[getCurrentPlayerColor(playerSlice)]
+
+describe.only('Testing a city field', () => {
     it(`If player has enough cash and bank owns the city, it should return text:
     You stop in 'Ateny' city. Its onwed by the bank. You don't have to pay for 
     staying here. You may purchase this city. If You don't it will be auctioned`, async () => {
-        const playerData = currentPlayerData;
         const estateDescriptor = getEstate(stateForFieldOptionsTests, 'Ateny');
+        const localPlayerSlice = cp(playerSlice);
+        const localPlayerDescriptor = getCurrentPlayerDescriptor(localPlayerSlice);
+        console.log('Local player descriptor', localPlayerDescriptor)
+        localPlayerDescriptor.cash = 119;
         const resultArr = await fieldOptionsMaker({
             fieldsDescriptorsArray: stateForFieldOptionsTests, 
             fieldData: estateDescriptor, 
-            playerStateSlice: playerSlice,
+            playerStateSlice: localPlayerSlice,
             control: controlState,
             game: {globalNumberOfHouses: 8}
         });
@@ -287,15 +293,18 @@ describe('Testing a city field', () => {
      })
 
 
-     it(`If another player owns this city, and has 2 houses here, and player that stepped 
+     it.only(`If another player owns this city, and has 2 houses here, and player that stepped 
      has NOT enough cash to pay for the visit, but still can mortage, should return text:
      You step in Ateny city. Its owned by Player_2. Player_2' has 2 houseS in Ateny, so you have to pay: $120.
      You don't have enough cash, but you still can get 350(Insbruck/blue) from the bank,
      or You may try to sell properties to another player.`, async () => {
-         const playerData = cp(currentPlayerData);
          const stateBoardSlice = cp(stateForFieldOptionsTests);
          const atenyEstate = getEstate(stateBoardSlice, 'Ateny');
          const salonikiEstate = getEstate(stateBoardSlice, 'Saloniki');
+         const localPlayerSlice = cp(playerSlice);
+         const localPlayerDescriptor = getCurrentPlayerDescriptor(localPlayerSlice);
+         localPlayerDescriptor.cash = 119;
+ 
          atenyEstate.owner = 'black';
          atenyEstate.nrOfHouses = 2;
          salonikiEstate.owner = 'black';
@@ -303,12 +312,12 @@ describe('Testing a city field', () => {
          const resultArr = await fieldOptionsMaker({
             fieldsDescriptorsArray: stateBoardSlice, 
             fieldData: atenyEstate, 
-            playerStateSlice: playerSlice,
+            playerStateSlice: localPlayerSlice,
             control: controlState,
             game: {globalNumberOfHouses: 8}
          });
          const resultInfo = getInfo(resultArr, 0);
-         const expectedText = `You stop in Ateny city. Its owned by Player_2. Player_2' has 2 houses in Ateny, so you have to pay $120. You don't have enough cash, but you still can get $350 from the bank, or you may try to sell properties to another player.`;
+         const expectedText = `You stop in Ateny city. Its owned by Player_2. Player_2 has 2 houses in Ateny, so you have to pay $120. You don't have enough cash, but you still can get $350 from the bank, or you may try to sell properties to another player.`;
          expect(resultInfo).toBe(expectedText);
 
         // !!! NOT CALCULATING POTENTIAL CASH
