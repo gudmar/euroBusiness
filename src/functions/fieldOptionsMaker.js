@@ -43,13 +43,33 @@ const getCityInfoText = ({
         output.push(`${ownerNameWithThe} has 1 hotel in ${id},`)
     }
     if (ownerName !== 'bank' && !isPlegded) output.push(` so you have to pay $${feeToPay}`)
-    if (ownerName !== 'bank' && !isPlegded && feeToPay > cash && nrOfEstatesPlayerHas > 0) {
+    if (
+        ownerName !== 'bank' && 
+        !isPlegded && 
+        feeToPay > cash && 
+        calculateCashForAllEstatesFromTheBank(fieldsDescriptorsArray, color, globalNumberOfHouses).money > 0 &&
+        nrOfEstatesPlayerHas > 0
+    ) {
         const ammountCanGetFromTheBank = calculateCashForAllEstatesFromTheBank(fieldsDescriptorsArray, color, globalNumberOfHouses).money
         output.push(`. You don't have enough cash, but you still can get $${ammountCanGetFromTheBank} from the bank, or you may try to sell properties to another player`)
     }
-    if (ownerName !== 'bank' && !isPlegded && feeToPay > cash && nrOfEstatesPlayerHas === 0) {
+    if (
+        ownerName !== 'bank' && 
+        feeToPay > cash && 
+        calculateCashForAllEstatesFromTheBank(fieldsDescriptorsArray, color, globalNumberOfHouses).money === 0 &&
+        (nrOfEstatesPlayerHas > 0)
+    ){
         output.push(`, but you are too poor. Even dealing with the bank will not help. The only rescue is to bargain with another players. You may give 10 offers for your estates`)
     }
+    console.log('Estates PLAYER HAS', nrOfEstatesPlayerHas)
+    if (
+        ownerName !== 'bank' && 
+        feeToPay > cash &&
+        (nrOfEstatesPlayerHas === 0)
+    ){
+        output.push(', but you are too poor. If you had anything of a value perhaps you could do anything to stay in the game a bit longer')
+    }
+
     output.push('.')
 
 

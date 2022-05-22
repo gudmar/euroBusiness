@@ -112,7 +112,7 @@ describe('Testing Start field', () => {
 const getCurrentPlayerColor = playerSlice => playerSlice?.currentPlayer;
 const getCurrentPlayerDescriptor = playerSlice => playerSlice[getCurrentPlayerColor(playerSlice)]
 
-describe.only('Testing a city field', () => {
+describe('Testing a city field', () => {
     it(`If player has enough cash and bank owns the city, it should return text:
     You stop in 'Ateny' city. Its onwed by the bank. You don't have to pay for 
     staying here. You may purchase this city. If You don't it will be auctioned.`, async () => {
@@ -134,6 +134,7 @@ describe.only('Testing a city field', () => {
         const expected = `You stop in Ateny city. Its owned by the bank. You don't have to pay for staying here. You may purchase this city. If You don't it will be auctioned.`;
         expect(resultInfo).toBe(expected);
     });
+
     it(`If another player owns this city, and only this city in greece, and player has enough cash to pay for stay should return text:
      You stop in 'Ateny' city. Its owned by 'player2'. 'Player2' owns 1 estate out of 2 in Greece, 
      so  you have to pay  $10.`, async () => {
@@ -332,7 +333,7 @@ describe.only('Testing a city field', () => {
          const atenyEstate = getEstate(stateBoardSlice, 'Ateny');
          const salonikiEstate = getEstate(stateBoardSlice, 'Saloniki');
          const insbruckEstate = getEstate(stateBoardSlice, 'Insbruck');
-         insbruckEstate.owner = 'purple';
+         insbruckEstate.isPlegded = true;
          const localPlayerSlice = cp(playerSlice);
          const localPlayerDescriptor = getCurrentPlayerDescriptor(localPlayerSlice);
          localPlayerDescriptor.cash = 119;
@@ -351,6 +352,39 @@ describe.only('Testing a city field', () => {
          const expectedText = `You stop in Ateny city. Its owned by Player_2. Player_2 has 2 houses in Ateny, so you have to pay $120, but you are too poor. Even dealing with the bank will not help. The only rescue is to bargain with another players. You may give 10 offers for your estates.`;
          expect(resultInfo).toBe(expectedText);
      })
+
+
+
+     it(`If another player owns this city, and has 2 houses here, and player that stepped 
+     has NOT enough cash to pay for the visit, cannot get enough cash from the bank, but
+     has any estate should return text:
+     You stop in 'Ateny' city. Its owned by 'player2'. Player2' has 2 houseS in 'Ateny'.
+     You should pay: $120, but you are too poor. If you had anything of a value perhaps 
+     You could do anything to stay in the game a bit longer.`, async () => {
+         const stateBoardSlice = cp(stateForFieldOptionsTests);
+         const atenyEstate = getEstate(stateBoardSlice, 'Ateny');
+         const salonikiEstate = getEstate(stateBoardSlice, 'Saloniki');
+         const insbruckEstate = getEstate(stateBoardSlice, 'Insbruck');
+         insbruckEstate.owner = 'purple';
+         const localPlayerSlice = cp(playerSlice);
+         const localPlayerDescriptor = getCurrentPlayerDescriptor(localPlayerSlice);
+         localPlayerDescriptor.cash = 1;
+         atenyEstate.owner = 'black';
+         atenyEstate.nrOfHouses = 2;
+         salonikiEstate.owner = 'black';
+         const globalNumberOfHouses = {globalNumberOfHouses: 8};
+         const resultArr = await fieldOptionsMaker({
+            fieldsDescriptorsArray: stateBoardSlice, 
+            fieldData: atenyEstate, 
+            playerStateSlice: localPlayerSlice,
+            control: controlState,
+            game: {globalNumberOfHouses: 8}
+         });
+         const resultInfo = getInfo(resultArr, 0);
+         const expectedText = `You stop in Ateny city. Its owned by Player_2. Player_2 has 2 houses in Ateny, so you have to pay $120, but you are too poor. If you had anything of a value perhaps you could do anything to stay in the game a bit longer.`;
+         expect(resultInfo).toBe(expectedText);
+     })
+
 
      
 

@@ -283,13 +283,13 @@ const stateForFieldOptionsTests = [
     // + or You may try to sell properties to another player.
 
 
-    // If another player owns this city, and has 2 houses here, and player that stepped 
-    // has NOT enough cash to pay for the visit, cannot get enough cash from the bank, but
-    // has any estate should return text:
-    // You step in 'Ateny' city. Its owned by 'player2'. Player2' has 2 houseS in 'Ateny'.
-    // You should pay $120, but you are too poor. Even dealing with the bank will not help.
-    // The only rescue is to bargain with another players. You may give 10 offers for your 
-    // estates.
+    // + If another player owns this city, and has 2 houses here, and player that stepped 
+    // + has NOT enough cash to pay for the visit, cannot get enough cash from the bank, but
+    // + has any estate should return text:
+    // + You step in 'Ateny' city. Its owned by 'player2'. Player2' has 2 houseS in 'Ateny'.
+    // + You should pay $120, but you are too poor. Even dealing with the bank will not help.
+    // + The only rescue is to bargain with another players. You may give 10 offers for your 
+    // + estates.
 
     // If another player owns this city, and has 2 houses here, and player that stepped 
     // has NOT enough cash to pay for the visit, cannot get enough cash from the bank, but
