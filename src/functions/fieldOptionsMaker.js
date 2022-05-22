@@ -24,23 +24,23 @@ import {
 
 const getCityInfoText = ({
     id, country, citiesOwnedByOwner, feeToPay, price, isPlegded, ownerName, name, nrOfHouses, cash, 
-    fieldsDescriptorsArray, color, globalNumberOfHouses,
+    fieldsDescriptorsArray, color, globalNumberOfHouses, nrOfOffersToOtherPlayersWhenSellingAProperty
 }) => {
     const ownerNameWithThe = ownerName === 'bank' ? 'the bank' : ownerName;
     const nrOfEstatesPlayerHas = countAllPropertiesPlayerHas(fieldsDescriptorsArray, color);
     let output = [];
-    output.push(`You stop in ${id} city. Its owned by ${ownerNameWithThe}. `);
+    output.push(`You stop in ${id} city. Its owned by ${ownerNameWithThe}.`);
     if (ownerName === 'bank') {
-        output.push(`You don't have to pay for staying here. You may purchase this city. If You don't it will be auctioned`)
+        output.push(` You don't have to pay for staying here. You may purchase this city. If You don't it will be auctioned`)
     } 
-    if (ownerName !== 'bank' && nrOfHouses === 0) {
-        output.push(`${ownerNameWithThe} owns ${citiesOwnedByOwner.owns} out of ${citiesOwnedByOwner.outOf} estates in ${country},`)
+    if (ownerName !== 'bank' && nrOfHouses === 0 && !isPlegded) {
+        output.push(` ${ownerNameWithThe} owns ${citiesOwnedByOwner.owns} out of ${citiesOwnedByOwner.outOf} estates in ${country},`)
     }
     if (ownerName !== 'bank' && nrOfHouses > 0 && nrOfHouses < 5) {
-        output.push(`${ownerNameWithThe} has ${nrOfHouses} ${nrOfHouses > 1 ? 'houses' : 'house'} in ${id},`);
+        output.push(` ${ownerNameWithThe} has ${nrOfHouses} ${nrOfHouses > 1 ? 'houses' : 'house'} in ${id},`);
     }
     if (nrOfHouses === 5) {
-        output.push(`${ownerNameWithThe} has 1 hotel in ${id},`)
+        output.push(` ${ownerNameWithThe} has 1 hotel in ${id},`)
     }
     if (ownerName !== 'bank' && !isPlegded) output.push(` so you have to pay $${feeToPay}`)
     if (
@@ -59,7 +59,7 @@ const getCityInfoText = ({
         calculateCashForAllEstatesFromTheBank(fieldsDescriptorsArray, color, globalNumberOfHouses).money === 0 &&
         (nrOfEstatesPlayerHas > 0)
     ){
-        output.push(`, but you are too poor. Even dealing with the bank will not help. The only rescue is to bargain with another players. You may give 10 offers for your estates`)
+        output.push(`, but you are too poor. Even dealing with the bank will not help. The only rescue is to bargain with another players. You may give ${nrOfOffersToOtherPlayersWhenSellingAProperty} offers for your estates`)
     }
     console.log('Estates PLAYER HAS', nrOfEstatesPlayerHas)
     if (
@@ -68,6 +68,9 @@ const getCityInfoText = ({
         (nrOfEstatesPlayerHas === 0)
     ){
         output.push(', but you are too poor. If you had anything of a value perhaps you could do anything to stay in the game a bit longer')
+    }
+    if (isPlegded) {
+        output.push(` ${id} is mortaged, so no fee for stopping by`)
     }
 
     output.push('.')
@@ -103,13 +106,15 @@ const getOptionsCity = async (fieldsDescriptorsArray, estateData, playerSlice, g
     } = playerSlice?.[playerSlice?.['currentPlayer']];
     const {
         globalNumberOfHouses,
+        nrOfOffersToOtherPlayersWhenSellingAProperty,
     } = gameState;
     const ownerName = getPlayerNameByColor(playerSlice, owner);
     const citiesOwnedByOwner = getNrOfCitiesPlayerHas(fieldsDescriptorsArray, estateData.owner, country);
     const feeToPay = await countExectVisitFeeChecker(fieldsDescriptorsArray, estateData);
     const informationText = getCityInfoText({
         id, country, citiesOwnedByOwner, feeToPay, price, isPlegded, ownerName, name, 
-        nrOfHouses, cash, fieldsDescriptorsArray, color, globalNumberOfHouses,
+        nrOfHouses, cash, fieldsDescriptorsArray, color, globalNumberOfHouses, 
+        nrOfOffersToOtherPlayersWhenSellingAProperty,
     })
     return [
         {

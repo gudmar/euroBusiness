@@ -1,7 +1,9 @@
 
 const gameStateConstructor = () => {
     return {
-        globalNumberOfHouses: 40
+        globalNumberOfHouses: 32,
+        globalNumberOfHotels: 12,
+        nrOfOffersToOtherPlayersWhenSellingAProperty: 10,
     }
 };
 

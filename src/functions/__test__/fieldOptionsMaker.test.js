@@ -346,7 +346,7 @@ describe('Testing a city field', () => {
             fieldData: atenyEstate, 
             playerStateSlice: localPlayerSlice,
             control: controlState,
-            game: {globalNumberOfHouses: 8}
+            game: {globalNumberOfHouses: 8, nrOfOffersToOtherPlayersWhenSellingAProperty: 10}
          });
          const resultInfo = getInfo(resultArr, 0);
          const expectedText = `You stop in Ateny city. Its owned by Player_2. Player_2 has 2 houses in Ateny, so you have to pay $120, but you are too poor. Even dealing with the bank will not help. The only rescue is to bargain with another players. You may give 10 offers for your estates.`;
@@ -378,12 +378,34 @@ describe('Testing a city field', () => {
             fieldData: atenyEstate, 
             playerStateSlice: localPlayerSlice,
             control: controlState,
-            game: {globalNumberOfHouses: 8}
+            game: {globalNumberOfHouses: 8, nrOfOffersToOtherPlayersWhenSellingAProperty: 10}
          });
          const resultInfo = getInfo(resultArr, 0);
          const expectedText = `You stop in Ateny city. Its owned by Player_2. Player_2 has 2 houses in Ateny, so you have to pay $120, but you are too poor. If you had anything of a value perhaps you could do anything to stay in the game a bit longer.`;
          expect(resultInfo).toBe(expectedText);
      })
+
+     it(`In case another player has a 'Ateny' but it is mortaged, should return text:
+        You stop in Ateny city. Its owned by Player_2. Ateny is mortaged, so 
+        no fee for stopping by.`, async () => {
+         const stateBoardSlice = cp(stateForFieldOptionsTests);
+         const atenyEstate = getEstate(stateBoardSlice, 'Ateny');
+         atenyEstate.owner = "black";
+         atenyEstate.isPlegded = true;
+         const localPlayerSlice = cp(playerSlice);
+         const resultArr = await fieldOptionsMaker({
+            fieldsDescriptorsArray: stateBoardSlice, 
+            fieldData: atenyEstate, 
+            playerStateSlice: localPlayerSlice,
+            control: controlState,
+            game: {globalNumberOfHouses: 8, nrOfOffersToOtherPlayersWhenSellingAProperty: 10}
+         });
+         const resultInfo = getInfo(resultArr, 0);
+         const expectedText = `You stop in Ateny city. Its owned by Player_2. Ateny is mortaged, so no fee for stopping by.`;
+         expect(resultInfo).toBe(expectedText);
+     })
+
+
 
 
      
