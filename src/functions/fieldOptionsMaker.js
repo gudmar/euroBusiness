@@ -9,6 +9,7 @@ import {
     addExtraCard,
     useExtraCard,
     nextPlayer,
+    calculateCashForAllEstatesFromTheBank,
 } from "../state/playerSlice.js"
 import { boardActionTypes } from '../state/boardReducer.js';
 import { playerActionTypes } from '../state/playerReducer.js';
@@ -21,7 +22,8 @@ import {
 
 
 const getCityInfoText = ({
-    id, country, citiesOwnedByOwner, feeToPay, price, isPlegded, ownerName, name, nrOfHouses
+    id, country, citiesOwnedByOwner, feeToPay, price, isPlegded, ownerName, name, nrOfHouses, cash, 
+    fieldsDescriptorsArray, color, globalNumberOfHouses,
 }) => {
     const ownerNameWithThe = ownerName === 'bank' ? 'the bank' : ownerName;
     let output = [];
@@ -39,13 +41,19 @@ const getCityInfoText = ({
         output.push(`${ownerNameWithThe} has 1 hotel in ${id},`)
     }
     if (ownerName !== 'bank' && !isPlegded) output.push(` so you have to pay $${feeToPay}.`)
+    if (ownerName !== 'bank' && !isPlegded && feeToPay > cash) {
+        const ammountCanGetFromTheBank = calculateCashForAllEstatesFromTheBank(fieldsDescriptorsArray, color, globalNumberOfHouses)
+        output.push(`You don't have enough cash, but you still can get ${ammountCanGetFromTheBank} from the band, or you may try to sell properties to another player.`)
+    }
+
+
     
     return output.join('');
 }
 
 
 
-const getOptionsCity = async (fieldsDescriptorsArray, estateData, playerSlice) => {
+const getOptionsCity = async (fieldsDescriptorsArray, estateData, playerSlice, gameState) => {
     const {
         id,
         country,
@@ -61,17 +69,21 @@ const getOptionsCity = async (fieldsDescriptorsArray, estateData, playerSlice) =
     } = estateData;
     const {
         cash,
-        color,
+        color,  // of player that stepped in someone elses estate
         extraCards,
         fieldNumber,
         name,
         turnToStale
     } = playerSlice?.[playerSlice?.['currentPlayer']];
+    const {
+        globalNumberOfHouses,
+    } = gameState;
     const ownerName = getPlayerNameByColor(playerSlice, owner);
     const citiesOwnedByOwner = getNrOfCitiesPlayerHas(fieldsDescriptorsArray, estateData.owner, country);
     const feeToPay = await countExectVisitFeeChecker(fieldsDescriptorsArray, estateData);
     const informationText = getCityInfoText({
-        id, country, citiesOwnedByOwner, feeToPay, price, isPlegded, ownerName, name, nrOfHouses
+        id, country, citiesOwnedByOwner, feeToPay, price, isPlegded, ownerName, name, 
+        nrOfHouses, cash, fieldsDescriptorsArray, color, globalNumberOfHouses,
     })
     return [
         {
@@ -137,7 +149,13 @@ const getOptionsTax = (data) => {
 
 }
 
-const fieldOptionsMaker = async (fieldsDescriptorsArray, fieldData, playerStateSlice) => {
+const fieldOptionsMaker = async ({
+    fieldsDescriptorsArray, 
+    fieldData, 
+    playerStateSlice, 
+    control, 
+    game
+}) => {
     // const {
     //     type,
     //     visit,
@@ -166,9 +184,10 @@ const fieldOptionsMaker = async (fieldsDescriptorsArray, fieldData, playerStateS
     // } = currentPlayerData;
 
 // default (at any time) options: build a house, sell a house, build a hotel, mortage estate, buy from mortage,
+console.log('GAME:', game, fieldData, fieldsDescriptorsArray)
     
     switch(fieldData.type) {
-        case 'city': return await getOptionsCity(fieldsDescriptorsArray, fieldData, playerStateSlice);
+        case 'city': return await getOptionsCity(fieldsDescriptorsArray, fieldData, playerStateSlice, game);
         case 'start': return getOptionsStart(fieldData);
         case 'chanceBlue': return getOptionsChanceBlue;
         case 'chanceRed': return getOptionsChanceRed;
