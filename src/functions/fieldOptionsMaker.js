@@ -18,6 +18,7 @@ import { getPlayerNameByColor } from '../state/defaultPlayerState.js'
 import {
     getNrOfCitiesPlayerHas, // { owns, outOf }
     countExectVisitFeeChecker,
+    countAllPropertiesPlayerHas
 } from '../state/boardFields.js'
 
 
@@ -26,6 +27,7 @@ const getCityInfoText = ({
     fieldsDescriptorsArray, color, globalNumberOfHouses,
 }) => {
     const ownerNameWithThe = ownerName === 'bank' ? 'the bank' : ownerName;
+    const nrOfEstatesPlayerHas = countAllPropertiesPlayerHas(fieldsDescriptorsArray, color);
     let output = [];
     output.push(`You stop in ${id} city. Its owned by ${ownerNameWithThe}. `);
     if (ownerName === 'bank') {
@@ -40,11 +42,15 @@ const getCityInfoText = ({
     if (nrOfHouses === 5) {
         output.push(`${ownerNameWithThe} has 1 hotel in ${id},`)
     }
-    if (ownerName !== 'bank' && !isPlegded) output.push(` so you have to pay $${feeToPay}.`)
-    if (ownerName !== 'bank' && !isPlegded && feeToPay > cash) {
+    if (ownerName !== 'bank' && !isPlegded) output.push(` so you have to pay $${feeToPay}`)
+    if (ownerName !== 'bank' && !isPlegded && feeToPay > cash && nrOfEstatesPlayerHas > 0) {
         const ammountCanGetFromTheBank = calculateCashForAllEstatesFromTheBank(fieldsDescriptorsArray, color, globalNumberOfHouses).money
-        output.push(` You don't have enough cash, but you still can get $${ammountCanGetFromTheBank} from the bank, or you may try to sell properties to another player.`)
+        output.push(`. You don't have enough cash, but you still can get $${ammountCanGetFromTheBank} from the bank, or you may try to sell properties to another player`)
     }
+    if (ownerName !== 'bank' && !isPlegded && feeToPay > cash && nrOfEstatesPlayerHas === 0) {
+        output.push(`, but you are too poor. Even dealing with the bank will not help. The only rescue is to bargain with another players. You may give 10 offers for your estates`)
+    }
+    output.push('.')
 
 
     
