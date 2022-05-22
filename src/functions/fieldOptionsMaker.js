@@ -14,7 +14,8 @@ import { calculateCashForAllEstatesFromTheBank } from '../state/boardFields.js'
 import { boardActionTypes } from '../state/boardReducer.js';
 import { playerActionTypes } from '../state/playerReducer.js';
 import { controlActionTypes } from '../state/controlReducer.js';
-import { getPlayerNameByColor } from '../state/defaultPlayerState.js'
+import { transactionActionTypes } from '../state/transactionsReducer.js';
+import { getPlayerNameByColor } from '../state/defaultPlayerState.js';
 import {
     getNrOfCitiesPlayerHas, // { owns, outOf }
     countExectVisitFeeChecker,
@@ -61,7 +62,6 @@ const getCityInfoText = ({
     ){
         output.push(`, but you are too poor. Even dealing with the bank will not help. The only rescue is to bargain with another players. You may give ${nrOfOffersToOtherPlayersWhenSellingAProperty} offers for your estates`)
     }
-    console.log('Estates PLAYER HAS', nrOfEstatesPlayerHas)
     if (
         ownerName !== 'bank' && 
         feeToPay > cash &&
@@ -78,6 +78,61 @@ const getCityInfoText = ({
 
     
     return output.join('');
+}
+
+
+const getCityButtons = ({
+    id, country, citiesOwnedByOwner, feeToPay, price, isPlegded, owner, ownerName, 
+    name, nrOfHouses, cash, fieldsDescriptorsArray, color, globalNumberOfHouses, 
+    nrOfOffersToOtherPlayersWhenSellingAProperty,
+}) => {
+    if(ownerName === 'bank' && price <= cash) {
+        return [
+            {
+                type: 'information',
+                title: 'You pass start:',
+                info: info,
+                options: [
+                    {
+                        type: 'button',
+                        label: 'Buy',
+                        function: undefined,
+                        actions: [
+                            {
+                                payload: {
+                                    buyer: color,
+                                    seller: owner,
+                                    estate: id,
+                                    price: price,
+                                }, 
+                                type: transactionActionTypes.PURCHASE
+                            },
+                            {type: controlActionTypes.SHUT_FIELD_WINDOW}
+                        ],
+                        tooltip: 'Accept'
+                    },
+                    {
+                        type: 'button',
+                        label: 'Auction',
+                        actions: [
+                            {
+                                type: controlActionTypes.SHUT_FIELD_WINDOW
+                            },
+                            {
+                                type: controlActionTypes.OPEN_AUCTION_WINDOW,
+                                // payload: {
+                                //     seller: owner,
+                                //     estate: id,
+                                //     price: price,                            
+                                // }
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+    
 }
 
 
@@ -116,6 +171,11 @@ const getOptionsCity = async (fieldsDescriptorsArray, estateData, playerSlice, g
         nrOfHouses, cash, fieldsDescriptorsArray, color, globalNumberOfHouses, 
         nrOfOffersToOtherPlayersWhenSellingAProperty,
     })
+    const buttons = getCityButtons({
+        id, country, citiesOwnedByOwner, feeToPay, price, isPlegded, owner, ownerName, name, 
+        nrOfHouses, cash, fieldsDescriptorsArray, color, globalNumberOfHouses, 
+        nrOfOffersToOtherPlayersWhenSellingAProperty,
+    })
     return [
         {
             type: 'information',
@@ -140,7 +200,7 @@ const getOptionsStart = (data) => {
                     label: 'OK',
                     function: pay,
                     actions: [
-                        {payload: 400, type: playerActionTypes.PAY_PLAYER},
+                        {payload: 400, type: playerActionTypes.PAY_CURRENT_PLAYER},
                         {type: controlActionTypes.SHUT_FIELD_WINDOW}
                     ],
                     tooltip: 'Accept'

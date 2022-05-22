@@ -5,6 +5,7 @@ import {
 import { playerActionTypes } from '../../state/playerReducer.js';
 import { getPlayerNameByColor } from '../../state/defaultPlayerState.js';
 import  { gameStateConstructor }  from '../../state/gameStateConstructor.js'
+import { transactionActionTypes } from '../../state/transactionsReducer.js'
 
 const controlState = {openFieldWindow: false};
 const game = gameStateConstructor();
@@ -91,7 +92,7 @@ describe('Testing Start field', () => {
             expect(result).toBe(expected);
         }
     );
-    it('Should return a single OK button having actions PAY_PLAYER and SHUT_WINDOW', async () => {
+    it('Should return a single OK button having actions PAY_CURRENT_PLAYER and SHUT_WINDOW', async () => {
         const estateDescriptor = getEstate(stateForFieldOptionsTests, 'Start');
         const globalNumberOfHouses = {globalNumberOfHouses: 8};
         const resultArr = await fieldOptionsMaker({
@@ -104,7 +105,7 @@ describe('Testing Start field', () => {
     const resultButtonNames = getButtonNames(resultArr, 0);
         const resultButtonActionTypes = getButtonActionTypes(resultArr, 0, 0)
         const expectedButtonNames = ['OK'];
-        const expectedActionTypes = [playerActionTypes.PAY_PLAYER, playerActionTypes.SHUT_FIELD_WINDOW]
+        const expectedActionTypes = [playerActionTypes.PAY_CURRENT_PLAYER, playerActionTypes.SHUT_FIELD_WINDOW]
         expect(resultButtonNames).arrayToContainTheSameValues(expectedButtonNames);
     })
 })
@@ -416,6 +417,27 @@ describe('Testing a city field', () => {
      // 10 attempts, there should be a GAME LOST
 
 
+})
 
+// const getButtons = (arr, index) => arr[index].options
+// const getButtonNames = (arr, index) => getButtons(arr, index).map(button => button.label);
+// const getButtonLabels = value =>  value.buttons.map(button => button[label])
 
+describe('Testing fieldOptionsMaker: getOptionsCity returned buttons', () => {
+    it(`If the bank owns Ateny, and player stands and has enough cash should return buttons 'Buy', 'Auction'`, async () => {
+        const stateBoardSlice = cp(stateForFieldOptionsTests);
+        const atenyEstate = getEstate(stateBoardSlice, 'Ateny');
+        const localPlayerSlice = cp(playerSlice);
+        const resultArr = await fieldOptionsMaker({
+            fieldsDescriptorsArray: stateBoardSlice,
+            fieldData: atenyEstate,
+            playerStateSlice: localPlayerSlice,
+            control: controlState,
+            game: {globalNumberOfHouses: 8, nrOfOffersToOtherPlayersWhenSellingAProperty: 10}
+        })
+        const buttonNames = getButtonNames(resultArr, 0);
+        const expectedButtonNames = ['Auction', 'Buy']
+        expect(buttonNames).arrayToContainTheSameValues(expectedButtonNames)
+
+    })
 })

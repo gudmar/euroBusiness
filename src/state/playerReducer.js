@@ -6,7 +6,8 @@ const playerActionTypes = {
     MOVE: 'MOVE',
     MOVE_ONE_FIELD: 'MOVE_ONE_FIELD',
     NEXT_PLAYER: 'NEXT_PLAYER',
-    PAY_PLAYER: 'PAY_PLAYER',
+    PAY_CURRENT_PLAYER: 'PAY_CURRENT_PLAYER',
+    PAY_PLAYER: 'PAY_PLAYER'
 }
 
 const playerReducer = (state, {type, payload}) => {
@@ -55,9 +56,14 @@ const playerReducer = (state, {type, payload}) => {
             const nextIndex = (currentIndex + 1) % players.length;
             state.playerSlice['currentPlayer'] = players[nextIndex];
             return {...state}
-        case playerActionTypes.PAY_PLAYER:
+        case playerActionTypes.PAY_CURRENT_PLAYER:
             state.playerSlice[state.playerSlice.currentPlayer].cash += payload;
             return {...state}
+
+        case playerActionTypes.PAY_PLAYER:
+            state.playerSlice[state.playerSlice[payload.targetPlayerColor]].cash += payload.ammount;
+            return {...state}
+
 
         default: {
             console.error(`Player reducer: no action matched (to match: ${type}`)
