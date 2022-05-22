@@ -5,6 +5,8 @@ import {
     doAllBelongToSamePlayer
 } from '../functions/sameSortGetter.js'
 
+console.error('Add removing houses from globalNumberOfHouses state here.')
+
 const getFieldIndex = (state, estateName) => state.boardSlice.findIndex(field => {return field.id === estateName;});
 
 const transactionActionTypes = {

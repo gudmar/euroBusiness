@@ -368,6 +368,24 @@ const stateForFieldOptionsTests = [
         boardFieldNumber: 4,
         isPlegded: false,
     },
+    {
+        id: 'Insbruck',
+        country: countries.austria,
+        type: 'city',
+        price: 700,
+        mortage: 350,
+        housePrice: 400,
+        hotelPrice: 400,
+        nrOfHousesToPurchase: 0,
+        nrOfHousesToSell: 0,
+        visit: [ 70, 140, 350, 1000, 2200, 2600, 3000 ], // 0 houses, 1 house, 2 houses...
+        owner: 'blue',
+        nrOfHouses: 0, // 5 houses === hotel
+        nrInSet: 2,
+        boardFieldNumber: 4,
+        isPlegded: false,
+    },
+
     // Should return the text of the chance card. Will be tasted later...
     {
         id: 'Chance_blue',
