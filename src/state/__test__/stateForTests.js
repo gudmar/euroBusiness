@@ -299,9 +299,9 @@ const stateForFieldOptionsTests = [
     // +  You could do anything to stay in the game a bit longer.
 
 
-    // In case another player has a 'Ateny' but it is mortaged, should return text:
-    // You step in 'Ateny' city. Its owned by 'player2'. 'Ateny' is mortaged, so 
-    // no fee for stopping by.
+    // + In case another player has a 'Ateny' but it is mortaged, should return text:
+    // + You step in 'Ateny' city. Its owned by 'player2'. 'Ateny' is mortaged, so 
+    // + no fee for stopping by.
 
     // BUTTONS -----
     

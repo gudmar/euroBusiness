@@ -7,6 +7,7 @@ const defaultState = {
     boardSlice: boardDescriptorCreator(),
     control: {
         openFieldWindow: false,
+        openAuctionWindow: false,
     },
     game: gameStateConstructor(),
 }
