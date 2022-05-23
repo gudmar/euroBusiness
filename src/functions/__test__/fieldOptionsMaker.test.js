@@ -46,6 +46,7 @@ expect.extend({
 
 const getInfo = (arr, index) => arr[index].info
 const getButtons = (arr, index) => arr[index].options
+const getButton = (arr, label) => arr.find(button => button.label === label)
 const getButtonNames = (arr, index) => getButtons(arr, index).map(button => button.label);
 const getButtonLabels = (arrOfOptions, index = 0) =>  {
     return arrOfOptions[index].options.map(button => {
@@ -439,9 +440,36 @@ describe('Testing fieldOptionsMaker: getOptionsCity returned buttons', () => {
             control: controlState,
             game: {globalNumberOfHouses: 8, nrOfOffersToOtherPlayersWhenSellingAProperty: 10}
         })
+
         const buttonNames = getButtonLabels(resultArr, 0);
         const expectedButtonNames = ['Auction', 'Buy']
         expect(buttonNames).arrayToContainTheSameValues(expectedButtonNames)
-
+        const actionsBuy = getButton(resultArr,'Buy').actions;
+        console.log('ActionsBuy, resULtarrAy', actionsBuy, resultArr)
+        const actionsPurchase = [
+            {
+                payload: {
+                    buyer: localPlayerSlice.currentPlayer,
+                    seller: atenyEstate.owner,
+                    estate: id,
+                    price: localPlayerDescriptor
+                },
+                type: transactionActionTypes.PURCHASE
+            },
+            {
+                type: transactionActionTypes.SHUT_FIELD_WINDOW
+            },
+        ];
+        const actionsAuction = [
+            {
+                type: controlActionTypes.SHUT_FIELD_WINDOW
+            },
+            {
+                type: controlActionTypes.OPEN_AUCTION_WINDOW,
+            },               
+        ]
+        // const buttonActionsAuction = getButton(resultArr, 'Auction').actions;
+        // const buttonActionsPurchase = getButton(resultArr, 'Buy').actions
+        // except([actionsPurchase, actionsAuction]).toEqual([buttonActionsAuction, guttonActionsPurchase])
     })
 })
