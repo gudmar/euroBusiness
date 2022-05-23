@@ -16,7 +16,8 @@ expect.extend({
         const arrToLookInCopy = JSON.parse(JSON.stringify(received));
         const notMatchingElements = [];
         if (arrayToLookIn.length !== arrayWithTheSameValues.length) return {
-            pass:false, message: () => `Different lenght of arrays: ${arrayToLookIn.length} vs. ${arrayWithTheSameValues.length}`
+            pass:false, message: () => `Different lenght of arrays: ${arrayToLookIn.length} vs. ${arrayWithTheSameValues.length}.
+            Arrays are: [${arrayToLookIn}] and [${arrayWithTheSameValues}]`
         }
         const doAllElementsMatch = arrayWithTheSameValues.reduce((acc, button) => {
             const buttonIndex = arrayToLookIn.findIndex(item => item === button);
@@ -46,7 +47,11 @@ expect.extend({
 const getInfo = (arr, index) => arr[index].info
 const getButtons = (arr, index) => arr[index].options
 const getButtonNames = (arr, index) => getButtons(arr, index).map(button => button.label);
-const getButtonLabels = value =>  value.buttons.map(button => button[label])
+const getButtonLabels = (arrOfOptions, index = 0) =>  {
+    return arrOfOptions[index].options.map(button => {
+        return button.label
+    })
+}
 const cp = obj => JSON.parse(JSON.stringify(obj));
 const getEstate = (stateArray, estateId) => stateArray.find(item => item.id === estateId);
 const getButtonActionTypes = (arrOfResults, indexSection, indexButton) => {
@@ -120,7 +125,6 @@ describe('Testing a city field', () => {
         const estateDescriptor = getEstate(stateForFieldOptionsTests, 'Ateny');
         const localPlayerSlice = cp(playerSlice);
         const localPlayerDescriptor = getCurrentPlayerDescriptor(localPlayerSlice);
-        console.log('Local player descriptor', localPlayerDescriptor)
         localPlayerDescriptor.cash = 119;
         const resultArr = await fieldOptionsMaker({
             fieldsDescriptorsArray: stateForFieldOptionsTests, 
@@ -435,7 +439,7 @@ describe('Testing fieldOptionsMaker: getOptionsCity returned buttons', () => {
             control: controlState,
             game: {globalNumberOfHouses: 8, nrOfOffersToOtherPlayersWhenSellingAProperty: 10}
         })
-        const buttonNames = getButtonNames(resultArr, 0);
+        const buttonNames = getButtonLabels(resultArr, 0);
         const expectedButtonNames = ['Auction', 'Buy']
         expect(buttonNames).arrayToContainTheSameValues(expectedButtonNames)
 

@@ -88,11 +88,6 @@ const getCityButtons = ({
 }) => {
     if(ownerName === 'bank' && price <= cash) {
         return [
-            {
-                type: 'information',
-                title: 'You pass start:',
-                info: info,
-                options: [
                     {
                         type: 'button',
                         label: 'Buy',
@@ -130,9 +125,6 @@ const getCityButtons = ({
                     }
                 ]
             }
-        ]
-    }
-    
 }
 
 
@@ -181,9 +173,7 @@ const getOptionsCity = async (fieldsDescriptorsArray, estateData, playerSlice, g
             type: 'information',
             title: `Stopped in ${id} in ${country}`,
             info: informationText,
-            options: [
-
-            ]
+            options: buttons
         }
     ]
 }
