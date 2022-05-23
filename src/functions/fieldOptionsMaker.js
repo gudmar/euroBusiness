@@ -102,7 +102,9 @@ const getCityButtons = ({
                                 }, 
                                 type: transactionActionTypes.PURCHASE
                             },
-                            {type: controlActionTypes.SHUT_FIELD_WINDOW}
+                            {   
+                                type: controlActionTypes.SHUT_FIELD_WINDOW
+                            }
                         ],
                         tooltip: 'Accept'
                     },
@@ -148,8 +150,7 @@ const getOptionsCity = async (fieldsDescriptorsArray, estateData, playerSlice, g
         color,  // of player that stepped in someone elses estate
         extraCards,
         fieldNumber,
-        name,
-        turnToStale
+        turnToStale,
     } = playerSlice?.[playerSlice?.['currentPlayer']];
     const {
         globalNumberOfHouses,
