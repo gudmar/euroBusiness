@@ -1,4 +1,5 @@
 import { stateForFieldOptionsTests, currentPlayerData, playerSlice } from '../../state/__test__/stateForTests.js';
+import { controlActionTypes } from '../../state/controlReducer.js'
 import {
     fieldOptionsMaker
 } from '../../functions/fieldOptionsMaker.js'
@@ -444,32 +445,38 @@ describe('Testing fieldOptionsMaker: getOptionsCity returned buttons', () => {
         const buttonNames = getButtonLabels(resultArr, 0);
         const expectedButtonNames = ['Auction', 'Buy']
         expect(buttonNames).arrayToContainTheSameValues(expectedButtonNames)
-        const actionsBuy = getButton(resultArr,'Buy').actions;
         console.log('ActionsBuy, resULtarrAy', actionsBuy, resultArr)
+        const actionsBuy = getButton(resultArr[0].options,'Buy').actions;
+        
         const actionsPurchase = [
             {
                 payload: {
                     buyer: localPlayerSlice.currentPlayer,
                     seller: atenyEstate.owner,
-                    estate: id,
-                    price: localPlayerDescriptor
+                    estate: 'Ateny',
+                    price: atenyEstate.price
                 },
                 type: transactionActionTypes.PURCHASE
             },
             {
-                type: transactionActionTypes.SHUT_FIELD_WINDOW
+                type: controlActionTypes.SHUT_FIELD_WINDOW
             },
-        ];
+        ]
         const actionsAuction = [
             {
                 type: controlActionTypes.SHUT_FIELD_WINDOW
             },
             {
                 type: controlActionTypes.OPEN_AUCTION_WINDOW,
+                payload: {
+                    seller: atenyEstate.owner,
+                    estate: atenyEstate.id,
+                    price: atenyEstate.price
+                }
             },               
         ]
-        // const buttonActionsAuction = getButton(resultArr, 'Auction').actions;
-        // const buttonActionsPurchase = getButton(resultArr, 'Buy').actions
-        // except([actionsPurchase, actionsAuction]).toEqual([buttonActionsAuction, guttonActionsPurchase])
+        const buttonActionsAuction =  getButton(resultArr[0].options, 'Auction').actions;
+        const buttonActionsPurchase = getButton(resultArr[0].options, 'Buy').actions
+        expect([actionsPurchase, actionsAuction]).toEqual([buttonActionsPurchase, buttonActionsAuction])
     })
 })

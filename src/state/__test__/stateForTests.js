@@ -2,6 +2,7 @@ import {countries, notCountryTypes} from '../../functions/countryTypes.js'
 
 const testState = {
     Ateny: {
+        id: 'Ateny',
         country: 'Greece',
         owner: 'Bolek',
         type: 'city',

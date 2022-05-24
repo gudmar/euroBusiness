@@ -117,11 +117,11 @@ const getCityButtons = ({
                             },
                             {
                                 type: controlActionTypes.OPEN_AUCTION_WINDOW,
-                                // payload: {
-                                //     seller: owner,
-                                //     estate: id,
-                                //     price: price,                            
-                                // }
+                                payload: {
+                                    seller: owner,
+                                    estate: id,
+                                    price: price,                            
+                                }
                             }
                         ]
                     }
@@ -160,12 +160,12 @@ const getOptionsCity = async (fieldsDescriptorsArray, estateData, playerSlice, g
     const citiesOwnedByOwner = getNrOfCitiesPlayerHas(fieldsDescriptorsArray, estateData.owner, country);
     const feeToPay = await countExectVisitFeeChecker(fieldsDescriptorsArray, estateData);
     const informationText = getCityInfoText({
-        id, country, citiesOwnedByOwner, feeToPay, price, isPlegded, ownerName, name, 
+        id, country, citiesOwnedByOwner, feeToPay, price, isPlegded, ownerName, owner, 
         nrOfHouses, cash, fieldsDescriptorsArray, color, globalNumberOfHouses, 
         nrOfOffersToOtherPlayersWhenSellingAProperty,
     })
     const buttons = getCityButtons({
-        id, country, citiesOwnedByOwner, feeToPay, price, isPlegded, owner, ownerName, name, 
+        id, country, citiesOwnedByOwner, feeToPay, price, isPlegded, owner, ownerName, owner, 
         nrOfHouses, cash, fieldsDescriptorsArray, color, globalNumberOfHouses, 
         nrOfOffersToOtherPlayersWhenSellingAProperty,
     })

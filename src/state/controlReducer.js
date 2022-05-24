@@ -1,6 +1,10 @@
 const controlActionTypes = {
     SHUT_FIELD_WINDOW: 'SHUT_FIELD_WINDOW',
     OPEN_FIELD_WINDOW: 'OPEN_FIELD_WINDOW',
+
+    SHUT_AUCTION_WINDOW: 'SHUT_FIELD_WINDOW',
+    OPEN_AUCTION_WINDOW: 'OPEN_FIELD_WINDOW',
+
 }
 
 const controlReducer = (state, {payload, type}) => {
