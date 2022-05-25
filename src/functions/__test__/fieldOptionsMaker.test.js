@@ -591,6 +591,37 @@ describe('Testing fieldOptionsMaker: getOptionsCity returned buttons', () => {
         expect([actionsPayResult]).toEqual([actionsPay])
     })
 
+    it(`If player stands on 'Ateny', and another player owns it, and player that stood has not cash
+    and can not mortage anymore, not owns estates or any extra cards should return one button:
+    Ok with action playerActionTypes.PLAYER_LOSES_THE_GAME`, async () => {
+        const stateBoardSlice = cp(stateForFieldOptionsTests);
+        const atenyEstate = getEstate(stateBoardSlice, 'Ateny');
+        const insbruckEstate = getEstate(stateBoardSlice, 'Insbruck');
+        atenyEstate.owner = 'pruple';
+        insbruckEstate.owner = 'purple'
+        const localPlayerSlice = cp(playerSlice);
+        localPlayerSlice.blue.cash = 1;
+        const resultArr = await fieldOptionsMaker({
+            fieldsDescriptorsArray: stateBoardSlice,
+            fieldData: atenyEstate,
+            playerStateSlice: localPlayerSlice,
+            control: controlState,
+            game: {globalNumberOfHouses: 8, nrOfOffersToOtherPlayersWhenSellingAProperty: 10}
+        })
+        const buttonNames = getButtonLabels(resultArr, 0);
+        const expectedButtonNames = ['Ok']
+        expect(buttonNames).arrayToContainTheSameValues(expectedButtonNames)
+        const actionsPayResult = getButton(resultArr[0].options,'Ok').actions;
+        const actionsPay = [
+            {
+                payload: {
+                    target: localPlayerSlice.currentPlayer,
+                },
+                type: playerActionTypes.PLAYER_LOSES_THE_GAME
+            },
+        ]
+        expect([actionsPayResult]).toEqual([actionsPay])
+    })
 
 
 })

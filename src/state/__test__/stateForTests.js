@@ -317,12 +317,12 @@ const stateForFieldOptionsTests = [
     // + stood on Atheny has not enough cash, but can mortage, should return 1 button:
     // + 'Estate Manager'
 
-    // If a player stands on 'Ateny', and another player owns it, and player that stoped in Ateny has
-    // enough cash to pay for it, should display a button 'OK'
+    // + If a player stands on 'Ateny', and another player owns it, and player that stoped in Ateny has
+    // + enough cash to pay for it, should display a button 'OK'
 
     // If player stands on 'Ateny', and another player owns it, and player that stood has not cash
     // and can not mortage anymore, not owns estates should return one button:
-    // Ok
+    // Ok with action playerActionTypes.PLAYER_LOSES_THE_GAME.
 
 
     // === The same player :

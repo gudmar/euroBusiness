@@ -19,7 +19,8 @@ const defaultPlayerStateConstructor = () => {
         blue: defaultPlayer('blue', 'Player_1'),
         red: defaultPlayer('red','Player_2'),
         green: defaultPlayer('green', 'Player_3'),
-        orange: defaultPlayer('orange', 'Player_4')
+        orange: defaultPlayer('orange', 'Player_4'),
+        queue: ['blue', 'orange', 'green', 'red'],
     }
 }
 
