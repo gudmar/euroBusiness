@@ -559,5 +559,39 @@ describe('Testing fieldOptionsMaker: getOptionsCity returned buttons', () => {
         expect([actionsEstateManagerResult]).toEqual([actionsEstateManager])        
     })
 
+    // playerActionTypes.PLAYER_PAYS_ANOTHER_PLAYER
+
+    it(`If a player stands on Ateny, and another player owns it but that player does not own Saloniki, and player that stoped in Ateny has
+     enough cash to pay for it, should display a button 'Pay'`, async () => {
+        const stateBoardSlice = cp(stateForFieldOptionsTests);
+        const atenyEstate = getEstate(stateBoardSlice, 'Ateny');
+        atenyEstate.owner = 'pruple';
+        const localPlayerSlice = cp(playerSlice);
+        const resultArr = await fieldOptionsMaker({
+            fieldsDescriptorsArray: stateBoardSlice,
+            fieldData: atenyEstate,
+            playerStateSlice: localPlayerSlice,
+            control: controlState,
+            game: {globalNumberOfHouses: 8, nrOfOffersToOtherPlayersWhenSellingAProperty: 10}
+        })
+        const buttonNames = getButtonLabels(resultArr, 0);
+        const expectedButtonNames = ['Pay']
+        expect(buttonNames).arrayToContainTheSameValues(expectedButtonNames)
+        const actionsPayResult = getButton(resultArr[0].options,'Pay').actions;
+        const actionsPay = [
+            {
+                payload: {
+                    source: localPlayerSlice.currentPlayer,
+                    target: atenyEstate.owner,
+                    amount: atenyEstate.visit[0],
+                },
+                type: playerActionTypes.PLAYER_PAYS_ANOTHER_PLAYER
+            },
+        ]
+        expect([actionsPayResult]).toEqual([actionsPay])
+    })
+
+
+
 })
 

@@ -7,7 +7,8 @@ const playerActionTypes = {
     MOVE_ONE_FIELD: 'MOVE_ONE_FIELD',
     NEXT_PLAYER: 'NEXT_PLAYER',
     PAY_CURRENT_PLAYER: 'PAY_CURRENT_PLAYER',
-    PAY_PLAYER: 'PAY_PLAYER'
+    PAY_PLAYER: 'PAY_PLAYER',
+    PLAYER_PAYS_ANOTHER_PLAYER: 'PLAYER_PAYS_ANOTHER_PLAYER'
 }
 
 const playerReducer = (state, {type, payload}) => {
@@ -63,6 +64,14 @@ const playerReducer = (state, {type, payload}) => {
         case playerActionTypes.PAY_PLAYER:
             state.playerSlice[state.playerSlice[payload.targetPlayerColor]].cash += payload.ammount;
             return {...state}
+        case playerActionTypes.PLAYER_PAYS_ANOTHER_PLAYER:
+            const {amount, sourcePlayer, targetPlayer} = payload;
+            if (!amount || !sourcePlayer || !targetPlayer) {
+                throw new Error (`playerReducer: ${playerActionTypes.PLAYER_PAYS_ANOTHER_PLAYER}: sourcePlayer is ${sourcePlayer}, targetPlayer is ${targetPlayer} and amount is ${amount}. All those variables should be defined.`)
+            }
+            state.playerSlice[sourcePlayer].cash -= amount;
+            state.playerSlice[targetPlayer].cash += amount;
+            return [...state];
 
 
         default: {
