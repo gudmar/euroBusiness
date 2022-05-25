@@ -2,6 +2,7 @@ import {countries, notCountryTypes} from '../../functions/countryTypes.js'
 
 const testState = {
     Ateny: {
+        id: 'Ateny',
         country: 'Greece',
         owner: 'Bolek',
         type: 'city',
@@ -305,8 +306,8 @@ const stateForFieldOptionsTests = [
 
     // BUTTONS -----
     
-    // If the bank owns Ateny, and player stands and has enough cash should return 
-    // buttons 'Buy', 'Auction'
+    // + If the bank owns Ateny, and player stands and has enough cash should return 
+    // + buttons 'Buy', 'Auction'
 
     // If the bank owns Ateny, and player stands and has not enough cash, but can mortage
     // should return 2 buttons: 'Auction', 'Estate manager'
