@@ -21,6 +21,10 @@ import {
     countExectVisitFeeChecker,
     countAllPropertiesPlayerHas
 } from '../state/boardFields.js'
+import {
+    hasPlayerExtraCardsFunction,
+    hasCurrentPlayerExtraCardsFunction
+} from './playerFunctions.js'
 
 
 const getCityInfoText = ({
@@ -84,7 +88,7 @@ const getCityInfoText = ({
 const getCityButtons = ({
     id, country, citiesOwnedByOwner, feeToPay, price, isPlegded, owner, ownerName, 
     name, nrOfHouses, cash, fieldsDescriptorsArray, color, globalNumberOfHouses, 
-    nrOfOffersToOtherPlayersWhenSellingAProperty
+    nrOfOffersToOtherPlayersWhenSellingAProperty, hasCurrentPlayerExtraCards
 }) => {
     const nrOfEstatesPlayerHas = countAllPropertiesPlayerHas(fieldsDescriptorsArray, color);
     if(ownerName === 'bank' && price <= cash) {
@@ -166,7 +170,7 @@ const getCityButtons = ({
             }
         ]
     }
-    if (ownerName !== 'bank' && owner != color && cash < feeToPay && nrOfEstatesPlayerHas > 0) {
+    if (ownerName !== 'bank' && owner != color && cash < feeToPay && (nrOfEstatesPlayerHas > 0 || hasCurrentPlayerExtraCards > 0)) {
         return [
             {
                 type: 'button',
@@ -205,6 +209,23 @@ const getCityButtons = ({
             }
         ]
     }
+    console.log('NrOfExtra cards: ', hasCurrentPlayerExtraCards)
+    if (ownerName !== 'bank' && owner != color && cash < feeToPay && nrOfEstatesPlayerHas === 0 && !hasCurrentPlayerExtraCards){
+        return [
+            {
+                type: 'button',
+                label: 'Ok',
+                actions: [
+                    {
+                        type: playerActionTypes.PLAYER_LOSES_THE_GAME,
+                        payload: {
+                            target: color,
+                        }
+                    }
+                ]
+            }
+        ]
+    }
 
 }
 
@@ -236,17 +257,18 @@ const getOptionsCity = async (fieldsDescriptorsArray, estateData, playerSlice, g
         nrOfOffersToOtherPlayersWhenSellingAProperty,
     } = gameState;
     const ownerName = getPlayerNameByColor(playerSlice, owner);
+    const hasCurrentPlayerExtraCards = hasCurrentPlayerExtraCardsFunction({playerSlice})
     const citiesOwnedByOwner = getNrOfCitiesPlayerHas(fieldsDescriptorsArray, estateData.owner, country);
     const feeToPay = await countExectVisitFeeChecker(fieldsDescriptorsArray, estateData);
     const informationText = getCityInfoText({
         id, country, citiesOwnedByOwner, feeToPay, price, isPlegded, ownerName, owner, 
         nrOfHouses, cash, fieldsDescriptorsArray, color, globalNumberOfHouses, 
-        nrOfOffersToOtherPlayersWhenSellingAProperty,
+        nrOfOffersToOtherPlayersWhenSellingAProperty, hasCurrentPlayerExtraCards
     })
     const buttons = getCityButtons({
         id, country, citiesOwnedByOwner, feeToPay, price, isPlegded, owner, ownerName, owner, 
         nrOfHouses, cash, fieldsDescriptorsArray, color, globalNumberOfHouses, 
-        nrOfOffersToOtherPlayersWhenSellingAProperty
+        nrOfOffersToOtherPlayersWhenSellingAProperty, hasCurrentPlayerExtraCards
     })
     return [
         {

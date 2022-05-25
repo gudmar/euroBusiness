@@ -14,6 +14,7 @@ const playerActionTypes = {
 const playerReducer = (state, {type, payload}) => {
 
     const diceResult = state.playerSlice.diceResult;
+    const targetPlayer = payload.targetPlayer;
     switch(type) {
         case playerActionTypes.SET_DICE_RESULT: {
             const [dice1, dice2] = payload;
@@ -71,9 +72,13 @@ const playerReducer = (state, {type, payload}) => {
             }
             state.playerSlice[sourcePlayer].cash -= amount;
             state.playerSlice[targetPlayer].cash += amount;
-            return [...state];
-
-
+            return {...state};
+        case playerActionTypes.PLAYER_LOSES_THE_GAME:             
+            const indexInQueue = state.playerSlice.queue.findIndex(item => item === targetPlayer);
+            if (indexInQueue === -1) throw new Error(`playerReducer: ${playerActionTypes.PLAYER_LOSES_THE_GAME}, player ${targetPlayer} not found in the queue array.`)
+            state.playerSlice.queue.splice(indexInQueue, 1);
+            delete state.playerSlice[targetPlayer];
+            return {...state}
         default: {
             console.error(`Player reducer: no action matched (to match: ${type}`)
             return state
