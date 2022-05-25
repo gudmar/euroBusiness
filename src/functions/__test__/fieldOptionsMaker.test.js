@@ -525,5 +525,39 @@ describe('Testing fieldOptionsMaker: getOptionsCity returned buttons', () => {
         ]
         expect([actionsEstateManagerResult, actionsAuctionResult]).toEqual([actionsEstateManager, actionsAuction])
     })
+    it(`If player stands on Ateny, and another player owns it, and only it and player that
+    stood on Atheny has not enough cash, but has any property, should return 1 button:
+    'Estate Manager' with actions to HIDE_FIELD_WINDOW and OPEN_ESTATE_MANAGER`, async ()=>{
+        const stateBoardSlice = cp(stateForFieldOptionsTests);
+        const atenyEstate = getEstate(stateBoardSlice, 'Ateny');
+        atenyEstate.owner = 'pruple';
+        const localPlayerSlice = cp(playerSlice);
+        localPlayerSlice.blue.cash = 1;
+        const resultArr = await fieldOptionsMaker({
+            fieldsDescriptorsArray: stateBoardSlice,
+            fieldData: atenyEstate,
+            playerStateSlice: localPlayerSlice,
+            control: controlState,
+            game: {globalNumberOfHouses: 8, nrOfOffersToOtherPlayersWhenSellingAProperty: 10}
+        })
+        const buttonNames = getButtonLabels(resultArr, 0);
+        const expectedButtonNames = ['Estate manager']
+        expect(buttonNames).arrayToContainTheSameValues(expectedButtonNames)
+        const actionsEstateManagerResult = getButton(resultArr[0].options,'Estate manager').actions;
+        const actionsEstateManager = [
+            {
+                type: controlActionTypes.HIDE_FIELD_WINDOW
+            },
+            {
+                payload: {
+                    player: localPlayerSlice.currentPlayer,
+                },
+                type: controlActionTypes.OPEN_ESTATE_MANAGER
+            },
+
+        ]
+        expect([actionsEstateManagerResult]).toEqual([actionsEstateManager])        
+    })
+
 })
 

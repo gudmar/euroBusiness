@@ -309,12 +309,12 @@ const stateForFieldOptionsTests = [
     // + If the bank owns Ateny, and player stands and has enough cash should return 
     // + buttons 'Buy', 'Auction'
 
-    // If the bank owns Ateny, and player stands and has not enough cash, but can mortage
-    // should return 2 buttons: 'Auction', 'Estate manager'
+    // + If the bank owns Ateny, and player stands and has not enough cash, but can mortage
+    // + should return 2 buttons: 'Auction', 'Estate manager'
 
     // If player stands on 'Ateny', and another player owns it, and only it and player that
-    // stood on Atheny has not enough cash, but can mortage, should return 2 buttons:
-    // 'Auction', 'Estate Manager'
+    // stood on Atheny has not enough cash, but can mortage, should return 1 button:
+    // 'Estate Manager'
 
     // If player stands on 'Ateny', and another player owns it, and player that stood has not cash
     // and can not mortage anymore, not owns estates should return one button:

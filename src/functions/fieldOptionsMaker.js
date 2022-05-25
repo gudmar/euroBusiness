@@ -166,6 +166,27 @@ const getCityButtons = ({
             }
         ]
     }
+    if (ownerName !== 'bank' && owner != color && cash < feeToPay && nrOfEstatesPlayerHas > 0) {
+        return [
+            {
+                type: 'button',
+                label: 'Estate manager',
+                function: undefined,
+                actions: [
+                    {   
+                        type: controlActionTypes.HIDE_FIELD_WINDOW
+                    },
+                    {
+                        payload: {
+                            player: color,
+                        }, 
+                        type: controlActionTypes.OPEN_ESTATE_MANAGER
+                    }
+                ],
+                tooltip: 'Accept'
+            },
+        ]    
+    }
 }
 
 
