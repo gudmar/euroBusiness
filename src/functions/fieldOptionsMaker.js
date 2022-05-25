@@ -187,6 +187,25 @@ const getCityButtons = ({
             },
         ]    
     }
+    if (ownerName !== 'bank' && owner != color && cash > feeToPay){
+        return [
+            {
+                type: 'button',
+                label: 'Pay',
+                actions: [
+                    {
+                        type: playerActionTypes.PLAYER_PAYS_ANOTHER_PLAYER,
+                        payload: {
+                            source: color,
+                            target: owner,
+                            amount: feeToPay,
+                        }
+                    }
+                ]
+            }
+        ]
+    }
+
 }
 
 

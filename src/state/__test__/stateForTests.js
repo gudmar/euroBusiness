@@ -13,6 +13,7 @@ const testState = {
         nrOfHousesToPurchase: 0,
         nrOfHousesToSell: 0,
         isPlegded: false,
+        visit: [ 10, 40, 120, 360, 640, 900 ]
 
     },
     Saloniki: {
@@ -26,7 +27,7 @@ const testState = {
         nrOfHousesToPurchase: 0,
         nrOfHousesToSell: 0,
         isPlegded: false,
-
+        visit: [ 10, 40, 120, 360, 640, 900 ]
     },
     Antarktyda: {
         country: 'None',
@@ -312,9 +313,12 @@ const stateForFieldOptionsTests = [
     // + If the bank owns Ateny, and player stands and has not enough cash, but can mortage
     // + should return 2 buttons: 'Auction', 'Estate manager'
 
-    // If player stands on 'Ateny', and another player owns it, and only it and player that
-    // stood on Atheny has not enough cash, but can mortage, should return 1 button:
-    // 'Estate Manager'
+    // + If player stands on 'Ateny', and another player owns it, and only it and player that
+    // + stood on Atheny has not enough cash, but can mortage, should return 1 button:
+    // + 'Estate Manager'
+
+    // If a player stands on 'Ateny', and another player owns it, and player that stoped in Ateny has
+    // enough cash to pay for it, should display a button 'OK'
 
     // If player stands on 'Ateny', and another player owns it, and player that stood has not cash
     // and can not mortage anymore, not owns estates should return one button:
