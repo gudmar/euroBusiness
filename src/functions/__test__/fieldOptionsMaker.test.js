@@ -445,7 +445,6 @@ describe('Testing fieldOptionsMaker: getOptionsCity returned buttons', () => {
         const buttonNames = getButtonLabels(resultArr, 0);
         const expectedButtonNames = ['Auction', 'Buy']
         expect(buttonNames).arrayToContainTheSameValues(expectedButtonNames)
-        console.log('ActionsBuy, resULtarrAy', actionsBuy, resultArr)
         const actionsBuy = getButton(resultArr[0].options,'Buy').actions;
         
         const actionsPurchase = [
@@ -479,4 +478,52 @@ describe('Testing fieldOptionsMaker: getOptionsCity returned buttons', () => {
         const buttonActionsPurchase = getButton(resultArr[0].options, 'Buy').actions
         expect([actionsPurchase, actionsAuction]).toEqual([buttonActionsPurchase, buttonActionsAuction])
     })
+
+    it(`If the bank owns Ateny, and player stands and has not enough cash, but can mortage
+    should return 2 buttons: 'Auction', 'Estate manager'`, async () => {
+        const stateBoardSlice = cp(stateForFieldOptionsTests);
+        const atenyEstate = getEstate(stateBoardSlice, 'Ateny');
+        const insbruckEstate = getEstate(stateBoardSlice, 'Insbruck');
+        const localPlayerSlice = cp(playerSlice);
+        localPlayerSlice.blue.cash = 10;
+        const resultArr = await fieldOptionsMaker({
+            fieldsDescriptorsArray: stateBoardSlice,
+            fieldData: atenyEstate,
+            playerStateSlice: localPlayerSlice,
+            control: controlState,
+            game: {globalNumberOfHouses: 8, nrOfOffersToOtherPlayersWhenSellingAProperty: 10}
+        })
+        const buttonNames = getButtonLabels(resultArr, 0);
+        const expectedButtonNames = ['Auction', 'Estate manager']
+        expect(buttonNames).arrayToContainTheSameValues(expectedButtonNames)
+        const actionsEstateManagerResult = getButton(resultArr[0].options,'Estate manager').actions;
+        const actionsAuctionResult = getButton(resultArr[0].options,'Auction').actions;
+        const actionsEstateManager = [
+            {
+                type: controlActionTypes.HIDE_FIELD_WINDOW
+            },
+            {
+                payload: {
+                    player: localPlayerSlice.currentPlayer,
+                },
+                type: controlActionTypes.OPEN_ESTATE_MANAGER
+            },
+
+        ]
+        const actionsAuction = [
+            {
+                type: controlActionTypes.SHUT_FIELD_WINDOW
+            },
+            {
+                type: controlActionTypes.OPEN_AUCTION_WINDOW,
+                payload: {
+                    seller: atenyEstate.owner,
+                    estate: atenyEstate.id,
+                    price: atenyEstate.price
+                }
+            },               
+        ]
+        expect([actionsEstateManagerResult, actionsAuctionResult]).toEqual([actionsEstateManager, actionsAuction])
+    })
 })
+
