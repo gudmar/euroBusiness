@@ -29,7 +29,8 @@ import {
 
 const getCityInfoText = ({
     id, country, citiesOwnedByOwner, feeToPay, price, isPlegded, ownerName, name, nrOfHouses, cash, 
-    fieldsDescriptorsArray, color, globalNumberOfHouses, nrOfOffersToOtherPlayersWhenSellingAProperty
+    fieldsDescriptorsArray, color, globalNumberOfHouses, nrOfOffersToOtherPlayersWhenSellingAProperty,
+    hasCurrentPlayerExtraCards
 }) => {
     const ownerNameWithThe = ownerName === 'bank' ? 'the bank' : ownerName;
     const nrOfEstatesPlayerHas = countAllPropertiesPlayerHas(fieldsDescriptorsArray, color);
@@ -48,15 +49,16 @@ const getCityInfoText = ({
         output.push(` ${ownerNameWithThe} has 1 hotel in ${id},`)
     }
     if (ownerName !== 'bank' && !isPlegded) output.push(` so you have to pay $${feeToPay}`)
+    console.log('EXTRA cards', hasCurrentPlayerExtraCards)
     if (
         ownerName !== 'bank' && 
         !isPlegded && 
         feeToPay > cash && 
         calculateCashForAllEstatesFromTheBank(fieldsDescriptorsArray, color, globalNumberOfHouses).money > 0 &&
-        nrOfEstatesPlayerHas > 0
+        (nrOfEstatesPlayerHas > 0 || hasCurrentPlayerExtraCards)
     ) {
         const ammountCanGetFromTheBank = calculateCashForAllEstatesFromTheBank(fieldsDescriptorsArray, color, globalNumberOfHouses).money
-        output.push(`. You don't have enough cash, but you still can get $${ammountCanGetFromTheBank} from the bank, or you may try to sell properties to another player`)
+        output.push(`. You don't have enough cash, but you still can get $${ammountCanGetFromTheBank} from the bank, or you may try to sell something to another player`)
     }
     if (
         ownerName !== 'bank' && 
@@ -69,7 +71,7 @@ const getCityInfoText = ({
     if (
         ownerName !== 'bank' && 
         feeToPay > cash &&
-        (nrOfEstatesPlayerHas === 0)
+        (nrOfEstatesPlayerHas === 0 && !hasCurrentPlayerExtraCards)
     ){
         output.push(', but you are too poor. If you had anything of a value perhaps you could do anything to stay in the game a bit longer')
     }
