@@ -333,6 +333,11 @@ const stateForFieldOptionsTests = [
     //  has NOT enough cash to pay for the visit, but still HAS A SPECIAL CARD, should return button:
     //  'Ok' with actions to close current window and open a window for selling cards.
 
+    // If another player owns Ateny. and player that stopped there has not 
+    // enough cash to pay, but owns an estate and a special card, 
+    // should return buttons for: opening estate manager and shutting current window,
+    // opening 
+
 
     // Add extra cards to all game los conditions
 

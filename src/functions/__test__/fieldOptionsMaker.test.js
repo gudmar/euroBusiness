@@ -1,7 +1,8 @@
 import { stateForFieldOptionsTests, currentPlayerData, playerSlice } from '../../state/__test__/stateForTests.js';
 import { controlActionTypes } from '../../state/controlReducer.js'
 import {
-    fieldOptionsMaker
+    fieldOptionsMaker,
+    buttonNames,
 } from '../../functions/fieldOptionsMaker.js'
 import { playerActionTypes } from '../../state/playerReducer.js';
 import { getPlayerNameByColor } from '../../state/defaultPlayerState.js';
@@ -111,7 +112,7 @@ describe('Testing Start field', () => {
         });
     const resultButtonNames = getButtonNames(resultArr, 0);
         const resultButtonActionTypes = getButtonActionTypes(resultArr, 0, 0)
-        const expectedButtonNames = ['OK'];
+        const expectedButtonNames = [buttonNames.ok];
         const expectedActionTypes = [playerActionTypes.PAY_CURRENT_PLAYER, playerActionTypes.SHUT_FIELD_WINDOW]
         expect(resultButtonNames).arrayToContainTheSameValues(expectedButtonNames);
     })
@@ -473,10 +474,10 @@ describe('Testing fieldOptionsMaker: getOptionsCity returned buttons', () => {
             game: {globalNumberOfHouses: 8, nrOfOffersToOtherPlayersWhenSellingAProperty: 10}
         })
 
-        const buttonNames = getButtonLabels(resultArr, 0);
-        const expectedButtonNames = ['Auction', 'Buy']
-        expect(buttonNames).arrayToContainTheSameValues(expectedButtonNames)
-        const actionsBuy = getButton(resultArr[0].options,'Buy').actions;
+        const buttonLabels = getButtonLabels(resultArr, 0);
+        const expectedButtonNames = [buttonNames.auction, buttonNames.buy]
+        expect(buttonLabels).arrayToContainTheSameValues(expectedButtonNames)
+        const actionsBuy = getButton(resultArr[0].options, buttonNames.buy).actions;
         
         const actionsPurchase = [
             {
@@ -505,8 +506,8 @@ describe('Testing fieldOptionsMaker: getOptionsCity returned buttons', () => {
                 }
             },               
         ]
-        const buttonActionsAuction =  getButton(resultArr[0].options, 'Auction').actions;
-        const buttonActionsPurchase = getButton(resultArr[0].options, 'Buy').actions
+        const buttonActionsAuction =  getButton(resultArr[0].options, buttonNames.auction).actions;
+        const buttonActionsPurchase = getButton(resultArr[0].options, buttonNames.buy).actions
         expect([actionsPurchase, actionsAuction]).toEqual([buttonActionsPurchase, buttonActionsAuction])
     })
 
@@ -524,11 +525,11 @@ describe('Testing fieldOptionsMaker: getOptionsCity returned buttons', () => {
             control: controlState,
             game: {globalNumberOfHouses: 8, nrOfOffersToOtherPlayersWhenSellingAProperty: 10}
         })
-        const buttonNames = getButtonLabels(resultArr, 0);
-        const expectedButtonNames = ['Auction', 'Estate manager']
-        expect(buttonNames).arrayToContainTheSameValues(expectedButtonNames)
-        const actionsEstateManagerResult = getButton(resultArr[0].options,'Estate manager').actions;
-        const actionsAuctionResult = getButton(resultArr[0].options,'Auction').actions;
+        const buttonLabels = getButtonLabels(resultArr, 0);
+        const expectedButtonNames = [buttonNames.auction, buttonNames.propertiesManager]
+        expect(buttonLabels).arrayToContainTheSameValues(expectedButtonNames)
+        const actionsEstateManagerResult = getButton(resultArr[0].options,buttonNames.propertiesManager).actions;
+        const actionsAuctionResult = getButton(resultArr[0].options, buttonNames.auction).actions;
         const actionsEstateManager = [
             {
                 type: controlActionTypes.HIDE_FIELD_WINDOW
@@ -571,10 +572,10 @@ describe('Testing fieldOptionsMaker: getOptionsCity returned buttons', () => {
             control: controlState,
             game: {globalNumberOfHouses: 8, nrOfOffersToOtherPlayersWhenSellingAProperty: 10}
         })
-        const buttonNames = getButtonLabels(resultArr, 0);
-        const expectedButtonNames = ['Estate manager']
-        expect(buttonNames).arrayToContainTheSameValues(expectedButtonNames)
-        const actionsEstateManagerResult = getButton(resultArr[0].options,'Estate manager').actions;
+        const buttonLabels = getButtonLabels(resultArr, 0);
+        const expectedButtonNames = [buttonNames.propertiesManager]
+        expect(buttonLabels).arrayToContainTheSameValues(expectedButtonNames)
+        const actionsEstateManagerResult = getButton(resultArr[0].options,buttonNames.propertiesManager).actions;
         const actionsEstateManager = [
             {
                 type: controlActionTypes.HIDE_FIELD_WINDOW
@@ -605,10 +606,10 @@ describe('Testing fieldOptionsMaker: getOptionsCity returned buttons', () => {
             control: controlState,
             game: {globalNumberOfHouses: 8, nrOfOffersToOtherPlayersWhenSellingAProperty: 10}
         })
-        const buttonNames = getButtonLabels(resultArr, 0);
-        const expectedButtonNames = ['Pay']
-        expect(buttonNames).arrayToContainTheSameValues(expectedButtonNames)
-        const actionsPayResult = getButton(resultArr[0].options,'Pay').actions;
+        const buttonLabels = getButtonLabels(resultArr, 0);
+        const expectedButtonNames = [buttonNames.pay]
+        expect(buttonLabels).arrayToContainTheSameValues(expectedButtonNames)
+        const actionsPayResult = getButton(resultArr[0].options, buttonNames.pay).actions;
         const actionsPay = [
             {
                 payload: {
@@ -639,10 +640,10 @@ describe('Testing fieldOptionsMaker: getOptionsCity returned buttons', () => {
             control: controlState,
             game: {globalNumberOfHouses: 8, nrOfOffersToOtherPlayersWhenSellingAProperty: 10}
         })
-        const buttonNames = getButtonLabels(resultArr, 0);
-        const expectedButtonNames = ['Ok']
-        expect(buttonNames).arrayToContainTheSameValues(expectedButtonNames)
-        const actionsPayResult = getButton(resultArr[0].options,'Ok').actions;
+        const buttonLabels = getButtonLabels(resultArr, 0);
+        const expectedButtonNames = [buttonNames.ok]
+        expect(buttonLabels).arrayToContainTheSameValues(expectedButtonNames)
+        const actionsPayResult = getButton(resultArr[0].options,buttonNames.ok).actions;
         const actionsPay = [
             {
                 payload: {
@@ -653,6 +654,9 @@ describe('Testing fieldOptionsMaker: getOptionsCity returned buttons', () => {
         ]
         expect([actionsPayResult]).toEqual([actionsPay])
     })
+
+
+
 
 
 })
