@@ -19,7 +19,10 @@ import { getPlayerNameByColor } from '../state/defaultPlayerState.js';
 import {
     getNrOfCitiesPlayerHas, // { owns, outOf }
     countExectVisitFeeChecker,
-    countAllPropertiesPlayerHas
+    countAllPropertiesPlayerHas,
+    types,
+    estateTypes,
+
 } from '../state/boardFields.js'
 import {
     hasPlayerExtraCardsFunction,
@@ -33,6 +36,44 @@ const buttonNames = {
     auction: 'Auction',
     cancel: 'Cancel',
     buy: 'Buy',
+}
+
+const canPlayerDoAnythingInPropertiesManager = (stateBoardSlice, playerSlice, playerColor) => {
+    countries.forEach.recalculateNrOfHousesToBuySell(fieldDescriptors);
+    const playerOptions = {
+        sellHouse: false,
+        buyHouse: false,
+        buyHotel: false,
+        sellHotel: false,
+        mortage: false,
+        buyFromMortage: false,
+        sellCard
+    }
+    const isEstate = targetType => Object.values(estateTypes).includes(targetType);
+    const isCity = targetType => targetType === types.CITY;
+    const getPropIfPlayerIsOwner = (estateDescriptor, property) => {
+        if (estateDescriptor.owner !== playerColor) return 0;
+        return estateDescriptor[property];        
+    }
+    const housesToBuy = estateDescriptor => getPropIfPlayerIsOwner(estateDescriptor, 'nrOfHousesToPurchase');
+    const housesToSell = estateDescriptor => getPropIfPlayerIsOwner(estateDescriptor, 'nrOfHousesToSell');
+    const hotelsToSell = estateDescriptor => getPropIfPlayerIsOwner(estateDescriptor, 'nrOfHouses') > 4 ? 1 : 0
+    const hotelsToBuy = estateDescriptor => {throw new Error('Missing implementation')}
+    const hotelsToSell = estateDescriptor => {throw new Error('Missing implementation')}
+    const isMortaged = estateDescriptor => getPropIfPlayerIsOwner(estateDescriptor, 'isPlegded')
+    stateBoardSlice.forEach(field => {
+        if (housesToBuy(field)>0) playerOptions.buyHouse = true;
+        if (housesToSell(field)>0) playerOptions.sellHouse = true;
+        if (hotelsToBuy(field)>0) playerOptions.buyHotel = true;
+        if (hotelsToSell(field)>0) playerOptions.sellHotel = true;
+        if (!isMortaged(field)) {
+            playerOptions.mortage = true
+        } else {
+            playerOptions.buyFromMortage = true;
+        }
+        if (playerSlice?.[playerColor].extraCards.length > 0) playerOptions.sellCard = true;
+    })
+    return playerOptions;
 }
 
 
@@ -428,4 +469,5 @@ const fieldOptionsMaker = async ({
     fieldOptionsMaker,
     getFieldOptions,
     buttonNames,
+    canPlayerDoAnythingInPropertiesManager,
  }

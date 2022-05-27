@@ -445,7 +445,22 @@ describe('Testing a city field', () => {
      })
 
 
+     it(`In case Ateny is owned by the same player that stopped by, and 
+         that player: may build a house, may build a hotel, may sell a house, 
+         may sell a hotel, may morgate, may buy from mortage, may sell a card, 
+         should return You stop in AtenyCity. Its owned by you. 
+         You may visit properties manager for more options.`, ()=> {
+// use canPlayerDoAnythingInPropertiesManager
+         })
 
+    it(`In case Ateny is owned by the same player that stopped by, and that 
+        player man not: build a house, build a hotel, sell a house, sell a hotel, 
+        mortage, buy out from mortage, sell a card, sell a property, should return:
+        You stop in Ateny city, and its owned by you. You could visit the 
+        property manager, however you will not be able to do anything there 
+        at present`, () => {
+// use canPlayerDoAnythingInPropertiesManager
+        })
 
      
 
@@ -690,6 +705,62 @@ describe('Testing fieldOptionsMaker: getOptionsCity returned buttons', () => {
         ];
         expect([actionsResult]).toEqual([actionsEstateManager])
     })
+
+
+    it(`If player has at least one estate, no cash, and owns a get-out-of jail, should return button
+    'properties manager' with action to open properties manager and hide current window`, async () => {
+        const stateBoardSlice = cp(stateForFieldOptionsTests);
+        const atenyEstate = getEstate(stateBoardSlice, 'Ateny');
+        atenyEstate.owner = 'pruple';
+        const localPlayerSlice = cp(playerSlice);
+        localPlayerSlice.blue.cash = 1;
+        localPlayerSlice[localPlayerSlice.currentPlayer].extraCards = ['getOutOfJail'];
+        const resultArr = await fieldOptionsMaker({
+            fieldsDescriptorsArray: stateBoardSlice,
+            fieldData: atenyEstate,
+            playerStateSlice: localPlayerSlice,
+            control: controlState,
+            game: {globalNumberOfHouses: 8, nrOfOffersToOtherPlayersWhenSellingAProperty: 10}
+        })
+        const buttonLabels = getButtonLabels(resultArr, 0);
+        const expectedButtonNames = [buttonNames.propertiesManager]
+        expect(buttonLabels).arrayToContainTheSameValues(expectedButtonNames)
+        const actionsResult = getButton(resultArr[0].options,buttonNames.propertiesManager).actions;
+        const actionsEstateManager = [
+            {
+                type: controlActionTypes.HIDE_FIELD_WINDOW
+            },
+            {
+                payload: {
+                    player: localPlayerSlice.currentPlayer,
+                },
+                type: controlActionTypes.OPEN_ESTATE_MANAGER
+            },
+        ];
+        expect([actionsResult]).toEqual([actionsEstateManager])
+    })
+
+
+     it(`In case Ateny is owned by the same player that stopped by, and 
+         that player: may build a house, may build a hotel, may sell a house, 
+         may sell a hotel, may morgate, may buy from mortage, may sell a card, 
+         should return 
+         button 'properties manager' with actions of hiding current window and 
+         displaying properties manager, and button 'skip' for hiding current window 
+         and starting next turn
+         `, ()=> {
+
+         })
+
+    it(`In case Ateny is owned by the same player that stopped by, and that 
+        player man not: build a house, build a hotel, sell a house, sell a hotel, 
+        mortage, buy out from mortage, sell a card, sell a property, should return:
+        button 'properties manager' with actions of hiding current window and 
+        displaying properties manager, and button 'skip' for hiding current window 
+        and starting next turn                        
+        `, () => {
+ 
+         })
 
 
 
