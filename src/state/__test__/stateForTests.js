@@ -284,11 +284,10 @@ const stateForFieldOptionsTests = [
     // + You should pay $120. You don't have enough cash, but you still can get ${ammountOfMoneyFromBank} from the bank,
     // + or You may try to sell properties to another player.
 
-    //  If another player owns this city, and has 2 houses here, and player that stepped 
-    //  has NOT enough cash to pay for the visit, but still HAS A SPECIAL CARD, should return text:
-    //  You step in 'Ateny' city. Its owned by 'player2'. Player2' has 2 houseS in 'Ateny'.
-    //  You should pay $120. You don't have enough cash, but you still can get ${ammountOfMoneyFromBank} from the bank,
-    //  or You may try to sell properties to another player.
+    // +  If another player owns this city, and player that stepped 
+    // +  has NOT enough cash to pay for the visit, but still HAS A SPECIAL CARD, should return text:
+    // +  You step in 'Ateny' city. Its owned by 'player2'. Player2' has 2 houseS in 'Ateny'.
+    // +  You should pay $120. You don't have enough cash, but you still can try to sell an extra card to another player
 
 
     // + If another player owns this city, and has 2 houses here, and player that stepped 
@@ -329,6 +328,11 @@ const stateForFieldOptionsTests = [
     // +/- If player stands on 'Ateny', and another player owns it, and player that stood has not cash
     // +/- and can not mortage anymore, not owns estates should return one button:
     // +/- Ok with action playerActionTypes.PLAYER_LOSES_THE_GAME.
+
+    //  If another player owns this city, and player that stepped 
+    //  has NOT enough cash to pay for the visit, but still HAS A SPECIAL CARD, should return button:
+    //  'Ok' with actions to close current window and open a window for selling cards.
+
 
     // Add extra cards to all game los conditions
 

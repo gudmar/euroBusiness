@@ -49,7 +49,6 @@ const getCityInfoText = ({
         output.push(` ${ownerNameWithThe} has 1 hotel in ${id},`)
     }
     if (ownerName !== 'bank' && !isPlegded) output.push(` so you have to pay $${feeToPay}`)
-    console.log('EXTRA cards', hasCurrentPlayerExtraCards)
     if (
         ownerName !== 'bank' && 
         !isPlegded && 
@@ -223,7 +222,6 @@ const getCityButtons = ({
             }
         ]
     }
-    console.log('NrOfExtra cards: ', hasCurrentPlayerExtraCards)
     if (ownerName !== 'bank' && owner != color && cash < feeToPay && nrOfEstatesPlayerHas === 0 && !hasCurrentPlayerExtraCards){
         return [
             {
@@ -272,7 +270,6 @@ const getOptionsCity = async (fieldsDescriptorsArray, estateData, playerSlice, g
     } = gameState;
     const ownerName = getPlayerNameByColor(playerSlice, owner);
     const hasCurrentPlayerExtraCards = hasCurrentPlayerExtraCardsFunction({playerSlice})
-    console.log('HAS CURRENT PLAYER EXTRA CARDS', hasCurrentPlayerExtraCards)
     const citiesOwnedByOwner = getNrOfCitiesPlayerHas(fieldsDescriptorsArray, estateData.owner, country);
     const feeToPay = await countExectVisitFeeChecker(fieldsDescriptorsArray, estateData);
     const informationText = getCityInfoText({
