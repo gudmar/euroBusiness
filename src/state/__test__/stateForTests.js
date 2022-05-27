@@ -1,4 +1,6 @@
 import {countries, notCountryTypes} from '../../functions/countryTypes.js'
+import { countCityVisitFee } from '../boardFields.js';
+import { gameStateConstructor } from '../gameStateConstructor.js';
 
 const testState = {
     Ateny: {
@@ -310,6 +312,22 @@ const stateForFieldOptionsTests = [
     // + You step in 'Ateny' city. Its owned by 'player2'. 'Ateny' is mortaged, so 
     // + no fee for stopping by.
 
+    // In case player stopped in Ateny, and it was owned by the bank, but 
+    // now it is owned by the player that stopped after purchasing or auction that took 
+    // place should return text:
+    // You are now owner of Ateny city. Congratulations. You may 
+    // visit properties manager or move on with the game.
+
+
+    // In case player stopped in Ateny, and it was owned by the bank, but 
+    // now it is owned by other player after acution, and player that stopped 
+    // can still: buy or sell house, buy or sell hotel, 
+    // mortage, buy from mortage, sell any estate, sell any card should return:
+    // You did not purchase Ateny city. You could visit the 
+    // property manager, however you will not be able to do anything there 
+    // at present 
+    
+
     // BUTTONS -----
     
     // + If the bank owns Ateny, and player stands and has enough cash should return 
@@ -329,9 +347,9 @@ const stateForFieldOptionsTests = [
     // + and can not mortage anymore, not owns estates should return one button:
     // + Ok with action playerActionTypes.PLAYER_LOSES_THE_GAME.
 
-    //  If another player owns this city, and player that stepped 
-    //  has NOT enough cash to pay for the visit, but still HAS A SPECIAL CARD, should return button:
-    //  'Properties manager' with an option to sell cards from it., 
+    // +  If another player owns this city, and player that stepped 
+    // +  has NOT enough cash to pay for the visit, but still HAS A SPECIAL CARD, should return button:
+    // +  'Properties manager' with an option to sell cards from it., 
 
     // + If another player owns Ateny. and player that stopped there has not 
     // + enough cash to pay, but owns an estate and a special card, 
@@ -340,7 +358,7 @@ const stateForFieldOptionsTests = [
 
 
     // Add extra cards to all game los conditions
-
+    // BUTTONS SHUTTING CURRENT WINDOW SHOULD EXECUTE NEXT TURN
 
     // === The same player :
 
@@ -483,9 +501,9 @@ const stateForFieldOptionsTests = [
     // If player has not enough cash, and is not capable of mortaging, selling estates
     // for enough cash thers should be text:
     // You stop in 'Shuth Rilways'. Its owned by the bank. You don't have enough cash 
-    // to bu this estate, so it will be auctioned.
+    // to buy this estate, so it will be auctioned.
 
-    // If player has onough cash, and South Railways is owned by the bank, should return buttons:
+    // If player has enough cash, and South Railways is owned by the bank, should return buttons:
     // 'Buy', 'Auction',
 
     // If plyaer has not enough cash, but can sell/ mortage estates, then should return buttons:

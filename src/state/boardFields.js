@@ -2,6 +2,28 @@
 import {throwDices} from '../functions/throwDices.js';
 import {countries, notCountryTypes} from '../functions/countryTypes.js'
 
+const estateTypes = {
+    CITY: 'city',
+    RAILWAY: 'railway',
+    POWER_STATION: 'powerStation',
+    WATER_PLANT: 'waterPlant'
+}
+const chanceTypes = {
+    CHANCE_BLUE: 'chanceBlue',
+    CHANCE_RED:  'chanceRed',
+}
+
+const otherTypes = {
+    START: 'start',
+    JAIL: 'jail',
+    FREE_PARK: 'freePark',
+    GO_TO_JAIL: 'go_to_jail',
+    TAX: 'tax'
+}
+const types = { ...estateTypes, ...chanceTypes, ...otherTypes }
+
+const estateTypes = ['city', 'railway', 'powerStation', 'waterPlant']
+
 const arrayStateToObjectState = arrayState => arrayState.reduce((acc, item) => {
     acc[item.id] = item;
     return acc;
@@ -654,4 +676,8 @@ export {
     throwDices,
     calculateCashForAllEstatesFromTheBank,
     countAllPropertiesPlayerHas,
+    types,
+    otherTypes,
+    estateTypes,
+    chanceTypes,
 }
