@@ -656,6 +656,41 @@ describe('Testing fieldOptionsMaker: getOptionsCity returned buttons', () => {
     })
 
 
+    it(`If player has no estates, no cash, but owns a get-out-of jail, should return button
+    'properties manager' with action to open properties manager and hide current window`, async () => {
+        const stateBoardSlice = cp(stateForFieldOptionsTests);
+        const atenyEstate = getEstate(stateBoardSlice, 'Ateny');
+        const insbruckEstate = getEstate(stateBoardSlice, 'Insbruck');
+        atenyEstate.owner = 'pruple';
+        insbruckEstate.owner = 'purple'
+        const localPlayerSlice = cp(playerSlice);
+        localPlayerSlice.blue.cash = 1;
+        localPlayerSlice[localPlayerSlice.currentPlayer].extraCards = ['getOutOfJail'];
+        const resultArr = await fieldOptionsMaker({
+            fieldsDescriptorsArray: stateBoardSlice,
+            fieldData: atenyEstate,
+            playerStateSlice: localPlayerSlice,
+            control: controlState,
+            game: {globalNumberOfHouses: 8, nrOfOffersToOtherPlayersWhenSellingAProperty: 10}
+        })
+        const buttonLabels = getButtonLabels(resultArr, 0);
+        const expectedButtonNames = [buttonNames.propertiesManager]
+        expect(buttonLabels).arrayToContainTheSameValues(expectedButtonNames)
+        const actionsResult = getButton(resultArr[0].options,buttonNames.propertiesManager).actions;
+        const actionsEstateManager = [
+            {
+                type: controlActionTypes.HIDE_FIELD_WINDOW
+            },
+            {
+                payload: {
+                    player: localPlayerSlice.currentPlayer,
+                },
+                type: controlActionTypes.OPEN_ESTATE_MANAGER
+            },
+        ];
+        expect([actionsResult]).toEqual([actionsEstateManager])
+    })
+
 
 
 
