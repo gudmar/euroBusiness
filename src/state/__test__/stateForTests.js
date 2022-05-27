@@ -325,18 +325,18 @@ const stateForFieldOptionsTests = [
     // + If a player stands on 'Ateny', and another player owns it, and player that stoped in Ateny has
     // + enough cash to pay for it, should display a button 'OK'
 
-    // +/- If player stands on 'Ateny', and another player owns it, and player that stood has not cash
-    // +/- and can not mortage anymore, not owns estates should return one button:
-    // +/- Ok with action playerActionTypes.PLAYER_LOSES_THE_GAME.
+    // + If player stands on 'Ateny', and another player owns it, and player that stood has not cash
+    // + and can not mortage anymore, not owns estates should return one button:
+    // + Ok with action playerActionTypes.PLAYER_LOSES_THE_GAME.
 
     //  If another player owns this city, and player that stepped 
     //  has NOT enough cash to pay for the visit, but still HAS A SPECIAL CARD, should return button:
-    //  'Ok' with actions to close current window and open a window for selling cards.
+    //  'Properties manager' with an option to sell cards from it., 
 
-    // If another player owns Ateny. and player that stopped there has not 
-    // enough cash to pay, but owns an estate and a special card, 
-    // should return buttons for: opening estate manager and shutting current window,
-    // opening 
+    // + If another player owns Ateny. and player that stopped there has not 
+    // + enough cash to pay, but owns an estate and a special card, 
+    // + should return buttons for: opening estate manager and hiding current window,
+    // + opening 
 
 
     // Add extra cards to all game los conditions
