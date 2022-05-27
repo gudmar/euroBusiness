@@ -26,6 +26,15 @@ import {
     hasCurrentPlayerExtraCardsFunction
 } from './playerFunctions.js'
 
+const buttonNames = {
+    ok: 'Ok',
+    pay: 'Pay',
+    propertiesManager: 'Properties manager',
+    auction: 'Auction',
+    cancel: 'Cancel',
+    buy: 'Buy',
+}
+
 
 const getCityInfoText = ({
     id, country, citiesOwnedByOwner, feeToPay, price, isPlegded, ownerName, name, nrOfHouses, cash, 
@@ -108,7 +117,7 @@ const getCityButtons = ({
         return [
                     {
                         type: 'button',
-                        label: 'Buy',
+                        label: buttonNames.buy,
                         function: undefined,
                         actions: [
                             {
@@ -128,7 +137,7 @@ const getCityButtons = ({
                     },
                     {
                         type: 'button',
-                        label: 'Auction',
+                        label: buttonNames.auction,
                         actions: [
                             {
                                 type: controlActionTypes.SHUT_FIELD_WINDOW
@@ -149,7 +158,7 @@ const getCityButtons = ({
         return [
             {
                 type: 'button',
-                label: 'Estate manager',
+                label: buttonNames.propertiesManager,
                 function: undefined,
                 actions: [
                     {   
@@ -166,7 +175,7 @@ const getCityButtons = ({
             },
             {
                 type: 'button',
-                label: 'Auction',
+                label: buttonNames.auction,
                 actions: [
                     {
                         type: controlActionTypes.SHUT_FIELD_WINDOW
@@ -187,7 +196,7 @@ const getCityButtons = ({
         return [
             {
                 type: 'button',
-                label: 'Estate manager',
+                label: buttonNames.propertiesManager,
                 function: undefined,
                 actions: [
                     {   
@@ -208,7 +217,7 @@ const getCityButtons = ({
         return [
             {
                 type: 'button',
-                label: 'Pay',
+                label: buttonNames.pay,
                 actions: [
                     {
                         type: playerActionTypes.PLAYER_PAYS_ANOTHER_PLAYER,
@@ -226,7 +235,7 @@ const getCityButtons = ({
         return [
             {
                 type: 'button',
-                label: 'Ok',
+                label: buttonNames.ok,
                 actions: [
                     {
                         type: playerActionTypes.PLAYER_LOSES_THE_GAME,
@@ -301,7 +310,7 @@ const getOptionsStart = (data) => {
             options: [
                 {
                     type: 'button',
-                    label: 'OK',
+                    label: buttonNames.ok,
                     function: pay,
                     actions: [
                         {payload: 400, type: playerActionTypes.PAY_CURRENT_PLAYER},
@@ -418,4 +427,5 @@ const fieldOptionsMaker = async ({
     getOptionsTax,
     fieldOptionsMaker,
     getFieldOptions,
+    buttonNames,
  }
