@@ -60,6 +60,18 @@ const getCityInfoText = ({
         const ammountCanGetFromTheBank = calculateCashForAllEstatesFromTheBank(fieldsDescriptorsArray, color, globalNumberOfHouses).money
         output.push(`. You don't have enough cash, but you still can get $${ammountCanGetFromTheBank} from the bank, or you may try to sell something to another player`)
     }
+
+    if (
+        ownerName !== 'bank' && 
+        !isPlegded && 
+        feeToPay > cash && 
+        hasCurrentPlayerExtraCards
+    ) {
+        const ammountCanGetFromTheBank = calculateCashForAllEstatesFromTheBank(fieldsDescriptorsArray, color, globalNumberOfHouses).money
+        output.push(`. You don't have enough cash, but you still can try to sell an extra card to another player`)
+    }
+
+
     if (
         ownerName !== 'bank' && 
         feeToPay > cash && 
@@ -260,6 +272,7 @@ const getOptionsCity = async (fieldsDescriptorsArray, estateData, playerSlice, g
     } = gameState;
     const ownerName = getPlayerNameByColor(playerSlice, owner);
     const hasCurrentPlayerExtraCards = hasCurrentPlayerExtraCardsFunction({playerSlice})
+    console.log('HAS CURRENT PLAYER EXTRA CARDS', hasCurrentPlayerExtraCards)
     const citiesOwnedByOwner = getNrOfCitiesPlayerHas(fieldsDescriptorsArray, estateData.owner, country);
     const feeToPay = await countExectVisitFeeChecker(fieldsDescriptorsArray, estateData);
     const informationText = getCityInfoText({

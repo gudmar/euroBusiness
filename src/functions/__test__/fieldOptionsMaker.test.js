@@ -332,8 +332,7 @@ describe('Testing a city field', () => {
      it(`If another player owns this city, and has 2 houses here, and player that stepped 
      has NOT enough cash to pay for the visit, but has SOME EXTRA CARDS, should return text:
      You step in Ateny city. Its owned by Player_2. Player_2' has 2 houseS in Ateny, so you have to pay: $120.
-     You don't have enough cash, but you still can get 350(Insbruck/blue) from the bank,
-     or You may try to sell something to another player.`, async () => {
+     You don't have enough cash, but you still can try to sell an extra card to another player`, async () => {
          const stateBoardSlice = cp(stateForFieldOptionsTests);
          const atenyEstate = getEstate(stateBoardSlice, 'Ateny');
          const insbruckEstate = getEstate(stateBoardSlice, 'Insbruck');
@@ -342,10 +341,8 @@ describe('Testing a city field', () => {
          const localPlayerSlice = cp(playerSlice);
          localPlayerSlice[localPlayerSlice.currentPlayer].extraCards = ['getOutOfJail'];
 
-Here is the problem!!! Extra cards dont seem to increment
-
          const localPlayerDescriptor = getCurrentPlayerDescriptor(localPlayerSlice);
-         localPlayerDescriptor.cash = 119;
+         localPlayerDescriptor.cash = 1;
  
          atenyEstate.owner = 'black';
          atenyEstate.nrOfHouses = 2;
@@ -359,7 +356,7 @@ Here is the problem!!! Extra cards dont seem to increment
             game: {globalNumberOfHouses: 8}
          });
          const resultInfo = getInfo(resultArr, 0);
-         const expectedText = `You stop in Ateny city. Its owned by Player_2. Player_2 has 2 houses in Ateny, so you have to pay $120. You don't have enough cash, but you still can get $350 from the bank, or you may try to sell something to another player.`;
+         const expectedText = `You stop in Ateny city. Its owned by Player_2. Player_2 has 2 houses in Ateny, so you have to pay $120. You don't have enough cash, but you still can try to sell an extra card to another player.`;
          expect(resultInfo).toBe(expectedText);
      })
 

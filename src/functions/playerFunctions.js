@@ -1,7 +1,8 @@
 const hasPlayerExtraCardsFunction = (state, playerColor) => {
     const extraCards = state?.playerSlice?.[playerColor]?.extraCards;
     if (extraCards === undefined) throw new Error(`playerFunctions, hasPlayerExtraCards: extra cards are undefined`);
-    console.log('Functoin Plaher', state, state.playerSlice, playerColor)
+    // console.log('Has playerExtraCards function', extraCards, state.playerSlice, playerColor)
+    // console.log('TesTinG: ', state?.playerSlice?.[playerColor].extraCards.length)
     return state?.playerSlice?.[playerColor]?.extraCards.length > 0
 }
 
