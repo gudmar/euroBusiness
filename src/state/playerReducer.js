@@ -14,7 +14,7 @@ const playerActionTypes = {
 const playerReducer = (state, {type, payload}) => {
 
     const diceResult = state.playerSlice.diceResult;
-    const targetPlayer = payload.targetPlayer;
+    const targetPlayer = payload?.targetPlayer;
     switch(type) {
         case playerActionTypes.SET_DICE_RESULT: {
             const [dice1, dice2] = payload;
@@ -53,7 +53,7 @@ const playerReducer = (state, {type, payload}) => {
             return {...state}
         }
         case playerActionTypes.NEXT_PLAYER:
-            const players = ['blue', 'red', 'orange', 'green'];
+            const players = state.playerSlice.queue;
             const currentIndex = players.findIndex(item => item === state.playerSlice.currentPlayer);
             const nextIndex = (currentIndex + 1) % players.length;
             state.playerSlice['currentPlayer'] = players[nextIndex];
