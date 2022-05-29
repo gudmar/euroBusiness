@@ -6,6 +6,8 @@ const throwDice = payload => action('THROW_DICE', payload);
 const disactivateDice = () => action('DISACTIVATE_DICE');
 const move = payload => action('MOVE', payload);
 const moveOneField = payload => action('MOVE_ONE_FIELD', payload);
-const nextPlayer = payload => action(playerActionTypes.NEXT_PLAYER, payload);
+const nextPlayer = payload => {
+    action(playerActionTypes.NEXT_PLAYER, payload);
+}
 
 export {setDiceResult, throwDice, disactivateDice, move, moveOneField, nextPlayer}

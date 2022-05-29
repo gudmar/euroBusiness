@@ -314,42 +314,78 @@ describe('estateOperations: recalculateNrOfHouses', () => {
         germanCities = [
             {id: 'Berlin', ...stateTemplate.Berlin},
             {id: 'Frankfurt', ...stateTemplate.Frankfurt}, 
-            {id: 'Munich', ...stateTemplate.Munich}
+            {id: 'Munich', ...stateTemplate.Munich},
+            {id: 'Ateny', ...stateTemplate.Ateny},
+            {id: 'Saloniki', ...stateTemplate.Saloniki},
+            {id: 'London', ...stateTemplate.London},
+            {id: 'Glasgow', ...stateTemplate.Glasgow},
+            {id: 'Liverpool', ...stateTemplate.Liverpool},
         ]    
     }
     const setGermanCitiesWithOwners = (nrOfHousesEach, owner) => {
         stateTemplate = cp(testState);
         Object.values(stateTemplate).forEach(city => {
-            city.owner = owner;
-            city.nrOfHouses = nrOfHousesEach;
+            if (city.country === 'Germany'){
+                city.owner = owner;
+                city.nrOfHouses = nrOfHousesEach;    
+            }
         });
         germanCities = [
             {id: 'Berlin', ...stateTemplate.Berlin},
             {id: 'Frankfurt', ...stateTemplate.Frankfurt}, 
-            {id: 'Munich', ...stateTemplate.Munich}
+            {id: 'Munich', ...stateTemplate.Munich},
+            {id: 'Ateny', ...stateTemplate.Ateny},
+            {id: 'Saloniki', ...stateTemplate.Saloniki},
+            {id: 'London', ...stateTemplate.London},
+            {id: 'Glasgow', ...stateTemplate.Glasgow},
+            {id: 'Liverpool', ...stateTemplate.Liverpool},
+
         ]            
     };
-    const setGermanCitiesDifferentHouseNrs = ({berlin, munich, frankfurt}) => {
+    const setGermanCitiesDifferentHouseNrs = ({berlinNrHouses, munichNrHouses, frankfurtNrHouses}) => {
         stateTemplate = cp(testState);
+
+        // const nrOfBuildings = nrOfHouses => nrOfHouses === 5 ? {
+        //     nrOfHousesToSell: 0,
+        //     nrOfHousesToPurchase: 0,
+        //     nrOfHotelsToSell: 1,
+        //     nrOfHotelsToBuy: 0,
+        //     nrOfHouses: 5
+        // } : {
+
+        // }
         
         Object.keys(stateTemplate).forEach(key => {
             stateTemplate[key].owner = 'Tytus';
-            if (key === 'Berlin') stateTemplate[key].nrOfHouses = berlin;
-            if (key === 'Frankfurt') stateTemplate[key].nrOfHouses = frankfurt;
-            if (key === 'Munich') stateTemplate[key].nrOfHouses = munich;
+            if (key === 'Berlin') stateTemplate[key].nrOfHouses = berlinNrHouses;
+            if (key === 'Frankfurt') stateTemplate[key].nrOfHouses = frankfurtNrHouses;
+            if (key === 'Munich') stateTemplate[key].nrOfHouses = munichNrHouses;
         });
         germanCities = [
             {id: 'Berlin', ...stateTemplate.Berlin},
             {id: 'Frankfurt', ...stateTemplate.Frankfurt}, 
-            {id: 'Munich', ...stateTemplate.Munich}
-        ]  
+            {id: 'Munich', ...stateTemplate.Munich},
+            {id: 'Ateny', ...stateTemplate.Ateny},
+            {id: 'Saloniki', ...stateTemplate.Saloniki},
+            {id: 'London', ...stateTemplate.London},
+            {id: 'Glasgow', ...stateTemplate.Glasgow},
+            {id: 'Liverpool', ...stateTemplate.Liverpool},
+        ]
     }
 
     const getNrOfEstateOperations = citiesArr => citiesArr.map(
-        city => ({id: city.id, nrOfHousesToPurchase: city.nrOfHousesToPurchase, nrOfHousesToSell: city.nrOfHousessToSell})
+        city => (
+            {
+                id: city.id, 
+                nrOfHousesToPurchase: city.nrOfHousesToPurchase, 
+                nrOfHousesToSell: city.nrOfHousessToSell,
+                nrOfHotelsToBuy: city.nrOfHotelsToBuy,
+                nrOfHotelsToSell: city.nrOfHotelsToSell,
+            }
+        )
     )
 
-    it('Should Throw and error in case fieldDescriptors is undefined, null or not convertable to array', () => {
+    it('Should Throw an error in case fieldDescriptors is undefined, null or not convertable to array', () => {
         const resultUndef = () => recalculateNrOfHousesToBuySell(undefined, 'Germany');
         const resultNull = () => recalculateNrOfHousesToBuySell(null, 'Germany');
         const resultPrimitive = () => recalculateNrOfHousesToBuySell(undefined, 'Germany');
@@ -377,96 +413,117 @@ describe('estateOperations: recalculateNrOfHouses', () => {
         const result = () => recalculateNrOfHousesToBuySell(germanCities, 'Germany');
         expect(result).toThrow();
     })
-    it('Should set nrOfHousesToPurchase and nrOfHousesToSell to 0 in case of different owners', () => {
+
+    it('Should set nrOfHousesToPurchase and nrOfHousesToSell, nrOfHotelsToBuy, nrOfHotelsToSell to 0 in case of different owners', () => {
         setGermanCities();
         const result = recalculateNrOfHousesToBuySell(germanCities, 'Germany');
         const filteredResult = getNrOfEstateOperations(result);
         const expected = [
-            {id: 'Berlin', nrOfHousesToSell: 0, nrOfHousesToPurchase: 0},
-            {id: 'Frankfurt', nrOfHousesToSell: 0, nrOfHousesToPurchase: 0},
-            {id: 'Munich', nrOfHousesToSell: 0, nrOfHousesToPurchase: 0},
+            {id: 'Berlin', nrOfHousesToSell: 0, nrOfHousesToPurchase: 0, nrOfHotelsToBuy: 0, nrOfHotelsToSell: 0},
+            {id: 'Frankfurt', nrOfHousesToSell: 0, nrOfHousesToPurchase: 0, nrOfHotelsToBuy: 0, nrOfHotelsToSell: 0},
+            {id: 'Munich', nrOfHousesToSell: 0, nrOfHousesToPurchase: 0, nrOfHotelsToBuy: 0, nrOfHotelsToSell: 0},
+            {id: 'London', nrOfHousesToSell: 0, nrOfHousesToPurchase: 0, nrOfHotelsToBuy: 0, nrOfHotelsToSell: 0},
+            {id: 'Liverpool', nrOfHousesToSell: 0, nrOfHousesToPurchase: 0, nrOfHotelsToBuy: 0, nrOfHotelsToSell: 0},
+            {id: 'Glasgow', nrOfHousesToSell: 0, nrOfHousesToPurchase: 0, nrOfHotelsToBuy: 0, nrOfHotelsToSell: 0},
         ]
         expect(result).arrayContainsObjectsContaining(expected);
     });
+
     it('Should return 0 to sell and 0 to purchase if owner of each city is bank', () => {
         setGermanCitiesWithOwners(0, 'bank');
         const result = recalculateNrOfHousesToBuySell(germanCities, 'Germany');
         const expected = [
-            {id: 'Berlin', nrOfHousesToSell: 0, nrOfHousesToPurchase: 0},
-            {id: 'Frankfurt', nrOfHousesToSell: 0, nrOfHousesToPurchase: 0},
-            {id: 'Munich', nrOfHousesToSell: 0, nrOfHousesToPurchase: 0}, 
+            {id: 'Berlin', nrOfHousesToSell: 0, nrOfHousesToPurchase: 0, nrOfHotelsToBuy: 0, nrOfHotelsToSell: 0},
+            {id: 'Frankfurt', nrOfHousesToSell: 0, nrOfHousesToPurchase: 0, nrOfHotelsToBuy: 0, nrOfHotelsToSell: 0},
+            {id: 'Munich', nrOfHousesToSell: 0, nrOfHousesToPurchase: 0, nrOfHotelsToBuy: 0, nrOfHotelsToSell: 0}, 
+            {id: 'London', nrOfHousesToSell: 0, nrOfHousesToPurchase: 0, nrOfHotelsToBuy: 0, nrOfHotelsToSell: 0},
+            {id: 'Liverpool', nrOfHousesToSell: 0, nrOfHousesToPurchase: 0, nrOfHotelsToBuy: 0, nrOfHotelsToSell: 0},
+            {id: 'Glasgow', nrOfHousesToSell: 0, nrOfHousesToPurchase: 0, nrOfHotelsToBuy: 0, nrOfHotelsToSell: 0},
         ]
         expect(result).arrayContainsObjectsContaining(expected);
     })
-    it(`In case of same owner, equal nr of houses === 2 should set nrOfHousesToSell to 1, nrOfHousesToPurchase to 1`, () => {
+    it(`In case of same owner, equal nr of houses === 2 should set nrOfHousesToSell to 1, nrOfHousesToPurchase to 1 nrOfHotelsToSell: 0, nrOfHotelsToBuy: 0`, () => {
         setGermanCitiesWithOwners(2, 'Bolek');
         const result = recalculateNrOfHousesToBuySell(germanCities, 'Germany');
         const expected = [
-            {id: 'Berlin', nrOfHousesToSell: 1, nrOfHousesToPurchase: 1},
-            {id: 'Frankfurt', nrOfHousesToSell: 1, nrOfHousesToPurchase: 1},
-            {id: 'Munich', nrOfHousesToSell: 1, nrOfHousesToPurchase: 1},            
+            {id: 'Berlin', nrOfHousesToSell: 1, nrOfHousesToPurchase: 1, nrOfHotelsToBuy: 0, nrOfHotelsToSell: 0},
+            {id: 'Frankfurt', nrOfHousesToSell: 1, nrOfHousesToPurchase: 1, nrOfHotelsToBuy: 0, nrOfHotelsToSell: 0},
+            {id: 'Munich', nrOfHousesToSell: 1, nrOfHousesToPurchase: 1, nrOfHotelsToBuy: 0, nrOfHotelsToSell: 0},
+
+            {id: 'London', nrOfHousesToSell: 0, nrOfHousesToPurchase: 0, nrOfHotelsToBuy: 0, nrOfHotelsToSell: 0},
+            {id: 'Liverpool', nrOfHousesToSell: 0, nrOfHousesToPurchase: 0, nrOfHotelsToBuy: 0, nrOfHotelsToSell: 0},
+            {id: 'Glasgow', nrOfHousesToSell: 0, nrOfHousesToPurchase: 0, nrOfHotelsToBuy: 0, nrOfHotelsToSell: 0},
         ]
         expect(result).arrayContainsObjectsContaining(expected);
     });
-    it(`In case of same owner, equal nr of houses === 5 should set nrOfHousesToSell to 1, nrOfHousesToPurchase to 0`, () => {
-        setGermanCitiesWithOwners(5, 'Bolek');
+    it(`In case of same owner, equal nr of houses === 4 should set nrOfHousesToSell to 1, nrOfHousesToPurchase to 0, nrOfHotelsToBuy: 1, nrOfHotelsToSell: 0`, () => {
+        setGermanCitiesWithOwners(4, 'Bolek');
         const result = recalculateNrOfHousesToBuySell(germanCities, 'Germany');
         const expected = [
-            {id: 'Berlin', nrOfHousesToSell: 1, nrOfHousesToPurchase: 0},
-            {id: 'Frankfurt', nrOfHousesToSell: 1, nrOfHousesToPurchase: 0},
-            {id: 'Munich', nrOfHousesToSell: 1, nrOfHousesToPurchase: 0},            
+            {id: 'Berlin', nrOfHousesToSell: 1, nrOfHousesToPurchase: 0, nrOfHotelsToBuy: 1, nrOfHotelsToSell: 0},
+            {id: 'Frankfurt', nrOfHousesToSell: 1, nrOfHousesToPurchase: 0, nrOfHotelsToBuy: 1, nrOfHotelsToSell: 0},
+            {id: 'Munich', nrOfHousesToSell: 1, nrOfHousesToPurchase: 0, nrOfHotelsToBuy: 1, nrOfHotelsToSell: 0},
+
+            {id: 'London', nrOfHousesToSell: 0, nrOfHousesToPurchase: 0, nrOfHotelsToBuy: 0, nrOfHotelsToSell: 0},
+            {id: 'Liverpool', nrOfHousesToSell: 0, nrOfHousesToPurchase: 0, nrOfHotelsToBuy: 0, nrOfHotelsToSell: 0},
+            {id: 'Glasgow', nrOfHousesToSell: 0, nrOfHousesToPurchase: 0, nrOfHotelsToBuy: 0, nrOfHotelsToSell: 0},
         ]
         expect(result).arrayContainsObjectsContaining(expected);
     })
-    it(`In case of same owner, equal nr of houses === 0 should set nrOfHousesToSell to 0, nrOfHousesToPurchase to 1`, () => {
+    it(`In case of same owner, equal nr of houses === 0 should set nrOfHousesToSell to 0, nrOfHousesToPurchase to 1, nrOfHotelsToBuy and to nrOfHotelsToSell to 0`, () => {
         setGermanCitiesWithOwners(0, 'Lolek');
         const result = recalculateNrOfHousesToBuySell(germanCities, 'Germany');
         const expected = [
-            {id: 'Berlin', nrOfHousesToSell: 0, nrOfHousesToPurchase: 1},
-            {id: 'Frankfurt', nrOfHousesToSell: 0, nrOfHousesToPurchase: 1},
-            {id: 'Munich', nrOfHousesToSell: 0, nrOfHousesToPurchase: 1},            
+            {id: 'Berlin', nrOfHousesToSell: 0, nrOfHousesToPurchase: 1, nrOfHotelsToBuy: 0, nrOfHotelsToSell: 0},
+            {id: 'Frankfurt', nrOfHousesToSell: 0, nrOfHousesToPurchase: 1, nrOfHotelsToBuy: 0, nrOfHotelsToSell: 0},
+            {id: 'Munich', nrOfHousesToSell: 0, nrOfHousesToPurchase: 1, nrOfHotelsToBuy: 0, nrOfHotelsToSell: 0},
+
+            {id: 'London', nrOfHousesToSell: 0, nrOfHousesToPurchase: 0, nrOfHotelsToBuy: 0, nrOfHotelsToSell: 0},
+            {id: 'Liverpool', nrOfHousesToSell: 0, nrOfHousesToPurchase: 0, nrOfHotelsToBuy: 0, nrOfHotelsToSell: 0},
+            {id: 'Glasgow', nrOfHousesToSell: 0, nrOfHousesToPurchase: 0, nrOfHotelsToBuy: 0, nrOfHotelsToSell: 0},
+            
         ]
         expect(result).arrayContainsObjectsContaining(expected);
     })
-    it('Should return housesToSell 1 and housesToPurchase 0 in case of city having more houses than the others in the country', () => {
+    it('Should return housesToSell 1 and housesToPurchase 0 in case of city having more houses than the others in the country. Hotels to buy and purchase set to 0, as middle case', () => {
         setGermanCitiesDifferentHouseNrs({
-            berlin: 3, munich: 2,frankfurt: 2,
+            berlinNrHouses: 3, munichNrHouses: 2,frankfurtNrHouses: 2,
         })
         const result = recalculateNrOfHousesToBuySell(germanCities, 'Germany');
         const expected = [
-            {id: 'Berlin', nrOfHousesToSell: 1, nrOfHousesToPurchase: 0},
-            {id: 'Frankfurt', nrOfHousesToSell: 0, nrOfHousesToPurchase: 1},
-            {id: 'Munich', nrOfHousesToSell: 0, nrOfHousesToPurchase: 1},            
+            {id: 'Berlin', nrOfHousesToSell: 1, nrOfHousesToPurchase: 0, nrOfHotelsToBuy: 0, nrOfHotelsToSell: 0},
+            {id: 'Frankfurt', nrOfHousesToSell: 0, nrOfHousesToPurchase: 1, nrOfHotelsToBuy: 0, nrOfHotelsToSell: 0},
+            {id: 'Munich', nrOfHousesToSell: 0, nrOfHousesToPurchase: 1, nrOfHotelsToBuy: 0, nrOfHotelsToSell: 0},
         ]
         expect(result).arrayContainsObjectsContaining(expected);
     })
-    it('Should return housesToSell 1 and housesToPurchase 0 in case of city having more houses than the others in the country, other instance', () => {
+    it('Should return housesToSell 1 and housesToPurchase 0 in case of city having more houses than the others in the country, other instance, hotels to sell and purchase are 0 as middle case', () => {
         setGermanCitiesDifferentHouseNrs({
-            berlin: 3, munich: 4,frankfurt: 3,
+            berlinNrHouses: 2, munichNrHouses: 3,frankfurtNrHouses: 2,
         })
         const result = recalculateNrOfHousesToBuySell(germanCities, 'Germany');
         const expected = [
-            {id: 'Berlin', nrOfHousesToSell: 0, nrOfHousesToPurchase: 1},
-            {id: 'Frankfurt', nrOfHousesToSell: 0, nrOfHousesToPurchase: 1},
-            {id: 'Munich', nrOfHousesToSell: 1, nrOfHousesToPurchase: 0},            
+            {id: 'Berlin', nrOfHousesToSell: 0, nrOfHousesToPurchase: 1, nrOfHotelsToBuy: 0, nrOfHotelsToSell: 0},
+            {id: 'Frankfurt', nrOfHousesToSell: 0, nrOfHousesToPurchase: 1, nrOfHotelsToBuy: 0, nrOfHotelsToSell: 0},
+            {id: 'Munich', nrOfHousesToSell: 1, nrOfHousesToPurchase: 0, nrOfHotelsToBuy: 0, nrOfHotelsToSell: 0},
         ]
         expect(result).arrayContainsObjectsContaining(expected);
     })
     it('Should return housesToSell 1 and housesToPurchase 0 in case of city having more houses than the others in the country, boundry case', () => {
         setGermanCitiesDifferentHouseNrs({
-            berlin: 4, munich: 4,frankfurt: 5,
+            berlinNrHouses: 3, munichNrHouses: 3,frankfurtNrHouses: 4,
         })
         const result = recalculateNrOfHousesToBuySell(germanCities, 'Germany');
         const expected = [
-            {id: 'Berlin', nrOfHousesToSell: 0, nrOfHousesToPurchase: 1},
-            {id: 'Frankfurt', nrOfHousesToSell: 1, nrOfHousesToPurchase: 0},
-            {id: 'Munich', nrOfHousesToSell: 0, nrOfHousesToPurchase: 1},            
+            {id: 'Berlin', nrOfHousesToSell: 0, nrOfHousesToPurchase: 1, nrOfHotelsToBuy: 0, nrOfHotelsToSell: 0},
+            {id: 'Frankfurt', nrOfHousesToSell: 1, nrOfHousesToPurchase: 0, nrOfHotelsToBuy: 0, nrOfHotelsToSell: 0},
+            {id: 'Munich', nrOfHousesToSell: 0, nrOfHousesToPurchase: 1, nrOfHotelsToBuy: 0, nrOfHotelsToSell: 0},  
         ]
         expect(result).arrayContainsObjectsContaining(expected);
     })
     it('Should return housesToSell 0 and housesToPurchase 1 in case of city having less houses than the others in the country', () => {
         setGermanCitiesDifferentHouseNrs({
-            berlin: 1, munich: 2,frankfurt: 2,
+            berlinNrHouses: 1, munichNrHouses: 2,frankfurtNrHouses: 2,
         })
         const result = recalculateNrOfHousesToBuySell(germanCities, 'Germany');
         const expected = [
@@ -478,7 +535,7 @@ describe('estateOperations: recalculateNrOfHouses', () => {
     })
     it('Should return housesToSell 0 and housesToPurchase 1 in case of city having less houses than the others in the country - boundry case', () => {
         setGermanCitiesDifferentHouseNrs({
-            berlin: 0, munich: 1,frankfurt: 1,
+            berlinNrHouses: 0, munichNrHouses: 1,frankfurtNrHouses: 1,
         })
         const result = recalculateNrOfHousesToBuySell(germanCities, 'Germany');
         const expected = [
@@ -488,5 +545,67 @@ describe('estateOperations: recalculateNrOfHouses', () => {
         ]
         expect(result).arrayContainsObjectsContaining(expected);
     })
+
+    
     
 })
+
+// Missing testCases:
+// 1) One hotel in Berlin, 4 houses in Frankfurt and Munich, should return
+// input: setGernamCItiesDifferentHousesNrs({
+//     berlinNrHouses: 5, munichNrHouses: 4, frankfurtNrHouses: 4
+// })
+// output: expected = [
+//     {id: 'Berlin', nrOfHousesToSell: 0, nrOfHousesToPurchase: 0, nrOfHotelsToBuy: 0, nrOfHotelsToSell: 1},
+//     {id: 'Frankfurt', nrOfHousesToSell: 0, nrOfHousesToPurchase: 0, nrOfHotelsToBuy: 1, nrOfHotelsToSell: 0},
+//     {id: 'Munich', nrOfHousesToSell: 0, nrOfHousesToPurchase: 0, nrOfHotelsToBuy: 1, nrOfHotelsToSell: 0},
+
+//     {id: 'London', nrOfHousesToSell: 0, nrOfHousesToPurchase: 0, nrOfHotelsToBuy: 0, nrOfHotelsToSell: 0},
+//     {id: 'Liverpool', nrOfHousesToSell: 0, nrOfHousesToPurchase: 0, nrOfHotelsToBuy: 0, nrOfHotelsToSell: 0},
+//     {id: 'Glasgow', nrOfHousesToSell: 0, nrOfHousesToPurchase: 0, nrOfHotelsToBuy: 0, nrOfHotelsToSell: 0},
+// ]
+
+// 2) 4 houses in all cities: should return 1 house to sell, 1 hotel to buy
+// input: setGernamCItiesDifferentHousesNrs({
+//     berlinNrHouses: 4, munichNrHouses: 4, frankfurtNrHouses: 4
+// })
+// output: expected = [
+//     {id: 'Berlin', nrOfHousesToSell: 1, nrOfHousesToPurchase: 0, nrOfHotelsToBuy: 1, nrOfHotelsToSell: 0},
+//     {id: 'Frankfurt', nrOfHousesToSell: 1, nrOfHousesToPurchase: 0, nrOfHotelsToBuy: 1, nrOfHotelsToSell: 0},
+//     {id: 'Munich', nrOfHousesToSell: 1, nrOfHousesToPurchase: 0, nrOfHotelsToBuy: 1, nrOfHotelsToSell: 0},
+
+//     {id: 'London', nrOfHousesToSell: 0, nrOfHousesToPurchase: 0, nrOfHotelsToBuy: 0, nrOfHotelsToSell: 0},
+//     {id: 'Liverpool', nrOfHousesToSell: 0, nrOfHousesToPurchase: 0, nrOfHotelsToBuy: 0, nrOfHotelsToSell: 0},
+//     {id: 'Glasgow', nrOfHousesToSell: 0, nrOfHousesToPurchase: 0, nrOfHotelsToBuy: 0, nrOfHotelsToSell: 0},
+// ]
+
+// 3) 1 hotel in all cities: should return 0 houses to sell, 0 hotels to buy, 1 hotel to sell
+// input: setGernamCItiesDifferentHousesNrs({
+//     berlinNrHouses: 5, munichNrHouses: 5, frankfurtNrHouses: 5
+// })
+// output: expected = [
+//     {id: 'Berlin', nrOfHousesToSell: 0, nrOfHousesToPurchase: 0, nrOfHotelsToBuy: 0, nrOfHotelsToSell: 1},
+//     {id: 'Frankfurt', nrOfHousesToSell: 0, nrOfHousesToPurchase: 0, nrOfHotelsToBuy: 0, nrOfHotelsToSell: 1},
+//     {id: 'Munich', nrOfHousesToSell: 0, nrOfHousesToPurchase: 0, nrOfHotelsToBuy: 0, nrOfHotelsToSell: 1},
+
+//     {id: 'London', nrOfHousesToSell: 0, nrOfHousesToPurchase: 0, nrOfHotelsToBuy: 0, nrOfHotelsToSell: 0},
+//     {id: 'Liverpool', nrOfHousesToSell: 0, nrOfHousesToPurchase: 0, nrOfHotelsToBuy: 0, nrOfHotelsToSell: 0},
+//     {id: 'Glasgow', nrOfHousesToSell: 0, nrOfHousesToPurchase: 0, nrOfHotelsToBuy: 0, nrOfHotelsToSell: 0},
+// ]
+
+// 4) In case of berlin: 3, frankfurt: 3, munich: 4 should return object allowing selling a house in munich and buying a house in berlin and frankfurt. No hotels are allowed to be bought or sold
+// input: setGernamCItiesDifferentHousesNrs({
+//     berlinNrHouses: 3, munichNrHouses: 3, frankfurtNrHouses: 4
+// })
+// output: expected = [
+//     {id: 'Berlin', nrOfHousesToSell: 0, nrOfHousesToPurchase: 1, nrOfHotelsToBuy: 0, nrOfHotelsToSell: 0},
+//     {id: 'Frankfurt', nrOfHousesToSell: 0, nrOfHousesToPurchase:10, nrOfHotelsToBuy: 0, nrOfHotelsToSell: 0},
+//     {id: 'Munich', nrOfHousesToSell: 1, nrOfHousesToPurchase: 0, nrOfHotelsToBuy: 0, nrOfHotelsToSell: 0},
+
+
+// 4) In case of 3 houses in berlin and 1 hotel in Frankfurt shoul throw an error
+// input: setGernamCItiesDifferentHousesNrs({
+//     berlinNrHouses: 3, munichNrHouses: 4, frankfurtNrHouses: 5
+// })
+// output: expected = Error: 
+//    too big difference between the nr of houses in Germany

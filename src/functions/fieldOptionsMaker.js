@@ -57,7 +57,7 @@ const canPlayerDoAnythingInPropertiesManager = (stateBoardSlice, playerSlice, pl
     }
     const housesToBuy = estateDescriptor => getPropIfPlayerIsOwner(estateDescriptor, 'nrOfHousesToPurchase');
     const housesToSell = estateDescriptor => getPropIfPlayerIsOwner(estateDescriptor, 'nrOfHousesToSell');
-    const hotelsToSell = estateDescriptor => getPropIfPlayerIsOwner(estateDescriptor, 'nrOfHouses') > 4 ? 1 : 0
+    // const hotelsToSell = estateDescriptor => getPropIfPlayerIsOwner(estateDescriptor, 'nrOfHouses') > 4 ? 1 : 0
     const hotelsToBuy = estateDescriptor => {throw new Error('Missing implementation')}
     const hotelsToSell = estateDescriptor => {throw new Error('Missing implementation')}
     const isMortaged = estateDescriptor => getPropIfPlayerIsOwner(estateDescriptor, 'isPlegded')

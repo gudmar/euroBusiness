@@ -45,99 +45,66 @@ const isNrOfHousesDifferenceTooBig = citiesArray => {
 const hasMandatoryKeys = obj => mandatoryKeys.every(key => Object.keys(obj).find(item => item === key));
 
 const recalculateNrOfHousesToBuySell = (fieldDescriptors, country) => {
-    const MAX_NR_HOUSES = 5; // for hotel
+    const MAX_NR_HOUSES = 4; // for hotel
     const MIN_NR_HOUSES = 0;
     const nameForError = 'estateOperations.recalculateNrOfHouses';
-    const eachCondition = condition => fieldDescriptors.every(item => condition(item));
-    const someCondition = condition => fieldDescriptors.some(item => condition(item));
     if (fieldDescriptors === undefined || fieldDescriptors === null || !Array.isArray(fieldDescriptors)) {
         throw new Error(`${nameForError}: fieldDescriptor is null, undefined, or cannot be converted to array of values`);
     }
+    const allEstatesFromCountry = getCities(fieldDescriptors, country);
+    const eachCondition = condition => allEstatesFromCountry.every(item => condition(item));
+    const someCondition = condition => allEstatesFromCountry.some(item => condition(item));
     if (!isACountry(country)) return fieldDescriptors;
-    const allEstates = getCities(fieldDescriptors, country);
-    for(let estate of allEstates) {
+    for(let estate of allEstatesFromCountry) {
         if (!hasMandatoryKeys(estate)) throw new Error(`${nameForError}: at leas one of cities has not all mandatory keys`)
     }
-    const citiesArray = getCities(fieldDescriptors, country);
-    if (isNrOfHousesDifferenceTooBig(citiesArray)) throw new Error(`${nameForError} too big difference between the nr of houses in ${country}`);
+    if (isNrOfHousesDifferenceTooBig(allEstatesFromCountry)) throw new Error(`${nameForError} too big difference between the nr of houses in ${country}`);
+    // const citiesArray = getCities(fieldDescriptors, country);
+    // if (isNrOfHousesDifferenceTooBig(citiesArray)) throw new Error(`${nameForError} too big difference between the nr of houses in ${country}`);
 
-    if (!eachCondition(item => item.owner === fieldDescriptors[0].owner)) {
-        fieldDescriptors.forEach(item => {
+    if (!eachCondition(item => item.owner === allEstatesFromCountry[0].owner)) {
+        allEstatesFromCountry.forEach(item => {
             item.nrOfHousesToSell = 0;
             item.nrOfHousesToPurchase = 0;
+            item.nrOfHotelsToBuy = 0;
+            item.nrOfHotelsToSell = 0;
         })
         return fieldDescriptors;
     }
     if (someCondition(item => item.owner === 'bank')){
-        fieldDescriptors.forEach(item => {
+        allEstatesFromCountry.forEach(item => {
             item.nrOfHousesToSell = 0;
             item.nrOfHousesToPurchase = 0;
+            item.nrOfHotelsToBuy = 0;
+            item.nrOfHotelsToSell = 0;
         })
         return fieldDescriptors;        
     }
 
-    if (eachCondition(item => item.owner === fieldDescriptors[0].owner)){
-        // if (eachCondition(
-        //     item => (
-        //         item.nrOfHouses === fieldDescriptors[0].nrOfHouses && 
-        //         item.nrOfHouses > MIN_NR_HOUSES && 
-        //         item.nrOfHouses < MAX_NR_HOUSES 
-        //     ) 
-        // )) {
-        //     fieldDescriptors.forEach(item => {
-        //         item.nrOfHousesToSell = 1;
-        //         item.nrOfHousesToPurchase = 1;
-        //     })
-        //     return fieldDescriptors; 
-        // }
-
-        // if (eachCondition(
-        //     item => (
-        //         item.nrOfHouses === fieldDescriptors[0].nrOfHouses && 
-        //         item.nrOfHouses === MAX_NR_HOUSES
-        //     ) 
-        // )) {
-        //     fieldDescriptors.forEach(item => {
-        //         item.nrOfHousesToSell = 1;
-        //         item.nrOfHousesToPurchase = 0;
-        //     })
-        //     return fieldDescriptors; 
-        // }
-
-        // if (eachCondition(
-        //     item => (
-        //         item.nrOfHouses === fieldDescriptors[0].nrOfHouses && 
-        //         item.nrOfHouses === MIN_NR_HOUSES
-        //     ) 
-        // )) {
-        //     fieldDescriptors.forEach(item => {
-        //         item.nrOfHousesToSell = 0;
-        //         item.nrOfHousesToPurchase = 1;
-        //     })
-        //     return fieldDescriptors; 
-        // }
-
-        const minNrHouses = Math.min(...fieldDescriptors.map(city => city.nrOfHouses));
-        const maxNrHouses = Math.max(...fieldDescriptors.map(city => city.nrOfHouses));
+        const minNrHouses = Math.min(...allEstatesFromCountry.map(city => city.nrOfHouses));
+        const maxNrHouses = Math.max(...allEstatesFromCountry.map(city => city.nrOfHouses));
         const getNrOfHouses = (currentNrHouses) => {
             
-            if (currentNrHouses === MAX_NR_HOUSES) return {sell: 1, buy: 0}
-            if (currentNrHouses === MIN_NR_HOUSES) return {sell: 0, buy: 1}
-            if (currentNrHouses === maxNrHouses && maxNrHouses === minNrHouses) return {sell: 1, buy: 1}
-            if (currentNrHouses === maxNrHouses) return {sell: 1, buy: 0}
-            return {sell: 0, buy: 1}
+            if (currentNrHouses > MAX_NR_HOUSES) return {housesSell: 0, housesBuy: 0, hotelsBuy: 0, hotelsSell: 1}
+            if (currentNrHouses === MAX_NR_HOUSES && minNrHouses < MAX_NR_HOUSES) return {housesSell: 1, housesBuy: 0, hotelsBuy: 1, hotelsSell: 0}
+            if (currentNrHouses === MAX_NR_HOUSES) return {housesSell: 1, housesBuy: 0, hotelsBuy: 1, hotelsSell: 0}
+            if (currentNrHouses === MIN_NR_HOUSES) return {housesSell: 0, housesBuy: 1, hotelsSell: 0, hotelsBuy: 0}
+            if (currentNrHouses === maxNrHouses && maxNrHouses === minNrHouses) return {housesSell: 1, housesBuy: 1,  hotelsSell: 0, hotelsBuy: 0}
+            if (currentNrHouses === maxNrHouses) return {housesSell: 1, housesBuy: 0, hotelsSell: 0, hotelsBuy: 0}
+            return {housesSell: 0, housesBuy: 1, hotelsBuy: 0, hotelsSell: 0}
         }
-        fieldDescriptors.forEach(item => {
+        allEstatesFromCountry.forEach(item => {
             const allowedShopping = getNrOfHouses(item.nrOfHouses);
-            item.nrOfHousesToPurchase = allowedShopping.buy;
-            item.nrOfHousesToSell = allowedShopping.sell;
+            item.nrOfHousesToPurchase = allowedShopping.housesBuy;
+            item.nrOfHousesToSell = allowedShopping.housesSell;
+            item.nrOfHotelsToBuy = allowedShopping.hotelsBuy;
+            item.nrOfHotelsToSell = allowedShopping.hotelsSell;
         })
+        console.log('FieldDescirptor', fieldDescriptors)
         return fieldDescriptors;
 
 
     }
-    
-}
 
 export {
     hasMandatoryKeys,
