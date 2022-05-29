@@ -186,6 +186,8 @@ const descriptors = {
         nrInSet: 2, // 2 cities in the country
         nrOfHousesToPurchase: 0,
         nrOfHousesToSell: 0,
+        nrOfHotelsToSell: 0,
+        nrOfHotelsToBuy: 0,        
         boardFieldNumber: 2,
         isPlegded: false, // zastawiony
     },
@@ -230,6 +232,8 @@ const descriptors = {
         hotelPrice: 100,
         nrOfHousesToPurchase: 0,
         nrOfHousesToSell: 0,
+        nrOfHotelsToSell: 0,
+        nrOfHotelsToBuy: 0,
         visit: [ 10, 40, 120, 360, 640, 900 ], // 0 houses, 1 house, 2 houses...
         owner: 'bank',
         nrOfHouses: 0, // 5 houses === hotel
@@ -281,6 +285,8 @@ const descriptors = {
         hotelPrice: 100,
         nrOfHousesToPurchase: 0,
         nrOfHousesToSell: 0,
+        nrOfHotelsToSell: 0,
+        nrOfHotelsToBuy: 0,        
         visit: [ 15, 60, 150, 540, 800, 1100 ], // 0 houses, 1 house, 2 houses...
         owner: 'bank',
         nrOfHouses: 0, // 5 houses === hotel
@@ -297,6 +303,8 @@ const descriptors = {
         hotelPrice: 100,        
         nrOfHousesToPurchase: 0,
         nrOfHousesToSell: 0,
+        nrOfHotelsToSell: 0,
+        nrOfHotelsToBuy: 0,        
         visit: [ 15, 60, 150, 540, 800, 1100 ], // 0 houses, 1 house, 2 houses...
         owner: 'bank',
         nrOfHouses: 0, // 5 houses === hotel
@@ -313,6 +321,8 @@ const descriptors = {
         hotelPrice: 100,
         nrOfHousesToPurchase: 0,
         nrOfHousesToSell: 0,
+        nrOfHotelsToSell: 0,
+        nrOfHotelsToBuy: 0,        
         visit: [ 20, 80, 200, 600, 900, 1200 ], // 0 houses, 1 house, 2 houses...
         owner: 'bank',
         nrOfHouses: 0, // 5 houses === hotel
@@ -329,6 +339,8 @@ const descriptors = {
         hotelPrice: 200,
         nrOfHousesToPurchase: 0,
         nrOfHousesToSell: 0,
+        nrOfHotelsToSell: 0,
+        nrOfHotelsToBuy: 0,        
         visit: [ 20, 100, 300, 900, 1250, 1500 ], // 0 houses, 1 house, 2 houses...
         owner: 'bank',
         nrOfHouses: 0, // 5 houses === hotel
@@ -356,6 +368,8 @@ const descriptors = {
         hotelPrice: 200,
         nrOfHousesToPurchase: 0,
         nrOfHousesToSell: 0,
+        nrOfHotelsToSell: 0,
+        nrOfHotelsToBuy: 0,        
         visit: [ 20, 100, 300, 900, 1250, 1500 ], // 0 houses, 1 house, 2 houses...
         owner: 'bank',
         nrOfHouses: 0, // 5 houses === hotel
@@ -372,6 +386,8 @@ const descriptors = {
         hotelPrice: 200,
         nrOfHousesToPurchase: 0,
         nrOfHousesToSell: 0,
+        nrOfHotelsToSell: 0,
+        nrOfHotelsToBuy: 0,        
         visit: [ 25, 120, 360, 1000, 1400, 1800 ], // 0 houses, 1 house, 2 houses...
         owner: 'bank',
         nrOfHouses: 0, // 5 houses === hotel
@@ -399,6 +415,8 @@ const descriptors = {
         hotelPrice: 200,
         nrOfHousesToPurchase: 0,
         nrOfHousesToSell: 0,
+        nrOfHotelsToSell: 0,
+        nrOfHotelsToBuy: 0,        
         visit: [ 30, 140, 400, 1100, 1500, 1900 ], // 0 houses, 1 house, 2 houses...
         owner: 'bank',
         nrOfHouses: 0, // 5 houses === hotel
@@ -415,6 +433,8 @@ const descriptors = {
         hotelPrice: 200,
         nrOfHousesToPurchase: 0,
         nrOfHousesToSell: 0,
+        nrOfHotelsToSell: 0,
+        nrOfHotelsToBuy: 0,        
         visit: [ 30, 140, 400, 1100, 1500, 1900 ], // 0 houses, 1 house, 2 houses...
         owner: 'bank',
         nrOfHouses: 0, // 5 houses === hotel
@@ -431,6 +451,8 @@ const descriptors = {
         hotelPrice: 200,
         nrOfHousesToPurchase: 0,
         nrOfHousesToSell: 0,
+        nrOfHotelsToSell: 0,
+        nrOfHotelsToBuy: 0,        
         visit: [ 35, 160, 440, 1200, 1600, 2000 ], // 0 houses, 1 house, 2 houses...
         owner: 'bank',
         nrOfHouses: 0, // 5 houses === hotel
@@ -447,6 +469,8 @@ const descriptors = {
         hotelPrice: 300,
         nrOfHousesToPurchase: 0,
         nrOfHousesToSell: 0,
+        nrOfHotelsToSell: 0,
+        nrOfHotelsToBuy: 0,        
         visit: [ 35, 180, 500, 1400, 1750, 2100 ], // 0 houses, 1 house, 2 houses...
         owner: 'bank',
         nrOfHouses: 0, // 5 houses === hotel
@@ -463,6 +487,8 @@ const descriptors = {
         hotelPrice: 300,
         nrOfHousesToPurchase: 0,
         nrOfHousesToSell: 0,
+        nrOfHotelsToSell: 0,
+        nrOfHotelsToBuy: 0,        
         visit: [ 35, 180, 500, 1400, 1750, 2100 ], // 0 houses, 1 house, 2 houses...
         owner: 'bank',
         nrOfHouses: 0, // 5 houses === hotel
@@ -479,6 +505,8 @@ const descriptors = {
         hotelPrice: 300,
         nrOfHousesToPurchase: 0,
         nrOfHousesToSell: 0,
+        nrOfHotelsToSell: 0,
+        nrOfHotelsToBuy: 0,        
         visit: [ 40, 200, 600, 1500, 1850, 2200 ], // 0 houses, 1 house, 2 houses...
         owner: 'bank',
         nrOfHouses: 0, // 5 houses === hotel
@@ -506,6 +534,8 @@ const descriptors = {
         hotelPrice: 300,
         nrOfHousesToPurchase: 0,
         nrOfHousesToSell: 0,
+        nrOfHotelsToSell: 0,
+        nrOfHotelsToBuy: 0,        
         visit: [ 45, 220, 600, 1600, 1950, 2300 ], // 0 houses, 1 house, 2 houses...
         owner: 'bank',
         nrOfHouses: 0, // 5 houses === hotel
@@ -522,6 +552,8 @@ const descriptors = {
         hotelPrice: 300,
         nrOfHousesToPurchase: 0,
         nrOfHousesToSell: 0,
+        nrOfHotelsToSell: 0,
+        nrOfHotelsToBuy: 0,        
         visit: [ 45, 220, 600, 1600, 1950, 2300 ], // 0 houses, 1 house, 2 houses...
         owner: 'bank',
         nrOfHouses: 0, // 5 houses === hotel
@@ -549,6 +581,8 @@ const descriptors = {
         hotelPrice: 300,
         nrOfHousesToPurchase: 0,
         nrOfHousesToSell: 0,
+        nrOfHotelsToSell: 0,
+        nrOfHotelsToBuy: 0,        
         visit: [ 50, 240, 720, 1700, 2050, 2400 ], // 0 houses, 1 house, 2 houses...
         owner: 'bank',
         nrOfHouses: 0, // 5 houses === hotel
@@ -565,6 +599,8 @@ const descriptors = {
         hotelPrice: 400,
         nrOfHousesToPurchase: 0,
         nrOfHousesToSell: 0,
+        nrOfHotelsToSell: 0,
+        nrOfHotelsToBuy: 0,        
         visit: [ 55, 260, 780, 1900, 2200, 2550 ], // 0 houses, 1 house, 2 houses...
         owner: 'bank',
         nrOfHouses: 0, // 5 houses === hotel
@@ -581,6 +617,8 @@ const descriptors = {
         hotelPrice: 400,
         nrOfHousesToPurchase: 0,
         nrOfHousesToSell: 0,
+        nrOfHotelsToSell: 0,
+        nrOfHotelsToBuy: 0,        
         visit: [ 55, 260, 780, 1900, 2200, 2550 ], // 0 houses, 1 house, 2 houses...
         owner: 'bank',
         nrOfHouses: 0, // 5 houses === hotel
@@ -597,6 +635,8 @@ const descriptors = {
         hotelPrice: 400,
         nrOfHousesToPurchase: 0,
         nrOfHousesToSell: 0,
+        nrOfHotelsToSell: 0,
+        nrOfHotelsToBuy: 0,        
         visit: [ 50, 300, 900, 2000, 2400, 2800 ], // 0 houses, 1 house, 2 houses...
         owner: 'bank',
         nrOfHouses: 0, // 5 houses === hotel
@@ -624,6 +664,8 @@ const descriptors = {
         hotelPrice: 400,
         nrOfHousesToPurchase: 0,
         nrOfHousesToSell: 0,
+        nrOfHotelsToSell: 0,
+        nrOfHotelsToBuy: 0,        
         visit: [ 70, 350, 1000, 2200, 2600, 3000 ], // 0 houses, 1 house, 2 houses...
         owner: 'bank',
         nrOfHouses: 0, // 5 houses === hotel
@@ -645,6 +687,8 @@ const descriptors = {
         hotelPrice: 400,
         nrOfHousesToPurchase: 0,
         nrOfHousesToSell: 0,
+        nrOfHotelsToSell: 0,
+        nrOfHotelsToBuy: 0,        
         visit: [ 70, 350, 1000, 2200, 2600, 3000 ], // 0 houses, 1 house, 2 houses...
         owner: 'bank',
         nrOfHouses: 0, // 5 houses === hotel
