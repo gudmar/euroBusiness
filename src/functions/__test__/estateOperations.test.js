@@ -371,6 +371,7 @@ describe('estateOperations: recalculateNrOfHouses', () => {
             {id: 'Glasgow', ...stateTemplate.Glasgow},
             {id: 'Liverpool', ...stateTemplate.Liverpool},
         ]
+        return germanCities;
     }
 
     const getNrOfEstateOperations = citiesArr => citiesArr.map(
@@ -521,63 +522,86 @@ describe('estateOperations: recalculateNrOfHouses', () => {
         ]
         expect(result).arrayContainsObjectsContaining(expected);
     })
-    it('Should return housesToSell 0 and housesToPurchase 1 in case of city having less houses than the others in the country', () => {
+    it('Should return housesToSell 0 and housesToPurchase 1, hotels to buy and hotels to purchase 0 (not an edge case) in case of city having less houses than the others in the country,', () => {
         setGermanCitiesDifferentHouseNrs({
             berlinNrHouses: 1, munichNrHouses: 2,frankfurtNrHouses: 2,
         })
         const result = recalculateNrOfHousesToBuySell(germanCities, 'Germany');
         const expected = [
-            {id: 'Berlin', nrOfHousesToSell: 0, nrOfHousesToPurchase: 1},
-            {id: 'Frankfurt', nrOfHousesToSell: 1, nrOfHousesToPurchase: 0},
-            {id: 'Munich', nrOfHousesToSell: 1, nrOfHousesToPurchase: 0},            
+            {id: 'Berlin', nrOfHousesToSell: 0, nrOfHousesToPurchase: 1, nrOfHotelsToBuy: 0, nrOfHotelsToSell: 0},
+            {id: 'Frankfurt', nrOfHousesToSell: 1, nrOfHousesToPurchase: 0, nrOfHotelsToBuy: 0, nrOfHotelsToSell: 0},
+            {id: 'Munich', nrOfHousesToSell: 1, nrOfHousesToPurchase: 0, nrOfHotelsToBuy: 0, nrOfHotelsToSell: 0},
         ]
         expect(result).arrayContainsObjectsContaining(expected);
     })
-    it('Should return housesToSell 0 and housesToPurchase 1 in case of city having less houses than the others in the country - boundry case', () => {
+    it('Should return housesToSell 0 and housesToPurchase 1, hotels to sell 0 and hotels to buy in case of Berlin having 0 houses, Munich having 1 house, Frankfurt having 1 house - boundry case', () => {
         setGermanCitiesDifferentHouseNrs({
             berlinNrHouses: 0, munichNrHouses: 1,frankfurtNrHouses: 1,
         })
         const result = recalculateNrOfHousesToBuySell(germanCities, 'Germany');
         const expected = [
-            {id: 'Berlin', nrOfHousesToSell: 0, nrOfHousesToPurchase: 1},
-            {id: 'Frankfurt', nrOfHousesToSell: 1, nrOfHousesToPurchase: 0},
-            {id: 'Munich', nrOfHousesToSell: 1, nrOfHousesToPurchase: 0},            
+            {id: 'Berlin', nrOfHousesToSell: 0, nrOfHousesToPurchase: 1, nrOfHotelsToBuy: 0, nrOfHotelsToSell: 0},
+            {id: 'Frankfurt', nrOfHousesToSell: 1, nrOfHousesToPurchase: 0, nrOfHotelsToBuy: 0, nrOfHotelsToSell: 0},
+            {id: 'Munich', nrOfHousesToSell: 1, nrOfHousesToPurchase: 0, nrOfHotelsToBuy: 0, nrOfHotelsToSell: 0}, 
         ]
         expect(result).arrayContainsObjectsContaining(expected);
     })
 
+    it('Should return 1 hotel to sell, 0 hotels and houses to buy for city having a hotel, and 1 hotels to buy 0 houses to sell for citeis having 4 houses. Should return UK cities not touched.', () => {
+        setGermanCitiesDifferentHouseNrs({
+            berlinNrHouses: 5, munichNrHouses: 4,frankfurtNrHouses: 4,
+        })
+        const result = recalculateNrOfHousesToBuySell(germanCities, 'Germany');
+        const expected = [
+            {id: 'Berlin', nrOfHousesToSell: 0, nrOfHousesToPurchase: 0, nrOfHotelsToBuy: 0, nrOfHotelsToSell: 1},
+            {id: 'Frankfurt', nrOfHousesToSell: 0, nrOfHousesToPurchase: 0, nrOfHotelsToBuy: 1, nrOfHotelsToSell: 0},
+            {id: 'Munich', nrOfHousesToSell: 0, nrOfHousesToPurchase: 0, nrOfHotelsToBuy: 1, nrOfHotelsToSell: 0}, 
+            {id: 'London', nrOfHousesToSell: 0, nrOfHousesToPurchase: 0, nrOfHotelsToBuy: 0, nrOfHotelsToSell: 0},
+            {id: 'Liverpool', nrOfHousesToSell: 0, nrOfHousesToPurchase: 0, nrOfHotelsToBuy: 0, nrOfHotelsToSell: 0},
+            {id: 'Glasgow', nrOfHousesToSell: 0, nrOfHousesToPurchase: 0, nrOfHotelsToBuy: 0, nrOfHotelsToSell: 0},
+
+        ]
+        expect(result).arrayContainsObjectsContaining(expected);
+    })
     
-    
+    it('Should return 1 hotel to buy, 0 hotels to sell, 1 house to sell in each city, having nrOfHouses set to 4 in each city. Should return UK cities not touched.', () => {
+        setGermanCitiesDifferentHouseNrs({
+            berlinNrHouses: 4, munichNrHouses: 4,frankfurtNrHouses: 4,
+        })
+        const result = recalculateNrOfHousesToBuySell(germanCities, 'Germany');
+        const expected = [
+            {id: 'Berlin', nrOfHousesToSell: 1, nrOfHousesToPurchase: 0, nrOfHotelsToBuy: 1, nrOfHotelsToSell: 0},
+            {id: 'Frankfurt', nrOfHousesToSell: 1, nrOfHousesToPurchase: 0, nrOfHotelsToBuy: 1, nrOfHotelsToSell: 0},
+            {id: 'Munich', nrOfHousesToSell: 1, nrOfHousesToPurchase: 0, nrOfHotelsToBuy: 1, nrOfHotelsToSell: 0},
+
+            {id: 'London', nrOfHousesToSell: 0, nrOfHousesToPurchase: 0, nrOfHotelsToBuy: 0, nrOfHotelsToSell: 0},
+            {id: 'Liverpool', nrOfHousesToSell: 0, nrOfHousesToPurchase: 0, nrOfHotelsToBuy: 0, nrOfHotelsToSell: 0},
+            {id: 'Glasgow', nrOfHousesToSell: 0, nrOfHousesToPurchase: 0, nrOfHotelsToBuy: 0, nrOfHotelsToSell: 0},
+        ]
+        expect(result).arrayContainsObjectsContaining(expected);
+    })
+
+    it('Should return 1 hotel to sell, 0 hotels to buy, 0 houses to buy or sell, having 1 hotel in each city (1 hotel === 5 houses). Should return UK cities not touched.', () => {
+        setGermanCitiesDifferentHouseNrs({
+            berlinNrHouses: 5, munichNrHouses: 5,frankfurtNrHouses: 5,
+        })
+        const result = recalculateNrOfHousesToBuySell(germanCities, 'Germany');
+        const expected = [
+            {id: 'Berlin', nrOfHousesToSell: 0, nrOfHousesToPurchase: 0, nrOfHotelsToBuy: 0, nrOfHotelsToSell: 1},
+            {id: 'Frankfurt', nrOfHousesToSell: 0, nrOfHousesToPurchase: 0, nrOfHotelsToBuy: 0, nrOfHotelsToSell: 1},
+            {id: 'Munich', nrOfHousesToSell: 0, nrOfHousesToPurchase: 0, nrOfHotelsToBuy: 0, nrOfHotelsToSell: 1},
+
+            {id: 'London', nrOfHousesToSell: 0, nrOfHousesToPurchase: 0, nrOfHotelsToBuy: 0, nrOfHotelsToSell: 0},
+            {id: 'Liverpool', nrOfHousesToSell: 0, nrOfHousesToPurchase: 0, nrOfHotelsToBuy: 0, nrOfHotelsToSell: 0},
+            {id: 'Glasgow', nrOfHousesToSell: 0, nrOfHousesToPurchase: 0, nrOfHotelsToBuy: 0, nrOfHotelsToSell: 0},
+        ]
+        expect(result).arrayContainsObjectsContaining(expected);
+    })
+
+
 })
 
 // Missing testCases:
-// 1) One hotel in Berlin, 4 houses in Frankfurt and Munich, should return
-// input: setGernamCItiesDifferentHousesNrs({
-//     berlinNrHouses: 5, munichNrHouses: 4, frankfurtNrHouses: 4
-// })
-// output: expected = [
-//     {id: 'Berlin', nrOfHousesToSell: 0, nrOfHousesToPurchase: 0, nrOfHotelsToBuy: 0, nrOfHotelsToSell: 1},
-//     {id: 'Frankfurt', nrOfHousesToSell: 0, nrOfHousesToPurchase: 0, nrOfHotelsToBuy: 1, nrOfHotelsToSell: 0},
-//     {id: 'Munich', nrOfHousesToSell: 0, nrOfHousesToPurchase: 0, nrOfHotelsToBuy: 1, nrOfHotelsToSell: 0},
-
-//     {id: 'London', nrOfHousesToSell: 0, nrOfHousesToPurchase: 0, nrOfHotelsToBuy: 0, nrOfHotelsToSell: 0},
-//     {id: 'Liverpool', nrOfHousesToSell: 0, nrOfHousesToPurchase: 0, nrOfHotelsToBuy: 0, nrOfHotelsToSell: 0},
-//     {id: 'Glasgow', nrOfHousesToSell: 0, nrOfHousesToPurchase: 0, nrOfHotelsToBuy: 0, nrOfHotelsToSell: 0},
-// ]
-
-// 2) 4 houses in all cities: should return 1 house to sell, 1 hotel to buy
-// input: setGernamCItiesDifferentHousesNrs({
-//     berlinNrHouses: 4, munichNrHouses: 4, frankfurtNrHouses: 4
-// })
-// output: expected = [
-//     {id: 'Berlin', nrOfHousesToSell: 1, nrOfHousesToPurchase: 0, nrOfHotelsToBuy: 1, nrOfHotelsToSell: 0},
-//     {id: 'Frankfurt', nrOfHousesToSell: 1, nrOfHousesToPurchase: 0, nrOfHotelsToBuy: 1, nrOfHotelsToSell: 0},
-//     {id: 'Munich', nrOfHousesToSell: 1, nrOfHousesToPurchase: 0, nrOfHotelsToBuy: 1, nrOfHotelsToSell: 0},
-
-//     {id: 'London', nrOfHousesToSell: 0, nrOfHousesToPurchase: 0, nrOfHotelsToBuy: 0, nrOfHotelsToSell: 0},
-//     {id: 'Liverpool', nrOfHousesToSell: 0, nrOfHousesToPurchase: 0, nrOfHotelsToBuy: 0, nrOfHotelsToSell: 0},
-//     {id: 'Glasgow', nrOfHousesToSell: 0, nrOfHousesToPurchase: 0, nrOfHotelsToBuy: 0, nrOfHotelsToSell: 0},
-// ]
 
 // 3) 1 hotel in all cities: should return 0 houses to sell, 0 hotels to buy, 1 hotel to sell
 // input: setGernamCItiesDifferentHousesNrs({

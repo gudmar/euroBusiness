@@ -85,6 +85,10 @@ const recalculateNrOfHousesToBuySell = (fieldDescriptors, country) => {
         const maxNrHouses = Math.max(...allEstatesFromCountry.map(city => city.nrOfHouses));
         const getNrOfHouses = (currentNrHouses) => {
             
+            if (currentNrHouses > MAX_NR_HOUSES && minNrHouses > MAX_NR_HOUSES){
+                // currentNrHouses > MAX_NR_HOUSES === hotel
+                return { housesSell: 0, housesBuy: 0, hotelsBuy: 0, hotelsSell: 1 }
+            }
             if (currentNrHouses > MAX_NR_HOUSES && minNrHouses === MAX_NR_HOUSES){
                 // currentNrHouses > MAX_NR_HOUSES === hotel
                 return { housesSell: 0, housesBuy: 0, hotelsBuy: 0, hotelsSell: 1 }
@@ -96,7 +100,7 @@ const recalculateNrOfHousesToBuySell = (fieldDescriptors, country) => {
             if (currentNrHouses === MAX_NR_HOUSES && maxNrHouses > MAX_NR_HOUSES) {
                 return { housesSell: 0, housesBuy: 0, hotelsBuy: 1, hotelsSell: 0 }
             }
-            if (currentNrHouses === MAX_NR_HOUSES && maxNrHouses === MAX_NR_HOUSES) {
+            if (currentNrHouses === MAX_NR_HOUSES && minNrHouses === MAX_NR_HOUSES) {
                 return { housesSell: 1, housesBuy: 0, hotelsBuy: 1, hotelsSell: 0 }
             }
             if (currentNrHouses === MAX_NR_HOUSES /*minNrHouses < MAX_NR_HOUSES*/) {
@@ -139,7 +143,6 @@ const recalculateNrOfHousesToBuySell = (fieldDescriptors, country) => {
             item.nrOfHotelsToBuy = allowedShopping.hotelsBuy;
             item.nrOfHotelsToSell = allowedShopping.hotelsSell;
         })
-        console.log('FieldDescirptor', fieldDescriptors)
         return fieldDescriptors;
 
 
