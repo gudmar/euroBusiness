@@ -94,7 +94,6 @@ const recalculateNrOfHousesToBuySell = (fieldDescriptors, country) => {
                 return { housesSell: 0, housesBuy: 0, hotelsBuy: 0, hotelsSell: 1 }
             }
             if (currentNrHouses > MAX_NR_HOUSES && minNrHouses < MAX_NR_HOUSES) {
-                // Toźsame poprzedniemu
                 return { housesSell: 0, housesBuy: 0, hotelsBuy: 0, hotelsSell: 1 }
             }
             if (currentNrHouses === MAX_NR_HOUSES && maxNrHouses > MAX_NR_HOUSES) {
@@ -110,7 +109,6 @@ const recalculateNrOfHousesToBuySell = (fieldDescriptors, country) => {
                 return { housesSell: 0, housesBuy: 1, hotelsBuy: 0, hotelsSell: 0 }
             }
             if (currentNrHouses === MIN_NR_HOUSES /*maxNrHouses > MIN_NR_HOUSES*/) {
-                // Toźsame z poprzednim
                 return { housesSell: 0, housesBuy: 1, hotelsBuy: 0, hotelsSell: 0 }
             }
             if (currentNrHouses > MIN_NR_HOUSES && currentNrHouses < MAX_NR_HOUSES) {
@@ -125,16 +123,6 @@ const recalculateNrOfHousesToBuySell = (fieldDescriptors, country) => {
                 
             }
             throw new Error('estateOperations: recalculateNrOfHousesToBuySell. Not every case was rethought.')
-
-
-
-            if (currentNrHouses > MAX_NR_HOUSES) return {housesSell: 0, housesBuy: 0, hotelsBuy: 0, hotelsSell: 1}
-            if (currentNrHouses === MAX_NR_HOUSES && minNrHouses < MAX_NR_HOUSES) return {housesSell: 1, housesBuy: 0, hotelsBuy: 1, hotelsSell: 0}
-            if (currentNrHouses === MAX_NR_HOUSES) return {housesSell: 1, housesBuy: 0, hotelsBuy: 1, hotelsSell: 0}
-            if (currentNrHouses === MIN_NR_HOUSES) return {housesSell: 0, housesBuy: 1, hotelsSell: 0, hotelsBuy: 0}
-            if (currentNrHouses === maxNrHouses && maxNrHouses === minNrHouses) return {housesSell: 1, housesBuy: 1,  hotelsSell: 0, hotelsBuy: 0}
-            if (currentNrHouses === maxNrHouses) return {housesSell: 1, housesBuy: 0, hotelsSell: 0, hotelsBuy: 0}
-            return {housesSell: 0, housesBuy: 1, hotelsBuy: 0, hotelsSell: 0}
         }
         allEstatesFromCountry.forEach(item => {
             const allowedShopping = getNrOfHouses(item.nrOfHouses);
