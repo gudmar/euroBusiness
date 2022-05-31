@@ -81,6 +81,39 @@ describe('Testing arrayToContainTheSameValues matcher', () => {
 })
 
 
+describe('Testing fieldOptionsMaker: canlayerDoAnythingInPropertiesManager', ()=> {
+    it(`Should return false for each flag in case player can not: buy a house, sell a house,
+    buy a hotel, sell a hotel, mortage a property, buy the property from mortage, sell an additional card`, () => {
+
+    });
+
+    it(`Should return 'sell a house' in case player has an estate with at least one house`, () => {
+
+    });
+
+    it(`Should return 'buy a house' in case player owns whole country and at least one house may be purcahsed there`, () => {
+
+    });
+    it(`Should return 'mortage' in case player has at least one estate that may be mortaged`, ()=> {
+
+    });
+    it(`Should return 'buyFromMortage', in case player has at least one mortaged property`, ()= {
+
+    });
+    it(`Should return 'sellCard' in case player has at least one special card in his collection`, () => {
+
+    })
+    it(`Should return sell a house and buy a house in case pleyer owns whole country and there is at least one house 
+    but not more than 4 houses in each city`, () => {
+
+    })
+    it(`Should return 'buy from mortage' and 'mortage' in case player owns 2 estates, one is mortaged and the other not`, () => {
+        
+    })
+
+})
+
+
 describe('Testing Start field', () => {
     it(`
         Should return a message: You stop on the 'start' field, that means 
