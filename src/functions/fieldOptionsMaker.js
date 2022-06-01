@@ -28,6 +28,8 @@ import {
     hasPlayerExtraCardsFunction,
     hasCurrentPlayerExtraCardsFunction
 } from './playerFunctions.js'
+import { recalculateNrOfHousesToBuySell } from './estateOperations.js'
+import { countries, notCountryTypes } from './countryTypes.js'
 
 const buttonNames = {
     ok: 'Ok',
@@ -38,8 +40,17 @@ const buttonNames = {
     buy: 'Buy',
 }
 
-const canPlayerDoAnythingInPropertiesManager = (stateBoardSlice, playerSlice, playerColor) => {
-    countries.forEach.recalculateNrOfHousesToBuySell(fieldDescriptors);
+const getCountries = () => countries; // so it may be mocked
+const getNotCountryTypes = () => notCountryTypes;
+
+const canPlayerDoAnythingInPropertiesManager = (
+    stateBoardSlice, 
+    playerSlice, 
+    playerColor
+) => {
+    const countries = Object.values(getCountries());
+    console.log('BOARD SLIE', stateBoardSlice)
+    countries.forEach(country => recalculateNrOfHousesToBuySell(stateBoardSlice, country));
     const playerOptions = {
         sellHouse: false,
         buyHouse: false,
@@ -47,7 +58,7 @@ const canPlayerDoAnythingInPropertiesManager = (stateBoardSlice, playerSlice, pl
         sellHotel: false,
         mortage: false,
         buyFromMortage: false,
-        sellCard
+        sellCard: false,
     }
     const isEstate = targetType => Object.values(estateTypes).includes(targetType);
     const isCity = targetType => targetType === types.CITY;
@@ -470,4 +481,6 @@ const fieldOptionsMaker = async ({
     getFieldOptions,
     buttonNames,
     canPlayerDoAnythingInPropertiesManager,
+    getCountries,
+    getNotCountryTypes,
  }

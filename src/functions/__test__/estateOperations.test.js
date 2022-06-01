@@ -1,5 +1,6 @@
 import {recalculateNrOfHousesToBuySell, hasMandatoryKeys, getCities, getMinMaxNrOfHouses} from '../estateOperations.js'
 import testState from '../../state/__test__/stateForTests';
+import {countries} from '../countryTypes.js'
 const _countries = require('../countryTypes.js');
 
 const cp = obj => JSON.parse(JSON.stringify(obj))
@@ -312,9 +313,9 @@ describe('estateOperations: recalculateNrOfHouses', () => {
     const setGermanCities = () => {
         stateTemplate = cp(testState);
         germanCities = [
-            {id: 'Berlin', ...stateTemplate.Berlin},
+            {id: 'Kolonia', ...stateTemplate.Kolonia},
             {id: 'Frankfurt', ...stateTemplate.Frankfurt}, 
-            {id: 'Munich', ...stateTemplate.Munich},
+            {id: 'Bonn', ...stateTemplate.Bonn},
             {id: 'Ateny', ...stateTemplate.Ateny},
             {id: 'Saloniki', ...stateTemplate.Saloniki},
             {id: 'London', ...stateTemplate.London},
@@ -325,15 +326,15 @@ describe('estateOperations: recalculateNrOfHouses', () => {
     const setGermanCitiesWithOwners = (nrOfHousesEach, owner) => {
         stateTemplate = cp(testState);
         Object.values(stateTemplate).forEach(city => {
-            if (city.country === 'Germany'){
+            if (city.country === countries.rfn){
                 city.owner = owner;
                 city.nrOfHouses = nrOfHousesEach;    
             }
         });
         germanCities = [
-            {id: 'Berlin', ...stateTemplate.Berlin},
+            {id: 'Kolonia', ...stateTemplate.Kolonia},
             {id: 'Frankfurt', ...stateTemplate.Frankfurt}, 
-            {id: 'Munich', ...stateTemplate.Munich},
+            {id: 'Bonn', ...stateTemplate.Bonn},
             {id: 'Ateny', ...stateTemplate.Ateny},
             {id: 'Saloniki', ...stateTemplate.Saloniki},
             {id: 'London', ...stateTemplate.London},
@@ -342,7 +343,7 @@ describe('estateOperations: recalculateNrOfHouses', () => {
 
         ]            
     };
-    const setGermanCitiesDifferentHouseNrs = ({berlinNrHouses, munichNrHouses, frankfurtNrHouses}) => {
+    const setGermanCitiesDifferentHouseNrs = ({koloniaNrHouses, bonnNrHouses, frankfurtNrHouses}) => {
         stateTemplate = cp(testState);
 
         // const nrOfBuildings = nrOfHouses => nrOfHouses === 5 ? {
@@ -357,14 +358,14 @@ describe('estateOperations: recalculateNrOfHouses', () => {
         
         Object.keys(stateTemplate).forEach(key => {
             stateTemplate[key].owner = 'Tytus';
-            if (key === 'Berlin') stateTemplate[key].nrOfHouses = berlinNrHouses;
+            if (key === 'Kolonia') stateTemplate[key].nrOfHouses = berlinNrHouses;
             if (key === 'Frankfurt') stateTemplate[key].nrOfHouses = frankfurtNrHouses;
-            if (key === 'Munich') stateTemplate[key].nrOfHouses = munichNrHouses;
+            if (key === 'Bonn') stateTemplate[key].nrOfHouses = munichNrHouses;
         });
         germanCities = [
-            {id: 'Berlin', ...stateTemplate.Berlin},
+            {id: 'Kolonia', ...stateTemplate.Kolonia},
             {id: 'Frankfurt', ...stateTemplate.Frankfurt}, 
-            {id: 'Munich', ...stateTemplate.Munich},
+            {id: 'Bonn', ...stateTemplate.Bonn},
             {id: 'Ateny', ...stateTemplate.Ateny},
             {id: 'Saloniki', ...stateTemplate.Saloniki},
             {id: 'London', ...stateTemplate.London},
@@ -650,13 +651,13 @@ describe('estateOperations: recalculateNrOfHouses', () => {
     })
     it('620) In case of single houses in each German estate should suggest to sell a house or buy a house in each german estate', () => {
         setGermanCitiesDifferentHouseNrs({
-            berlinNrHouses: 1, munichNrHouses: 1,frankfurtNrHouses: 1,
+            koloniaNrHouses: 1, bonnNrHouses: 1,frankfurtNrHouses: 1,
         })
-        const result = recalculateNrOfHousesToBuySell(germanCities, 'Germany');
+        const result = recalculateNrOfHousesToBuySell(germanCities, countries.rfn);
         const expected = [
-            {id: 'Berlin', nrOfHousesToSell: 1, nrOfHousesToPurchase: 1, nrOfHotelsToBuy: 0, nrOfHotelsToSell: 0},
+            {id: 'Kolonia', nrOfHousesToSell: 1, nrOfHousesToPurchase: 1, nrOfHotelsToBuy: 0, nrOfHotelsToSell: 0},
             {id: 'Frankfurt', nrOfHousesToSell: 1, nrOfHousesToPurchase: 1, nrOfHotelsToBuy: 0, nrOfHotelsToSell: 0},
-            {id: 'Munich', nrOfHousesToSell: 1, nrOfHousesToPurchase: 1, nrOfHotelsToBuy: 0, nrOfHotelsToSell: 0},
+            {id: 'Bonn', nrOfHousesToSell: 1, nrOfHousesToPurchase: 1, nrOfHotelsToBuy: 0, nrOfHotelsToSell: 0},
     ]
         expect(result).arrayContainsObjectsContaining(expected);
     })

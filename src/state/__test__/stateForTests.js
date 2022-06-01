@@ -83,8 +83,10 @@ const testState = {
         isPlegded: false,
 
     },
-    Berlin: {
-        country: 'Germany',
+    // Berlin: {
+    Kolonia: {
+        // country: 'Germany',
+        country: countries.rfn,
         owner:'Romek',
         type: 'city',
         mortage: false,
@@ -99,7 +101,8 @@ const testState = {
 
     },
     Frankfurt: {
-        country: 'Germany',
+        // country: 'Germany',
+        country: countries.rfn,
         owner: 'Atomek',
         type: 'city',
         mortage: false,
@@ -113,8 +116,10 @@ const testState = {
         isPlegded: false,
 
     },
-    Munich: {
-        country: 'Germany',
+    // Munich: {
+    Bonn: {
+        // country: 'Germany',
+        country: countries.rfn,
         owner: 'Romek',
         type: 'city',
         mortage: false,
@@ -126,7 +131,6 @@ const testState = {
         nrOfHotelsToSell: 0,
         nrOfHotelsToBuy: 0,
         isPlegded: false,
-
     },
     London: {
         country: 'UK',
@@ -257,6 +261,10 @@ const playerSlice = {
     black: {
         name: 'Player_2', color: 'black', fieldNumber: 0,
         cash: 3000, extraCards:[], player: 'computer',
+    },
+    orange: {
+        name: 'OrangePlayer', color: 'orange', fieldNumber: 3,
+        cash: 3000, extraCards: [], player: 'computer',
     },
     blue: currentPlayerData,
 }
