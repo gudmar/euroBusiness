@@ -85,40 +85,40 @@ describe('Testing arrayToContainTheSameValues matcher', () => {
 
 
 describe('Testing fieldOptionsMaker: canlayerDoAnythingInPropertiesManager', ()=> {
-    const getCountries_local = () => { 
-        return {
-            greece: "Greece",
-            italy: "Italy",
-            spain: "Spain",
-            uk: 'UK',
-            benelux: "Benelux",
-            sweeden: 'Sweeden',
-            rfn: 'RFN',
-            austria: 'Austria',
-    }};
-    const getNotCountryTypes_local = () => ({
-        railways: 'Railways',
-        plant: 'Plant',
-    });
-    const getCountries = jest.spyOn(FOM, 'getCountries').mockImplementation(getCountries_local)
-    const getNotCountryTypes = jest.spyOn(FOM, 'getNotCountryTypes').mockImplementation(getNotCountryTypes_local)
+    // const getCountries_local = () => { 
+    //     return {
+    //         greece: "Greece",
+    //         italy: "Italy",
+    //         spain: "Spain",
+    //         uk: 'UK',
+    //         benelux: "Benelux",
+    //         sweeden: 'Sweeden',
+    //         rfn: 'RFN',
+    //         austria: 'Austria',
+    // }};
+    // const getNotCountryTypes_local = () => ({
+    //     railways: 'Railways',
+    //     plant: 'Plant',
+    // });
+    // const getCountries = jest.spyOn(FOM, 'getCountries').mockImplementation(getCountries_local)
+    // const getNotCountryTypes = jest.spyOn(FOM, 'getNotCountryTypes').mockImplementation(getNotCountryTypes_local)
 
     it(`Should return false for each flag in case player can not: buy a house, sell a house,
     buy a hotel, sell a hotel, mortage a property, buy the property from mortage, sell an additional card`, () => {
-        // const boardState = cp(stateForFieldOptionsTests);
-        // const playerState = cp(playerSlice);
-        // const playerColor = 'orange';
-        // const expectedResult = {
-        //     sellHouse: false,
-        //     buyHouse: false,
-        //     buyHotel: false,
-        //     sellHotel: false,
-        //     mortage: false,
-        //     buyFromMortage: false,
-        //     sellCard: false,
-        // }
-        // const result = canPlayerDoAnythingInPropertiesManager(boardState, playerState, playerColor);
-        // expect(result).toBe(expectedResult);
+        const boardState = cp(stateForFieldOptionsTests);
+        const playerState = cp(playerSlice);
+        const playerColor = 'orange';
+        const expectedResult = {
+            sellHouse: false,
+            buyHouse: false,
+            buyHotel: false,
+            sellHotel: false,
+            mortage: false,
+            buyFromMortage: false,
+            sellCard: false,
+        }
+        const result = canPlayerDoAnythingInPropertiesManager(boardState, playerState, playerColor);
+        expect(result).toBe(expectedResult);
 
     });
 

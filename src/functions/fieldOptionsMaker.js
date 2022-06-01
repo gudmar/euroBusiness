@@ -40,17 +40,17 @@ const buttonNames = {
     buy: 'Buy',
 }
 
-const getCountries = () => countries; // so it may be mocked
-const getNotCountryTypes = () => notCountryTypes;
+// const getCountries = () => countries; // so it may be mocked
+// const getNotCountryTypes = () => notCountryTypes;
 
 const canPlayerDoAnythingInPropertiesManager = (
     stateBoardSlice, 
     playerSlice, 
     playerColor
 ) => {
-    const countries = Object.values(getCountries());
-    console.log('BOARD SLIE', stateBoardSlice)
-    countries.forEach(country => recalculateNrOfHousesToBuySell(stateBoardSlice, country));
+    const countriesArr = Object.values(countries);
+    console.log('CoUnTRiEEssss',countries)
+    countriesArr.forEach(country => recalculateNrOfHousesToBuySell(stateBoardSlice, country));
     const playerOptions = {
         sellHouse: false,
         buyHouse: false,
@@ -481,6 +481,4 @@ const fieldOptionsMaker = async ({
     getFieldOptions,
     buttonNames,
     canPlayerDoAnythingInPropertiesManager,
-    getCountries,
-    getNotCountryTypes,
  }

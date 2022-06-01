@@ -13,14 +13,6 @@ const getStateArray = (state) => {
     }
 )}
 
-// const isACountry_local = (country) => {
-//     const countries = {
-//         greece:'Greece', spain: 'Spain', germany: countries.rfn, uk: 'UK',
-//     }    
-//     return Object.values(countries).find(val => val === country);
-// }
-// const isACountry = jest.spyOn(_countries, 'isACountry').mockImplementation(isACountry_local)
-
 expect.extend({
     arrayContainsObjectsContaining(received, objectWithKeys) {
         let indexOfDifference = -1;
