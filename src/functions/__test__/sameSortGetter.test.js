@@ -35,7 +35,7 @@ describe('sameSortGetter: areAllEstatesSamePlayer', () => {
         expect(result).toBe(false);
     })
     it('Should return fasle if player is Romek', () => {
-        const descriptor = testSet1['Berlin'];
+        const descriptor = testSet1['Kolonia'];
         const player = 'Romek';
         const result = areAllEstatesSamePlayer(descriptor, testSet1, player)
         expect(result).toBe(false);
