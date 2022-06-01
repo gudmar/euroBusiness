@@ -1,13 +1,16 @@
-import { stateForFieldOptionsTests, currentPlayerData, playerSlice } from '../../state/__test__/stateForTests.js';
+import testState, { stateForFieldOptionsTests, currentPlayerData, playerSlice } from '../../state/__test__/stateForTests.js';
 import { controlActionTypes } from '../../state/controlReducer.js'
 import {
     fieldOptionsMaker,
     buttonNames,
+    canPlayerDoAnythingInPropertiesManager,
 } from '../../functions/fieldOptionsMaker.js'
 import { playerActionTypes } from '../../state/playerReducer.js';
 import { getPlayerNameByColor } from '../../state/defaultPlayerState.js';
 import  { gameStateConstructor }  from '../../state/gameStateConstructor.js'
 import { transactionActionTypes } from '../../state/transactionsReducer.js'
+
+const FOM = require('../../functions/fieldOptionsMaker')
 
 const controlState = {openFieldWindow: false};
 const game = gameStateConstructor();
@@ -82,8 +85,40 @@ describe('Testing arrayToContainTheSameValues matcher', () => {
 
 
 describe('Testing fieldOptionsMaker: canlayerDoAnythingInPropertiesManager', ()=> {
+    const getCountries_local = () => { 
+        return {
+            greece: "Greece",
+            italy: "Italy",
+            spain: "Spain",
+            uk: 'UK',
+            benelux: "Benelux",
+            sweeden: 'Sweeden',
+            rfn: 'RFN',
+            austria: 'Austria',
+    }};
+    const getNotCountryTypes_local = () => ({
+        railways: 'Railways',
+        plant: 'Plant',
+    });
+    const getCountries = jest.spyOn(FOM, 'getCountries').mockImplementation(getCountries_local)
+    const getNotCountryTypes = jest.spyOn(FOM, 'getNotCountryTypes').mockImplementation(getNotCountryTypes_local)
+
     it(`Should return false for each flag in case player can not: buy a house, sell a house,
     buy a hotel, sell a hotel, mortage a property, buy the property from mortage, sell an additional card`, () => {
+        // const boardState = cp(stateForFieldOptionsTests);
+        // const playerState = cp(playerSlice);
+        // const playerColor = 'orange';
+        // const expectedResult = {
+        //     sellHouse: false,
+        //     buyHouse: false,
+        //     buyHotel: false,
+        //     sellHotel: false,
+        //     mortage: false,
+        //     buyFromMortage: false,
+        //     sellCard: false,
+        // }
+        // const result = canPlayerDoAnythingInPropertiesManager(boardState, playerState, playerColor);
+        // expect(result).toBe(expectedResult);
 
     });
 
@@ -91,24 +126,28 @@ describe('Testing fieldOptionsMaker: canlayerDoAnythingInPropertiesManager', ()=
 
     });
 
-    it(`Should return 'buy a house' in case player owns whole country and at least one house may be purcahsed there`, () => {
+    it(`Should return 'buy a house' in case player owns whole country and at least one house may be purchased there, and player has cash to buy a house`, () => {
 
     });
-    it(`Should return 'mortage' in case player has at least one estate that may be mortaged`, ()=> {
+    it(`Should return 'mortage' in case player has at least one estate that may be mortaged - Check railways`, ()=> {
 
     });
-    it(`Should return 'buyFromMortage', in case player has at least one mortaged property`, ()= {
+    it(`Should return 'buyFromMortage', in case player has at least one mortaged property, and can has cash to buy from mortage`, ()=> {
+
+    });
+    it(`Should return false for each falg in case player has at least one mortaged estate, but cannot afford to buy that 
+    estate from mortage`, ()=> {
 
     });
     it(`Should return 'sellCard' in case player has at least one special card in his collection`, () => {
 
     })
     it(`Should return sell a house and buy a house in case pleyer owns whole country and there is at least one house 
-    but not more than 4 houses in each city`, () => {
+    but not more than 4 houses in each city, and player has cash to buy the house`, () => {
 
     })
-    it(`Should return 'buy from mortage' and 'mortage' in case player owns 2 estates, one is mortaged and the other not`, () => {
-        
+    it(`Should return 'buy from mortage' and 'mortage' in case player owns 2 estates, one is mortaged and the other not, and has cash needed to buy the estate from mortage`, () => {
+
     })
 
 })
