@@ -15,7 +15,9 @@ const mandatoryKeys = [
     'owner', 
     'nrOfHouses',
     'nrOfHousesToPurchase', 
-    'nrOfHousesToSell', 
+    'nrOfHousesToSell',
+    'nrOfHotelsToSell',
+    'nrOfHotelsToBuy',
     'isPlegded'
 ]
 
@@ -48,6 +50,7 @@ const recalculateNrOfHousesToBuySell = (fieldDescriptors, country) => {
     const MAX_NR_HOUSES = 4; // for hotel
     const MIN_NR_HOUSES = 0;
     const nameForError = 'estateOperations.recalculateNrOfHouses';
+    if (!Object.values(countries).find(c => c === country)) return fieldDescriptors;
     if (fieldDescriptors === undefined || fieldDescriptors === null || !Array.isArray(fieldDescriptors)) {
         throw new Error(`${nameForError}: fieldDescriptor is null, undefined, or cannot be converted to array of values`);
     }
@@ -57,7 +60,7 @@ const recalculateNrOfHousesToBuySell = (fieldDescriptors, country) => {
     const someCondition = condition => allEstatesFromCountry.some(item => condition(item));
     if (!isACountry(country)) return fieldDescriptors;
     for(let estate of allEstatesFromCountry) {
-        if (!hasMandatoryKeys(estate)) throw new Error(`${nameForError}: at leas one of cities has not all mandatory keys`)
+        if (!hasMandatoryKeys(estate)) throw new Error(`${nameForError}: at least one of cities (${estate.id} in ${estate.country}) has not all mandatory keys`)
     }
     if (isNrOfHousesDifferenceTooBig(allEstatesFromCountry)) throw new Error(`${nameForError} too big difference between the nr of houses in ${country}`);
     // const citiesArray = getCities(fieldDescriptors, country);

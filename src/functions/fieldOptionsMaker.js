@@ -49,7 +49,7 @@ const canPlayerDoAnythingInPropertiesManager = (
     playerColor
 ) => {
     const countriesArr = Object.values(countries);
-    console.log('CoUnTRiEEssss',countries)
+    console.log('CoUnTRiEEssss',countriesArr)
     countriesArr.forEach(country => recalculateNrOfHousesToBuySell(stateBoardSlice, country));
     const playerOptions = {
         sellHouse: false,

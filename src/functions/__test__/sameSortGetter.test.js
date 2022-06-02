@@ -5,7 +5,9 @@ import  {
     doAllBelongToSamePlayer,
 }  from '../sameSortGetter.js';
 import testState  from '../../state/__test__/stateForTests.js';
-const testSet1 = testState;
+
+const cp = obj => JSON.parse(JSON.stringify(obj));
+const testSet1 = cp(testState);
 
 
 describe('sameSortGetter: areAllEstatesSamePlayer', () => {
