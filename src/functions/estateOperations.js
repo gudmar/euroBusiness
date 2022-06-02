@@ -55,7 +55,7 @@ const recalculateNrOfHousesToBuySell = (fieldDescriptors, country) => {
         throw new Error(`${nameForError}: fieldDescriptor is null, undefined, or cannot be converted to array of values`);
     }
     const allEstatesFromCountry = getCities(fieldDescriptors, country);
-    if (allEstatesFromCountry.length === 0) console.log('Get Cities', country, allEstatesFromCountry,  fieldDescriptors)
+    // if (allEstatesFromCountry.length === 0) console.log('Get Cities', country, allEstatesFromCountry,  fieldDescriptors)
     const eachCondition = condition => allEstatesFromCountry.every(item => condition(item));
     const someCondition = condition => allEstatesFromCountry.some(item => condition(item));
     if (!isACountry(country)) return fieldDescriptors;

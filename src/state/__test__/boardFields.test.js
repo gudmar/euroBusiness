@@ -32,7 +32,7 @@ const getPowerStation = descriptors => descriptors.Power_Station;
 describe('boardFields: getNrOfCitiesPlayerHas', () => {
     //descriptors, player, country
 
-    it.only('Should return 2/2 in case of Greece and Bolek', () => {
+    it('Should return 2/2 in case of Greece and Bolek', () => {
         const state = cp(testState);
         const result = getNrOfCitiesPlayerHas(state, 'Bolek', 'Greece');
         const expected = {owns: 2, outOf: 2};
@@ -80,6 +80,7 @@ describe('boardFields: getNrOfCiteisPlayerHas should work with array-like descri
     it('Should return 2/3 in case of Lolek and Spain', () => {
         let state = cp(testState);
         state = arrFromDescriptors(state);
+        console.log( 'second SHOULD 2/3', state)
         const result = getNrOfCitiesPlayerHas(state, 'Lolek', 'Spain');
         const expected = {owns: 2, outOf: 3};
         expect(result).toEqual(expected);        

@@ -80,7 +80,6 @@ const testState = {
         mortage: false,
         housePrice: 10,
         hotelPrice: 10,
-        owner: 'bank',
         nrOfHouses: 0,
         nrOfHousesToPurchase: 0,
         nrOfHousesToSell: 0,

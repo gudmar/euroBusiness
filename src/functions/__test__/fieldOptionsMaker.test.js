@@ -108,7 +108,6 @@ describe('Testing fieldOptionsMaker: canlayerDoAnythingInPropertiesManager', ()=
         const boardState = cp(stateForFieldOptionsTests);
         const playerState = cp(playerSlice);
         const playerColor = 'orange';
-        console.log('DUPAAAAA ', boardState)
         const expectedResult = {
             sellHouse: false,
             buyHouse: false,
