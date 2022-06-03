@@ -170,6 +170,8 @@ describe('testing arrayContainsObjectsContaining matcher', () => {
                         nrOfHouses: 3,
                         nrOfHousesToPurchase: 0,
                         nrOfHousesToSell: 1,
+                        nrOfHotelsToSell: 0,
+                        nrOfHotelsToBuy: 0,
                         isPlegded: false
                     },
                     {
@@ -183,6 +185,8 @@ describe('testing arrayContainsObjectsContaining matcher', () => {
                         nrOfHouses: 2,
                         nrOfHousesToPurchase: 1,
                         nrOfHousesToSell: 0,
+                        nrOfHotelsToSell: 0,
+                        nrOfHotelsToBuy: 0,
                         isPlegded: false
                     },
                     {
@@ -196,6 +200,8 @@ describe('testing arrayContainsObjectsContaining matcher', () => {
                         nrOfHouses: 2,
                         nrOfHousesToPurchase: 1,
                         nrOfHousesToSell: 0,
+                        nrOfHotelsToSell: 0,
+                        nrOfHotelsToBuy: 0,
                         isPlegded: false
                     }
                 ],
@@ -220,6 +226,9 @@ describe('setateOperations: hasMandatoryKeys', () => {
         housePrice: '200', hotelPrice: 200,
         owner: 'Bolek', nrOfHouses: 0, nrOfHousesToPurchase: 0,
         nrOfHousesToSell: 0, isPlegded: false,
+        nrOfHotelsToSell: 0,
+        nrOfHotelsToBuy: 0,
+
     }
     it('Should return false if type is missing', () => {
         const obj = cp(testObject);
@@ -391,8 +400,9 @@ describe('estateOperations: recalculateNrOfHouses', () => {
         expect(resultObject).toThrow(expectedErrorMsg);
     });
     it('Should return the same object in case not a country is passed as a second arg', () => {
-        const result = recalculateNrOfHousesToBuySell(cp(getStateArray(testState)), 'Railway');
-        expect(result).toEqual(getStateArray(testState));
+        const stateTemplate = cp(testState);
+        const result = recalculateNrOfHousesToBuySell(cp(getStateArray(stateTemplate)), 'Railway');
+        expect(result).toEqual(getStateArray(stateTemplate));
     })
     it('Should throw an error in case there is a difference in max nr of houses and min nr of houses in the same country of more then 1', () => {
         stateTemplate = cp(testState);

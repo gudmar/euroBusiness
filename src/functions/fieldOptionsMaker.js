@@ -49,7 +49,6 @@ const canPlayerDoAnythingInPropertiesManager = (
     playerColor
 ) => {
     const countriesArr = Object.values(countries);
-    console.log('CoUnTRiEEssss',countries)
     countriesArr.forEach(country => recalculateNrOfHousesToBuySell(stateBoardSlice, country));
     const playerOptions = {
         sellHouse: false,
@@ -66,21 +65,24 @@ const canPlayerDoAnythingInPropertiesManager = (
         if (estateDescriptor.owner !== playerColor) return 0;
         return estateDescriptor[property];        
     }
+    const isOwner = estateDescriptor => estateDescriptor.owner === playerColor;
     const housesToBuy = estateDescriptor => getPropIfPlayerIsOwner(estateDescriptor, 'nrOfHousesToPurchase');
     const housesToSell = estateDescriptor => getPropIfPlayerIsOwner(estateDescriptor, 'nrOfHousesToSell');
     // const hotelsToSell = estateDescriptor => getPropIfPlayerIsOwner(estateDescriptor, 'nrOfHouses') > 4 ? 1 : 0
-    const hotelsToBuy = estateDescriptor => {throw new Error('Missing implementation')}
-    const hotelsToSell = estateDescriptor => {throw new Error('Missing implementation')}
+    const hotelsToBuy = estateDescriptor => getPropIfPlayerIsOwner(estateDescriptor, 'nrOfHotelsToSell');//{throw new Error('Missing implementation')}
+    const hotelsToSell = estateDescriptor => getPropIfPlayerIsOwner(estateDescriptor, 'nrOfHotelsToBuy');//{throw new Error('Missing implementation')}
     const isMortaged = estateDescriptor => getPropIfPlayerIsOwner(estateDescriptor, 'isPlegded')
     stateBoardSlice.forEach(field => {
         if (housesToBuy(field)>0) playerOptions.buyHouse = true;
         if (housesToSell(field)>0) playerOptions.sellHouse = true;
         if (hotelsToBuy(field)>0) playerOptions.buyHotel = true;
         if (hotelsToSell(field)>0) playerOptions.sellHotel = true;
-        if (!isMortaged(field)) {
-            playerOptions.mortage = true
-        } else {
-            playerOptions.buyFromMortage = true;
+        if (isOwner(field)){
+            if (!isMortaged(field)) {
+                playerOptions.mortage = true
+            } else {
+                playerOptions.buyFromMortage = true;
+            }
         }
         if (playerSlice?.[playerColor].extraCards.length > 0) playerOptions.sellCard = true;
     })

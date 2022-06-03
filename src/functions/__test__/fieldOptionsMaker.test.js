@@ -118,7 +118,7 @@ describe('Testing fieldOptionsMaker: canlayerDoAnythingInPropertiesManager', ()=
             sellCard: false,
         }
         const result = canPlayerDoAnythingInPropertiesManager(boardState, playerState, playerColor);
-        expect(result).toBe(expectedResult);
+        expect(result).toEqual(expectedResult);
 
     });
 
