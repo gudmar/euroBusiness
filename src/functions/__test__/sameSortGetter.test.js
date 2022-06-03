@@ -78,8 +78,17 @@ describe('sameSortGetter: getTargetPlayerBelongings', () => {
         expect(expected).toEqual(getTargetPlayerBelongings(testSet1, 'Bolek'));
     });
     it('Should return all bank estates', () => {
-        const { Power_Station, Water_Plant, East_Railways, South_Railways,North_Railways, West_Railways } = testSet1;
-        const expected = { Power_Station, Water_Plant, East_Railways, South_Railways,North_Railways, West_Railways };
+        const { Power_Station, Water_Plant, East_Railways, 
+            South_Railways,North_Railways, West_Railways, Antarktyda, Arktyka, 
+            Malmo, Goteborg, Sztokholm, Rotterdam, Bruksela, Amsterdam, Mediolan, 
+            Rome, 
+        } = testSet1;
+        const expected = { 
+            Power_Station, Water_Plant, East_Railways, South_Railways,
+            North_Railways, West_Railways, Antarktyda, Arktyka, 
+            Malmo, Goteborg, Sztokholm, Rotterdam, Bruksela, Amsterdam, Mediolan, 
+            Rome, 
+        };
         const result = getTargetPlayerBelongings(testSet1, 'bank');
         expect(expected).toEqual(result)
     })

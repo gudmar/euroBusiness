@@ -40,7 +40,6 @@ describe('boardFields: getNrOfCitiesPlayerHas', () => {
     });
     it('Should return 2/3 in case of Lolek and Spain', () => {
         const state = cp(testState);
-        console.log('SHOULD 2/3 state', state)
         const result = getNrOfCitiesPlayerHas(state, 'Lolek', 'Spain');
         const expected = {owns: 2, outOf: 3};
         expect(result).toEqual(expected);        
@@ -80,7 +79,6 @@ describe('boardFields: getNrOfCiteisPlayerHas should work with array-like descri
     it('Should return 2/3 in case of Lolek and Spain', () => {
         let state = cp(testState);
         state = arrFromDescriptors(state);
-        console.log( 'second SHOULD 2/3', state)
         const result = getNrOfCitiesPlayerHas(state, 'Lolek', 'Spain');
         const expected = {owns: 2, outOf: 3};
         expect(result).toEqual(expected);        
