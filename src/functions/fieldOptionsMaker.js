@@ -72,18 +72,21 @@ const canPlayerDoAnythingInPropertiesManager = (
     const hotelsToBuy = estateDescriptor => getPropIfPlayerIsOwner(estateDescriptor, 'nrOfHotelsToSell');//{throw new Error('Missing implementation')}
     const hotelsToSell = estateDescriptor => getPropIfPlayerIsOwner(estateDescriptor, 'nrOfHotelsToBuy');//{throw new Error('Missing implementation')}
     const isMortaged = estateDescriptor => getPropIfPlayerIsOwner(estateDescriptor, 'isPlegded')
+    const canBeMortaged = (isOwner && housesToSell === 0 && hotelsToSell === 0 && hotelsToBuy === 0 && !isMortaged)
     stateBoardSlice.forEach(field => {
         if (housesToBuy(field)>0) playerOptions.buyHouse = true;
         if (housesToSell(field)>0) playerOptions.sellHouse = true;
         if (hotelsToBuy(field)>0) playerOptions.buyHotel = true;
         if (hotelsToSell(field)>0) playerOptions.sellHotel = true;
-        if (isOwner(field)){
-            if (!isMortaged(field)) {
-                playerOptions.mortage = true
-            } else {
-                playerOptions.buyFromMortage = true;
-            }
-        }
+        if (canBeMortaged) playerOptions.mortage = true;
+        if (isMortaged === true) playerOptions.buyFromMortage = true;
+        // if (isOwner(field)){
+        //     if (!isMortaged(field)) {
+        //         playerOptions.mortage = true
+        //     } else {
+        //         playerOptions.buyFromMortage = true;
+        //     }
+        // }
         if (playerSlice?.[playerColor].extraCards.length > 0) playerOptions.sellCard = true;
     })
     return playerOptions;
