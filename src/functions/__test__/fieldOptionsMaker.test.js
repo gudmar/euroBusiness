@@ -123,7 +123,25 @@ describe('Testing fieldOptionsMaker: canlayerDoAnythingInPropertiesManager', ()=
     });
 
     it(`Should return 'sell a house' in case player has an estate with at least one house`, () => {
-
+        const boardState = cp(stateForFieldOptionsTests);
+        const playerState = cp(playerSlice);
+        const playerColor = 'orange';
+        const expectedResult = {
+            sellHouse: true,
+            buyHouse: true,
+            buyHotel: false,
+            sellHotel: false,
+            mortage: false,
+            buyFromMortage: false,
+            sellCard: false,
+        }
+        const salonikiEstate = getEstate(boardState, 'Saloniki');
+        const atenyEstate = getEstate(boardState, 'Ateny');
+        atenyEstate.owner = playerColor;
+        salonikiEstate.owner = playerColor;
+        atenyEstate.nrOfHouses = 1;
+        const result = canPlayerDoAnythingInPropertiesManager(boardState, playerState, playerColor);
+        expect(result).toEqual(expectedResult);
     });
 
     it(`Should return 'buy a house' in case player owns whole country and at least one house may be purchased there, and player has cash to buy a house`, () => {
