@@ -941,7 +941,7 @@ const stateForFieldOptionsTests = [
 
 
     {
-        id: 'South Railways',
+        id: 'South_Railways',
         country: notCountryTypes.railways,
         type: 'railway',
         price: 400,
@@ -953,7 +953,7 @@ const stateForFieldOptionsTests = [
         isPlegded: false,
     },
     {
-        id: 'West Railways',
+        id: 'West_Railways',
         country: notCountryTypes.railways,
         type: 'railway',
         price: 400,
@@ -965,7 +965,7 @@ const stateForFieldOptionsTests = [
         isPlegded: false,
     },
     {
-        id: 'North Railways',
+        id: 'North_Railways',
         country: notCountryTypes.railways,
         type: 'railway',
         price: 400,
@@ -977,7 +977,7 @@ const stateForFieldOptionsTests = [
         isPlegded: false,
     },
     {
-        id: 'East Railways',
+        id: 'East_Railways',
         country: notCountryTypes.railways,
         type: 'railway',
         price: 400,
