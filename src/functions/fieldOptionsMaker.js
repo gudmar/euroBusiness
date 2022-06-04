@@ -58,6 +58,7 @@ const canPlayerDoAnythingInPropertiesManager = (
         mortage: false,
         buyFromMortage: false,
         sellCard: false,
+        sellProperty: false,
     }
     const isEstate = targetType => Object.values(estateTypes).includes(targetType);
     const isCity = targetType => targetType === types.CITY;
@@ -74,13 +75,18 @@ const canPlayerDoAnythingInPropertiesManager = (
     const hotelsToSell = estateDescriptor => getPropIfPlayerIsOwner(estateDescriptor, 'nrOfHotelsToBuy');//{throw new Error('Missing implementation')}
     const isMortaged = estateDescriptor => getPropIfPlayerIsOwner(estateDescriptor, 'isPlegded')
     const canBeMortaged = estateDescriptor => {
-        console.log('canBeMortaged: ', estateDescriptor, isOwner(estateDescriptor), housesToSell(estateDescriptor), hotelsToSell(estateDescriptor), hotelsToBuy(estateDescriptor),isMortaged(estateDescriptor))
+        // console.log('canBeMortaged: ', estateDescriptor, isOwner(estateDescriptor), housesToSell(estateDescriptor), hotelsToSell(estateDescriptor), hotelsToBuy(estateDescriptor),isMortaged(estateDescriptor))
         return (
         isOwner(estateDescriptor) && 
         (housesToSell(estateDescriptor) === 0) && 
         (hotelsToSell(estateDescriptor) === 0) && 
         (hotelsToBuy(estateDescriptor) === 0 ) && 
         !isMortaged(estateDescriptor))
+    }
+    
+    const canPlayerSellProperty = (estateDescriptor, player) => {
+        const { owns, outOf } = getNrOfCitiesPlayerHas(stateBoardSlice, estateDescriotor, estateDescriptor.country);
+
     }
     stateBoardSlice.forEach(field => {
         if (housesToBuy(field)>0) playerOptions.buyHouse = true;

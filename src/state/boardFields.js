@@ -27,6 +27,36 @@ const arrayStateToObjectState = arrayState => arrayState.reduce((acc, item) => {
     return acc;
 }, {})
 
+const getCitiesOfCountry = (descriptors, country) => descriptors.filter(field => field.country === country);
+
+const doesEveryFieldMeetCondition = (descriptors, callbackConditionFunction) => {
+   return descriptors.reduce((acc, field) => {
+        if (acc === false ) return acc;
+        acc = callbackConditionFunction(field);
+        return acc;
+    }, true)
+}
+
+const doesAnyFieldMeetCondition = (descriptors, callbackConditionFunction) => {
+    return descriptors.reduce((acc, field) => {
+         if (acc === true ) return acc;
+         acc = callbackConditionFunction(field);
+         return acc;
+     }, false)
+ }
+ 
+
+const doesPlayerOwnEachCityInCountry = (descriptors, country, playerColor) => {
+    const checkFunction = field => field.owner === playerColor;
+    const singleCountryDescriptors = getCitiesOfCountry(descriptors, country);
+    return doesEveryFieldMeetCondition(singleCountryDescriptors, checkFunction);
+}
+const doesAnyCityInCountryHaveAHouseOrHotel = (descriptors, country) => {
+    const checkFunction = field => ( field.nrOfHouses > 0 || field.nrOfHotels > 0 );
+    const singleCountryDescriptors = getCitiesOfCountry(descriptors, country);
+    return doesAnyFieldMeetCondition(singleCountryDescriptors, checkFunction);
+}
+
 const getNrOfCitiesPlayerHas = (descriptors, player, country) => {
     // From a single country | player === color
 
@@ -722,4 +752,6 @@ export {
     otherTypes,
     estateTypes,
     chanceTypes,
+    doesPlayerOwnEachCityInCountry,
+    doesAnyCityInCountryHaveAHouseOrHotel
 }

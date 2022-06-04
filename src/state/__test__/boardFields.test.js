@@ -5,7 +5,7 @@
 // await expect(result).rejects.toThrow();
 //  A way to deal with an async function that shuld throw
 
-import testState from './stateForTests.js'
+import testState, { stateForFieldOptionsTests } from './stateForTests.js'
 import { 
     getNrOfCitiesPlayerHas,
     countWaterPlantVisitFee,
@@ -16,7 +16,10 @@ import {
     assumpVisitChecker,
     calculateCashForAllEstatesFromTheBank,
     countAllPropertiesPlayerHas,
+    doesAnyCityInCountryHaveAHouseOrHotel,
+    doesPlayerOwnEachCityInCountry,
 } from '../boardFields.js'
+import { notCountryTypes } from '../../functions/countryTypes.js';
 
 const throwDice = require('../../functions/throwDices.js');
 const bf = require('../boardFields.js');
@@ -27,7 +30,7 @@ const cp = state => JSON.parse(JSON.stringify(state));
 const getWaterPlant = descriptors => descriptors.Water_Plant;
 const getPowerStation = descriptors => descriptors.Power_Station;
 
-
+const getEstate = (stateArray, estateId) => stateArray.find(item => item.id === estateId);
 
 describe('boardFields: getNrOfCitiesPlayerHas', () => {
     //descriptors, player, country
@@ -525,5 +528,56 @@ describe('boardFields, countAllPropertiesPlayerHas', () => {
         const result = countAllPropertiesPlayerHas(testSet, 'purple');
         expect(result).toBe(0); 
     })
+})
 
+describe('boardFields, doesPlayerOwnEachCityInCountry', () => {
+    let state; 
+    beforeEach(() => {
+        state = cp(stateForFieldOptionsTests);
+    })
+    it('Should return true in case player owns each city in the country', () => {
+        const ukOwner = 'Mr Been';
+        const result = doesPlayerOwnEachCityInCountry(state, 'UK', ukOwner);
+        expect(result).toBe(true);
+    });
+    it('Should return true in case it is asked if the player owns all raiways', () => {
+        const railwayOwner = 'bank';
+        const result = doesPlayerOwnEachCityInCountry(state, notCountryTypes.railways, railwayOwner);
+        expect(result).toBe(true);
+    });
+    it('Should return false in case player does not own at least one city in the country', () => {
+        const ukOwner = 'Mr Been';
+        const londonEstate = getEstate(state, 'London');
+        londonEstate.owner = 'orange'
+        const result = doesPlayerOwnEachCityInCountry(state, 'UK', ukOwner);
+        expect(result).toBe(false);      
+    })
+})
+
+describe('boardFields, doesAnyCityInCountryHaveAHouseOrHotel', () => {
+    let state; 
+    beforeEach(() => {
+        state = cp(stateForFieldOptionsTests);
+    })
+    it('Should return true in case there is a house in one of cities', () => {
+        const ukOwner = 'Mr Been';
+        const londonEstate = getEstate(state, 'London');
+        londonEstate.nrOfHouses = 1;
+        const result = doesAnyCityInCountryHaveAHouseOrHotel(state, "UK");
+        expect(result).toBe(true);
+    });
+    it('Should return ture in case there is a hotel in one of cities', () => {
+        const ukOwner = 'Mr Been';
+        const londonEstate = getEstate(state, 'London');
+        londonEstate.nrOfHotels = 1;
+        const result = doesAnyCityInCountryHaveAHouseOrHotel(state, "UK");
+        expect(result).toBe(true);
+    })
+    it('Should return false in case there is no hotel or house in cities belonging to the same country', () => {
+        const ukOwner = 'Mr Been';
+        const londonEstate = getEstate(state, 'London');
+        const result = doesAnyCityInCountryHaveAHouseOrHotel(state, "UK");
+        expect(result).toBe(false);
+    })
+    
 })
