@@ -63,6 +63,7 @@ const canPlayerDoAnythingInPropertiesManager = (
     const isCity = targetType => targetType === types.CITY;
     const getPropIfPlayerIsOwner = (estateDescriptor, property) => {
         if (estateDescriptor.owner !== playerColor) return 0;
+        if (estateDescriptor[property] === undefined) return 0;
         return estateDescriptor[property];        
     }
     const isOwner = estateDescriptor => estateDescriptor.owner === playerColor;
@@ -72,13 +73,21 @@ const canPlayerDoAnythingInPropertiesManager = (
     const hotelsToBuy = estateDescriptor => getPropIfPlayerIsOwner(estateDescriptor, 'nrOfHotelsToSell');//{throw new Error('Missing implementation')}
     const hotelsToSell = estateDescriptor => getPropIfPlayerIsOwner(estateDescriptor, 'nrOfHotelsToBuy');//{throw new Error('Missing implementation')}
     const isMortaged = estateDescriptor => getPropIfPlayerIsOwner(estateDescriptor, 'isPlegded')
-    const canBeMortaged = (isOwner && housesToSell === 0 && hotelsToSell === 0 && hotelsToBuy === 0 && !isMortaged)
+    const canBeMortaged = estateDescriptor => {
+        console.log('canBeMortaged: ', estateDescriptor, isOwner(estateDescriptor), housesToSell(estateDescriptor), hotelsToSell(estateDescriptor), hotelsToBuy(estateDescriptor),isMortaged(estateDescriptor))
+        return (
+        isOwner(estateDescriptor) && 
+        (housesToSell(estateDescriptor) === 0) && 
+        (hotelsToSell(estateDescriptor) === 0) && 
+        (hotelsToBuy(estateDescriptor) === 0 ) && 
+        !isMortaged(estateDescriptor))
+    }
     stateBoardSlice.forEach(field => {
         if (housesToBuy(field)>0) playerOptions.buyHouse = true;
         if (housesToSell(field)>0) playerOptions.sellHouse = true;
         if (hotelsToBuy(field)>0) playerOptions.buyHotel = true;
         if (hotelsToSell(field)>0) playerOptions.sellHotel = true;
-        if (canBeMortaged) playerOptions.mortage = true;
+        if (canBeMortaged(field)) playerOptions.mortage = true;
         if (isMortaged === true) playerOptions.buyFromMortage = true;
         // if (isOwner(field)){
         //     if (!isMortaged(field)) {
