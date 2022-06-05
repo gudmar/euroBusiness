@@ -52,9 +52,23 @@ const doesPlayerOwnEachCityInCountry = (descriptors, country, playerColor) => {
     return doesEveryFieldMeetCondition(singleCountryDescriptors, checkFunction);
 }
 const doesAnyCityInCountryHaveAHouseOrHotel = (descriptors, country) => {
-    const checkFunction = field => ( field.nrOfHouses > 0 || field.nrOfHotels > 0 );
+    const checkFunction = field => {
+        if (field.nrOfHotels === undefined && field.nrOfHouses === undefined) return false;
+        return ( field.nrOfHouses > 0 || field.nrOfHotels > 0 );
+    }
     const singleCountryDescriptors = getCitiesOfCountry(descriptors, country);
     return doesAnyFieldMeetCondition(singleCountryDescriptors, checkFunction);
+}
+
+const canPlayerSellProperty = (estateDescriptors, estateName, player) => {
+    const estate = estateDescriptors.filter(e => e.id === estateName)[0];
+    const anyCityHasABuilding = doesAnyCityInCountryHaveAHouseOrHotel(estateDescriptors, estate.country);
+    if (estate.owner !== player) return false;
+    return !anyCityHasABuilding
+}
+const canPlayerSellAnyProperty = (estateDescriptors, player) => {
+    const checkFunction = (field) => canPlayerSellProperty(estateDescriptors, field.id, player)
+    return doesAnyFieldMeetCondition(estateDescriptors, checkFunction);
 }
 
 const getNrOfCitiesPlayerHas = (descriptors, player, country) => {
@@ -753,5 +767,7 @@ export {
     estateTypes,
     chanceTypes,
     doesPlayerOwnEachCityInCountry,
-    doesAnyCityInCountryHaveAHouseOrHotel
+    doesAnyCityInCountryHaveAHouseOrHotel,
+    canPlayerSellProperty,
+    canPlayerSellAnyProperty,
 }

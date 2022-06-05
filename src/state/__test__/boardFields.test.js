@@ -18,6 +18,7 @@ import {
     countAllPropertiesPlayerHas,
     doesAnyCityInCountryHaveAHouseOrHotel,
     doesPlayerOwnEachCityInCountry,
+    canPlayerSellProperty
 } from '../boardFields.js'
 import { notCountryTypes } from '../../functions/countryTypes.js';
 
@@ -579,5 +580,49 @@ describe('boardFields, doesAnyCityInCountryHaveAHouseOrHotel', () => {
         const result = doesAnyCityInCountryHaveAHouseOrHotel(state, "UK");
         expect(result).toBe(false);
     })
+    it('Should return false in case of railways', () => {
+        const result = doesAnyCityInCountryHaveAHouseOrHotel(state, notCountryTypes.railways);
+        expect(result).toBe(false);        
+    })
+    
+})
+
+
+
+describe('boardFields, canPlayerSellProperty', () => {
+    let state; 
+    beforeEach(() => {
+        state = cp(stateForFieldOptionsTests);
+    })
+    it('Should return ture if no buildings and owner matches', () => {
+        const ukOwner = 'Mr Been';
+        const result = canPlayerSellProperty(state, "London", ukOwner);
+        expect(result).toBe(true);
+    });
+
+    it('Should return false if building in London, player matches', () => {
+        const ukOwner = 'Mr Been';
+        const londonEstate = getEstate(state, 'London');
+        londonEstate.nrOfHouses = 1;
+        const result = canPlayerSellProperty(state, "London", ukOwner);
+        expect(result).toBe(false);
+    });
+
+    it('Should true if railway', () => {
+        const ukOwner = 'Mr Been';
+        const southRailwayEstate = getEstate(state, 'South_Railways');
+        southRailwayEstate.owner = ukOwner;
+        const result = canPlayerSellProperty(state, 'South_Railways', ukOwner);
+        expect(result).toBe(true);
+    });
+
+    it('Should true if owner of just one city in the country', () => {
+        const londonOwner = 'orange';
+        const londonEstate = getEstate(state, 'London');
+        londonEstate.owner = londonOwner;
+        const result = canPlayerSellProperty(state, 'London', londonOwner);
+        expect(result).toBe(true);
+    });
+
     
 })

@@ -10,7 +10,12 @@ import {
     useExtraCard,
     nextPlayer,
 } from "../state/playerSlice.js"
-import { calculateCashForAllEstatesFromTheBank } from '../state/boardFields.js'
+// import { 
+//     calculateCashForAllEstatesFromTheBank,
+//     doesPlayerOwnEachCityInCountry,
+//     doesAnyCityInCountryHaveAHouseOrHotel,
+//     canPlayerSellAnyProperty,
+// } from '../state/boardFields.js'
 import { boardActionTypes } from '../state/boardReducer.js';
 import { playerActionTypes } from '../state/playerReducer.js';
 import { controlActionTypes } from '../state/controlReducer.js';
@@ -22,7 +27,10 @@ import {
     countAllPropertiesPlayerHas,
     types,
     estateTypes,
-
+    doesAnyCityInCountryHaveAHouseOrHotel,
+    doesPlayerOwnEachCityInCountry,
+    calculateCashForAllEstatesFromTheBank,
+    canPlayerSellAnyProperty,
 } from '../state/boardFields.js'
 import {
     hasPlayerExtraCardsFunction,
@@ -84,10 +92,7 @@ const canPlayerDoAnythingInPropertiesManager = (
         !isMortaged(estateDescriptor))
     }
     
-    const canPlayerSellProperty = (estateDescriptor, player) => {
-        const { owns, outOf } = getNrOfCitiesPlayerHas(stateBoardSlice, estateDescriotor, estateDescriptor.country);
 
-    }
     stateBoardSlice.forEach(field => {
         if (housesToBuy(field)>0) playerOptions.buyHouse = true;
         if (housesToSell(field)>0) playerOptions.sellHouse = true;
@@ -95,6 +100,7 @@ const canPlayerDoAnythingInPropertiesManager = (
         if (hotelsToSell(field)>0) playerOptions.sellHotel = true;
         if (canBeMortaged(field)) playerOptions.mortage = true;
         if (isMortaged === true) playerOptions.buyFromMortage = true;
+        if (canPlayerSellAnyProperty(stateBoardSlice, playerColor))
         // if (isOwner(field)){
         //     if (!isMortaged(field)) {
         //         playerOptions.mortage = true
