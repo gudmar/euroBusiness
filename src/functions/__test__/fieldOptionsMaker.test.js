@@ -153,20 +153,20 @@ describe(' Testing fieldOptionsMaker: canlayerDoAnythingInPropertiesManager', ()
 
 
     it(`40) Should return 'mortgage' in case player has at least one estate that may be mortgaged - Check railways. Should indicate that player may sell the property to another player.`, ()=> {
-        // const southRailwaysEstate = getEstate(boardState, 'South_Railways')
-        // const expectedResult = {
-        //     sellHouse: false,
-        //     buyHouse: false,
-        //     buyHotel: false,
-        //     sellHotel: false,
-        //     mortage: true,
-        //     buyFromMortage: false,
-        //     sellCard: false,
-        //     sellProperty: true,
-        // }
-        // southRailwaysEstate.owner = playerColor;
-        // const result = canPlayerDoAnythingInPropertiesManager(boardState, playerState, playerColor);
-        // expect(result).toEqual(expectedResult);
+        const southRailwaysEstate = getEstate(boardState, 'South_Railways')
+        const expectedResult = {
+            sellHouse: false,
+            buyHouse: false,
+            buyHotel: false,
+            sellHotel: false,
+            mortage: true,
+            buyFromMortage: false,
+            sellCard: false,
+            sellProperty: true,
+        }
+        southRailwaysEstate.owner = playerColor;
+        const result = canPlayerDoAnythingInPropertiesManager(boardState, playerState, playerColor);
+        expect(result).toEqual(expectedResult);
     });
     it(`50) Should return 'buyFromMortage', in case player has at least one mortgaged property, and can has cash to buy from mortage`, ()=> {
 
